@@ -1,21 +1,19 @@
 # phpwhois-web
 
-[description]
+Simple PHP frontend that makes use of @[phpWhois/phpWhois](https://github.com/phpWhois/phpWhois) library.
 
 ## Installation
 
-1. Make sure you've installed all requirements
-2. Clone this repository:
-  `git clone https://github.com/[GitHubUsername]/phpwhois-web`
-3. Install the project using `make`:
-  `make install`
-
-## Usage
-
-Here's a short explanation how to use `phpwhois-web`:
-
-* Use it
-* Profit
+1. Make sure you've installed all requirements:  
+  `npm install -g gulp bower`
+2. Clone this repository:  
+  `git clone https://github.com/frdmn/phpwhois-web`
+3. Install PHP dependencies using Composer:  
+  `composer install`
+3. Install the web libraries using Bower:  
+  `bower install`
+3. Run Gulp to complie assets:  
+  `gulp`  
 
 ## Contributing
 
@@ -27,9 +25,8 @@ Here's a short explanation how to use `phpwhois-web`:
 
 ## Requirements / Dependencies
 
-* This
-* That
-* As well as this
+* PHP (Composer)
+* Node (Bower and Gulp)
 
 ## Version
 
