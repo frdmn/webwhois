@@ -117,10 +117,10 @@ gulp.task('connect', function() {
 gulp.task('phplint', function (cb) {
   phplint(['*.php', 'api/*.php'], {limit: 10}, function (err, stdout, stderr) {
     if (err) {
-      cb(err)
-      process.exit(1)
+      cb(err);
+      process.exit(1);
     }
-    cb()
+    cb();
   })
 })
 
