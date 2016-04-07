@@ -1,0 +1,24 @@
+{
+  "name": "phpwhois-web",
+  "version": "1.0.0",
+  "description": "Simple PHP based Whois frontend",
+  "authors": [
+    "Jonas Friedmann <j@frd.mn>"
+  ],
+  "moduleType": [
+    "node"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/frdmn/phpwhois-web",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap-sass": "boostrap-sass#~3.3.6",
+    "modernizr": "2.8.1"
+  }
+}
