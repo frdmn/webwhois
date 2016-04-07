@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -6,11 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="iWelt Whois">
+    <meta name="author" content="Jonas Friedmann <j@frd.mn>">
 
-    <title>Starter Template for Bootstrap</title>
+    <title><?= GENERAL_TITLE ?> - <?=$this->e($title)?></title>
 
+    <!-- Compiled CSS -->
     <link href="assets/css/style.css" rel="stylesheet">
   </head>
 
@@ -38,13 +38,15 @@
     </nav>
 
     <div class="container">
-
-      <div class="starter-template">
-        <h1>Bootstrap starter template</h1>
-        <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.</p>
-      </div>
-
+      <?=$this->section('content')?>
     </div><!-- /.container -->
+
+    <footer class="footer">
+      <div class="container">
+        <p class="text-muted pull-left">Made by <strong><a href="https://frd.mn" target="_blank" href="#">frdmn</a></strong> for  <strong><a href="http://www.iwelt.de" target="_blank" href="#">iWelt AG</a></strong> under <a href="LICENSE">MIT</a> license.</p>
+        <p class="text-muted pull-right"></p>
+      </div>
+    </footer>
 
     <script src="assets/js/build.js"></script>
   </body>
