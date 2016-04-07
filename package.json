@@ -6,6 +6,9 @@
     "type": "git",
     "url": "https://github.com/frdmn/phpwhois-web.git"
   },
+  "scripts": {
+    "test": "bower install && gulp && true"
+  },
   "devDependencies": {
     "gulp": "^3.9.0",
     "gulp-autoprefixer": "^3.1.0",
