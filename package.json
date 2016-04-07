@@ -1,0 +1,23 @@
+{
+  "name": "phpwhois-web",
+  "version": "1.0.0",
+  "description": "Simple PHP based Whois frontend",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/frdmn/phpwhois-web.git"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-clean": "^0.3.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-connect": "^2.3.1",
+    "gulp-imagemin": "^2.4.0",
+    "gulp-load-plugins": "^1.2.0",
+    "gulp-sass": "^2.1.1",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-uglify": "^1.5.1",
+    "imagemin-pngquant": "^4.2.0",
+    "phplint": "^1.7.0"
+  }
+}
