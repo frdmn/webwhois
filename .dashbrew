@@ -1,0 +1,8 @@
+---
+phpwhois-web.devel:
+  title: phpwhois-web
+  php:
+    build: system
+  vhost:
+    servername: phpwhois-web.devel
+    ssl: false
