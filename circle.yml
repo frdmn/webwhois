@@ -1,6 +1,8 @@
 machine:
   node:
     version: v5.10.0
+  php:
+    version: 5.5.0
 test:
   pre:
     - npm install -g bower

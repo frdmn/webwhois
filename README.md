@@ -30,8 +30,8 @@ Simple PHP frontend that makes use of @[phpWhois/phpWhois](https://github.com/ph
 
 ## Requirements / Dependencies
 
-* PHP (Composer)
-* Node (Bower and Gulp)
+* PHP >= 5.5 (Composer)
+* Node >= 5.0 (Bower and Gulp)
 
 ## Version
 
