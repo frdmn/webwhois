@@ -16,7 +16,7 @@
           <span class="input-group-addon" id="dot">.</span>
           <div class="input-group-btn">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <span id="tld-display">com / net / org / biz / info</span> <span class="caret"></span>
+              <span id="tld-display"></span> <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" id="dropdownmenu">
               <?php foreach ($config->tldpackages as $pkgname => $pkg): ?>

@@ -1,6 +1,7 @@
 {
   "general": {
-    "title": "Whois System"
+    "title": "Whois System",
+    "default-selection": "New gTLDs"
   },
   "tldpackages": {
     "com / net / org / biz / info": {
@@ -30,6 +31,7 @@
     "actor",
     "biz",
     "com",
+    "de",
     "info",
     "net",
     "org"
