@@ -1,8 +1,8 @@
 <?php
 
-// Set env varibales
-define('GENERAL_VERSION', '1.0.0');
-define('GENERAL_TITLE', 'Test');
+// Load config and inject current version string
+$config = json_decode(file_get_contents('config.json'));
+$config->version = file_get_contents('VERSION');
 
 // Autoload composer components
 require 'vendor/autoload.php';

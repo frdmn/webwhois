@@ -1,3 +1,5 @@
+<?php global $config; ?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -8,7 +10,7 @@
     <meta name="description" content="iWelt Whois">
     <meta name="author" content="Jonas Friedmann <j@frd.mn>">
 
-    <title><?= GENERAL_TITLE ?> - <?=$this->e($title)?></title>
+    <title><?= $config->general->title ?> - <?= $this->e($title) ?></title>
 
     <!-- Compiled CSS -->
     <link href="assets/css/style.css" rel="stylesheet">
@@ -44,7 +46,7 @@
     <footer class="footer">
       <div class="container">
         <p class="text-muted pull-left">Made by <strong><a href="https://frd.mn" target="_blank" href="#">frdmn</a></strong> for  <strong><a href="http://www.iwelt.de" target="_blank" href="#">iWelt AG</a></strong> under <a href="LICENSE">MIT</a> license.</p>
-        <p class="text-muted pull-right"></p>
+        <p class="text-muted pull-right">Version <?= $config->version ?></p>
       </div>
     </footer>
 
