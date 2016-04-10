@@ -20,6 +20,7 @@ $app = new \Slim\App;
 
 // Set routes
 $app->get('/', 'dashboard');
+$app->get('/api', 'routeGetOverview');
 
 // Run application
 $app->run();
