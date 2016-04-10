@@ -1,8 +1,13 @@
+// Fixed top padding because of navbar
 body {
   padding-top: 50px;
 }
 
-.starter-template {
+.row {
   padding: 40px 15px;
-  text-align: center;
+}
+
+// Prevent duplicate borders for form-control element
+span#dot {
+  border-left: 0px;
 }
