@@ -20,7 +20,7 @@
             </button>
             <ul class="dropdown-menu" id="dropdownmenu">
               <?php foreach ($config->tldpackages as $pkgname => $pkg): ?>
-                <li data-package="<?= getIntegerIndexOfObjectKey($config->tldpackages, $pkgname) ?>"><a href="#"><?= $pkgname ?></a></li>
+                <li data-package="<?= getIntegerIndexOfObjectKey($config->tldpackages, $pkgname) ?>"><a href="#"><?= $this->e($pkgname) ?></a></li>
               <?php endforeach; ?>
               <li role="separator" class="divider"></li>
             </ul><!-- /.dropdown-menu -->
