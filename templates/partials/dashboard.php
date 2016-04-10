@@ -23,6 +23,9 @@
                 <li data-package="<?= getIntegerIndexOfObjectKey($config->tldpackages, $pkgname) ?>"><a href="#"><?= $this->e($pkgname) ?></a></li>
               <?php endforeach; ?>
               <li role="separator" class="divider"></li>
+              <?php foreach ($config->tlds as $index => $tld): ?>
+                <li data-tld="<?= $index ?>"><a href="#"><?= $this->e($tld) ?></a></li>
+              <?php endforeach; ?>
             </ul><!-- /.dropdown-menu -->
             <input type="hidden" id="dropdowninput" name="tldpackage">
           </div><!-- /.input-group-btn -->
