@@ -7,8 +7,9 @@ $config->version = file_get_contents('VERSION');
 // Autoload composer components
 require 'vendor/autoload.php';
 
-// Load route functions
+// Load routes and functions
 include('includes/routes.php');
+include('includes/functions.php');
 
 // Initialize new Plates instance and map template folders
 $templates = new League\Plates\Engine('templates');
