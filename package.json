@@ -2,13 +2,20 @@
   "name": "phpwhois-web",
   "version": "1.0.0",
   "description": "Simple PHP based Whois frontend",
+  "author": "Jonas Friedmann <j@frd.mn>",
+  "homepage": "https://github.com/frdmn/phpwhois-web#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/frdmn/phpwhois-web.git"
+    "url": "git+https://github.com/frdmn/phpwhois-web.git"
+  },
+  "bugs": {
+    "url": "https://github.com/frdmn/phpwhois-web/issues"
   },
   "scripts": {
     "test": "bower install && gulp && true"
   },
+  "main": "gulpfile.js",
+  "dependencies": {},
   "devDependencies": {
     "gulp": "^3.9.0",
     "gulp-autoprefixer": "^3.1.0",
@@ -22,5 +29,6 @@
     "gulp-uglify": "^1.5.1",
     "imagemin-pngquant": "^4.2.0",
     "phplint": "^1.7.0"
-  }
+  },
+  "license": "MIT"
 }
