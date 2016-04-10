@@ -31,7 +31,7 @@ var imageminOptions = {
 gulp.task('styles:dev', function () {
   gulp.src(dirs.css + '/**/*.scss')
     .pipe($.sourcemaps.init())
-    .pipe($.sass().on('error', $.sass.logError))
+    .pipe($.sass({outputStyle: 'expanded', 'precision': 10}).on('error', $.sass.logError))
     .pipe($.autoprefixer(autoprefixerOptions))
     .pipe($.sourcemaps.write())
     .pipe(gulp.dest(dirs.css))
@@ -41,7 +41,7 @@ gulp.task('styles:dev', function () {
 // Compile sass for production (compressed)
 gulp.task('styles', function () {
   gulp.src(dirs.css + '/**/*.scss')
-    .pipe($.sass({outputStyle: 'compressed'}).on('error', $.sass.logError))
+    .pipe($.sass({outputStyle: 'compressed', 'precision': 10}).on('error', $.sass.logError))
     .pipe($.autoprefixer(autoprefixerOptions))
     .pipe(gulp.dest(dirs.css));
 });
