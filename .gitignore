@@ -28,6 +28,7 @@ vendor
 composer.lock
 
 #####=== phpwhois-web ===#####
+.dashbrew
 config.php
 bower_components
 assets/css/*.css
