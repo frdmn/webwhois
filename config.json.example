@@ -1,5 +1,37 @@
 {
-  "general":{
-    "title":"Whois System"
-  }
+  "general": {
+    "title": "Whois System"
+  },
+  "tldpackages": {
+    "com / net / org / biz / info": {
+      "tlds": [
+        "com",
+        "net",
+        "org",
+        "biz",
+        "info"
+      ]
+    },
+    "New gTLDs": {
+      "tlds": [
+        "academy",
+        "accountant",
+        "accountants",
+        "active",
+        "actor"
+      ]
+    }
+  },
+  "tlds": [
+    "academy",
+    "accountant",
+    "accountants",
+    "active",
+    "actor",
+    "biz",
+    "com",
+    "info",
+    "net",
+    "org"
+  ]
 }
