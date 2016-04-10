@@ -16,18 +16,18 @@
           <span class="input-group-addon" id="dot">.</span>
           <div class="input-group-btn">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <span id="dropdowndisplay">de</span> <span class="caret"></span>
+              <span id="tld-display">com / net / org / biz / info</span> <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" id="dropdownmenu">
               <?php foreach ($config->tldpackages as $pkgname => $pkg): ?>
-                <li data-package="<?= getIntegerIndexOfObjectKey($config->tldpackages, $pkgname) ?>"><a href="#"><?= $this->e($pkgname) ?></a></li>
+                <li data-tlds="<?= join(', ', $pkg->tlds) ?>"><a href="#"><?= $this->e($pkgname) ?></a></li>
               <?php endforeach; ?>
               <li role="separator" class="divider"></li>
               <?php foreach ($config->tlds as $index => $tld): ?>
-                <li data-tld="<?= $index ?>"><a href="#"><?= $this->e($tld) ?></a></li>
+                <li data-tlds="<?= $this->e($tld) ?>"><a href="#"><?= $this->e($tld) ?></a></li>
               <?php endforeach; ?>
             </ul><!-- /.dropdown-menu -->
-            <input type="hidden" id="dropdowninput" name="tldpackage">
+            <input type="hidden" id="tlds" name="tlds">
           </div><!-- /.input-group-btn -->
         </div><!-- /.input-group -->
         <hr>
