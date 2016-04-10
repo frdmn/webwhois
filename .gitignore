@@ -29,7 +29,7 @@ composer.lock
 
 #####=== phpwhois-web ===#####
 .dashbrew
-config.php
+config.json
 bower_components
 assets/css/*.css
 assets/js/modernizr.js
