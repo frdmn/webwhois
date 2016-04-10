@@ -19,9 +19,10 @@
               <span id="dropdowndisplay">de</span> <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" id="dropdownmenu">
-              <li><a href="#">de</a></li>
-              <li><a href="#">com / net / org / biz / info</a></li>
-              <li><a href="#">New gTLDs</a></li>
+              <?php foreach ($config->tldpackages as $pkgname => $pkg): ?>
+                <li data-package="<?= getIntegerIndexOfObjectKey($config->tldpackages, $pkgname) ?>"><a href="#"><?= $pkgname ?></a></li>
+              <?php endforeach; ?>
+              <li role="separator" class="divider"></li>
             </ul><!-- /.dropdown-menu -->
             <input type="hidden" id="dropdowninput" name="tldpackage">
           </div><!-- /.input-group-btn -->
