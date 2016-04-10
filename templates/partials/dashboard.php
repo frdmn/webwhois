@@ -12,7 +12,7 @@
       <div class="form-inputs">
         <div class="input-group">
           <span class="input-group-addon">www.</span>
-          <input type="text" class="form-control" id="your-domain" name="your-domain" placeholder="Your domain">
+          <input type="text" class="form-control" id="your-domain" name="your-domain" placeholder="yourdomain">
           <span class="input-group-addon" id="dot">.</span>
           <div class="input-group-btn">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
