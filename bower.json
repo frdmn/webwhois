@@ -1,6 +1,6 @@
 {
   "name": "phpwhois-web",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Simple PHP based Whois frontend",
   "authors": [
     "Jonas Friedmann <j@frd.mn>"
