@@ -44,7 +44,7 @@
     <footer class="footer">
       <div class="container">
         <p class="text-muted pull-left">Made by <strong><a href="https://frd.mn" target="_blank" href="#">frdmn</a></strong> under <a href="LICENSE">MIT</a> license.</p>
-        <p class="text-muted pull-right">Version <?= $config->version ?></p>
+        <p class="text-muted pull-right"><i class="icon-large icon-github"></i><a href="https://github.com/frdmn/webwhois" target="_blank">webwhois</a> version <?= $config->version ?></p>
       </div>
     </footer>
 
