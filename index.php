@@ -46,7 +46,8 @@ $app->add($headerMiddleware);
 
 // Set routes
 $app->get('/', 'dashboard');
-$app->get('/api', 'routeGetOverview');
+$app->get('/api', 'routeApiOverview');
+$app->get('/api/tlds', 'routeApiGetTlds');
 
 // Run application
 $app->run();
