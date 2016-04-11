@@ -7,26 +7,57 @@ Simple, Lightweight and customizable domain lookup/whois system, which makes use
 ## Installation
 
 1. Make sure you've installed all requirements:  
-  `npm install -g gulp bower`
-2. Clone this repository:  
-  `git clone https://github.com/frdmn/phpwhois-web`
-3. Install PHP dependencies using Composer:  
-  `composer install`
-3. Install the web libraries using Bower:  
-  `bower install`
-3. Run Gulp to complie assets:  
-  `gulp`  
+
+    ```shell
+    npm install -g gulp bower
+    ```
+
+1. Clone this repository:  
+
+    ```shell
+    git clone https://github.com/frdmn/webwhois
+    ```
+
+1. Install PHP dependencies using Composer:  
+
+    ```shell
+    composer install
+    ```
+
+1. Install the web libraries using Bower:  
+
+    ```shell
+    bower install
+    ```
+
+1. Run Gulp to compile assets:  
+
+    ```shell
+    gulp  
+    ```
 
 ## Contributing
 
 1. Fork it
-2. Create your feature branch:  
-  `git checkout -b feature/my-new-feature`
-3. Commit your changes:  
-  `git commit -am 'Add some feature'`
-4. Push to the branch:  
-  `git push origin feature/my-new-feature`
-5. Submit a pull request
+1. Create your feature branch:  
+
+    ```shell
+    git checkout -b feature/my-new-feature
+    ```
+
+1. Commit your changes:  
+
+    ```shell
+    git commit -am 'Add some feature'
+    ```
+
+1. Push to the branch:  
+
+    ```shell
+    git push origin feature/my-new-feature
+    ```
+
+1. Submit a pull request
 
 ## Requirements / Dependencies
 
