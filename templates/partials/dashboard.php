@@ -7,7 +7,7 @@
   <form method="post">
     <fieldset>
       <!-- Form Name -->
-      <legend>Domain search</legend>
+      <legend>Domain lookup</legend>
 
       <div class="form-inputs">
         <div class="input-group">
