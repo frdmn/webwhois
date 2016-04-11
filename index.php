@@ -23,7 +23,7 @@ $headerMiddleware = function ($request, $response, $next) {
   $response = $response->withHeader('X-Frame-Options', 'SAMEORIGIN');
   $response = $response->withHeader('X-Content-Type-Options', 'nosniff');
   $response = $response->withHeader('X-XSS-Protection', '1; mode=block');
-  $response = $response->withHeader('Content-Security-Policy', "default-src 'none'; script-src 'self'; connect-src 'self'; img-src 'self'; style-src 'self';");
+  $response = $response->withHeader('Content-Security-Policy', "default-src 'none'; script-src 'self'; connect-src 'self'; img-src 'self'; style-src 'self' 'unsafe-inline';");
 
   // If API request succeeded, add CORS headers and always return as JSON
   $reqIsAPI = (bool) preg_match('|^/api|', $request->getUri()->getPath());
