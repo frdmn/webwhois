@@ -1,15 +1,15 @@
 {
-  "name": "phpwhois-web",
+  "name": "webwhois",
   "version": "0.0.1",
-  "description": "Simple PHP based Whois frontend",
+  "description": "Lightweight and customizable domain lookup/whois system.",
   "author": "Jonas Friedmann <j@frd.mn>",
-  "homepage": "https://github.com/frdmn/phpwhois-web#readme",
+  "homepage": "https://github.com/frdmn/webwhois#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/frdmn/phpwhois-web.git"
+    "url": "git+https://github.com/frdmn/webwhois.git"
   },
   "bugs": {
-    "url": "https://github.com/frdmn/phpwhois-web/issues"
+    "url": "https://github.com/frdmn/webwhois/issues"
   },
   "scripts": {
     "test": "bower install && gulp && true"

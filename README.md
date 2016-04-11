@@ -1,6 +1,6 @@
-# phpwhois-web
+# webwhois
 
-Simple PHP frontend that makes use of @[phpWhois/phpWhois](https://github.com/phpWhois/phpWhois) library.
+Simple, Lightweight and customizable domain lookup/whois system, which makes use of @[phpWhois/phpWhois](https://github.com/phpWhois/phpWhois) library. Comes with REST support and can be used embeddable or as standalone frontend
 
 ![](http://up.frd.mn/cccR9UByHH.png)
 

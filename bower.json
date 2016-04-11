@@ -1,7 +1,7 @@
 {
-  "name": "phpwhois-web",
+  "name": "webwhois",
   "version": "0.0.1",
-  "description": "Simple PHP based Whois frontend",
+  "description": "Lightweight and customizable domain lookup/whois system.",
   "authors": [
     "Jonas Friedmann <j@frd.mn>"
   ],
@@ -9,7 +9,7 @@
     "node"
   ],
   "license": "MIT",
-  "homepage": "https://github.com/frdmn/phpwhois-web",
+  "homepage": "https://github.com/frdmn/webwhois",
   "ignore": [
     "**/.*",
     "node_modules",

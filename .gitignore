@@ -27,7 +27,7 @@ node_modules
 vendor
 composer.lock
 
-#####=== phpwhois-web ===#####
+#####=== webwhois ===#####
 .dashbrew
 config.json
 bower_components
