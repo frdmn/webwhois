@@ -58,14 +58,18 @@ function routeApiGetTlds() {
 function routeApiGetLookupSingle($request, $response, $args) {
   global $jsonObject;
 
+  // Parse domain from request path
   $domain = $args['domain'];
+  // Check if domain is registered
   $status = checkIfRegistered($domain);
 
+  // Make sure there was no problem during the lookup
   if (!$status) {
     $jsonObject['status'] = 'error';
     $jsonObject['message'] = 'Problem while trying to lookup whois';
   }
 
+  // Evaluate $status
   if ($status === 'yes') {
     $jsonObject['data']['registered'] = true;
   } elseif ($status === 'yes') {
@@ -82,28 +86,36 @@ function routeApiGetLookupSingle($request, $response, $args) {
  * @return void
  */
 function routeApiPostLookupMulti($request, $response, $args) {
-  global $jsonObject, $app;
+  global $jsonObject;
 
+  // Parse POST parameter
   $postBody = $request->getParsedBody();
 
+  // Check for "domain"
   if (!$postBody['domain']) {
     $jsonObject['status'] = 'error';
     $jsonObject['message'] = 'Couldn\'t find \'domain\' parameter';
   }
 
+  // and for "tlds"
   if (!$postBody['tlds']) {
     $jsonObject['status'] = 'error';
     $jsonObject['message'] = 'Couldn\'t find \'tlds\' parameter';
   }
 
+  // Split by ","
   $tlds = explode(', ', $postBody['tlds']);
   $results = [];
 
+  // Loop through each given TLD
   foreach ($tlds as $tld) {
+    // Construct full domain with TLD suffix
     $domain = $postBody['domain'].'.'.$tld;
+    // Check if domain is registered
     $status = checkIfRegistered($domain);
     $tldJsonObject = array();
 
+    // Make sure there was no problem during the lookup
     if (!$status) {
       $tldJsonObject['status'] = 'error';
       $tldJsonObject['message'] = 'Problem while trying to lookup whois';
@@ -111,6 +123,7 @@ function routeApiPostLookupMulti($request, $response, $args) {
       $tldJsonObject['status'] = 'success';
     }
 
+    // Evaluate $status
     if ($status === 'yes') {
       $tldJsonObject['registered'] = true;
     } elseif ($status === 'yes') {
@@ -119,9 +132,11 @@ function routeApiPostLookupMulti($request, $response, $args) {
       $tldJsonObject['registered'] = $status;
     }
 
+    // Push $tldJsonObject into the $results array using the domain as key
     $results[$domain] = $tldJsonObject;
   }
 
+  // Push results array into "data" JSON
   $jsonObject['data'] = $results;
 
   echo json_encode($jsonObject);
