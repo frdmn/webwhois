@@ -1,6 +1,7 @@
 {
   "general": {
     "title": "Whois System",
+    "debug": false,
     "default-selection": "New gTLDs"
   },
   "tldpackages": {

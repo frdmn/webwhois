@@ -11,6 +11,13 @@ require 'vendor/autoload.php';
 include('includes/routes.php');
 include('includes/functions.php');
 
+// Because of a lot of E_NOTICE's in the phpWhois library, I decided to surpress them unless debug mode is enabled
+if (!$config->general->debug) {
+  error_reporting(E_ALL & ~E_NOTICE);
+} else {
+  error_reporting(E_ALL);
+}
+
 // Initialize new Plates instance and map template folders
 $templates = new League\Plates\Engine('templates');
 $templates->addFolder('partials', 'templates/partials');
