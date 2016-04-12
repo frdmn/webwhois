@@ -29,7 +29,7 @@ function routeApiOverview() {
   $routes = array(
     'GET /api' => 'This API overview',
     'GET /api/tlds' => 'List all available TLDs',
-    'GET /api/lookup' => 'Whois a single domain'
+    'GET /api/lookup/single/{domain}' => 'Whois a single domain'
     );
 
   $jsonObject['data'] = $routes;
@@ -51,10 +51,10 @@ function routeApiGetTlds() {
 }
 
 /**
- * Route - "GET /api/lookup/:domain" - Lookup a single domain
+ * Route - "GET /api/lookup/single/:domain" - Lookup a single domain
  * @return void
  */
-function routeApiGetLookup($request, $response, $args) {
+function routeApiGetLookupSingle($request, $response, $args) {
   global $jsonObject;
 
   $domain = $args['domain'];

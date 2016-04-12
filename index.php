@@ -55,7 +55,7 @@ $app->add($headerMiddleware);
 $app->get('/', 'dashboard');
 $app->get('/api', 'routeApiOverview');
 $app->get('/api/tlds', 'routeApiGetTlds');
-$app->get('/api/lookup/{domain}', 'routeApiGetLookup');
+$app->get('/api/lookup/single/{domain}', 'routeApiGetLookupSingle');
 
 // Run application
 $app->run();
