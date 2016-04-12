@@ -11,16 +11,21 @@ $jsonObject = array(
 
 /**
  * Route - "GET /"
- * @return void
+ *
+ * The default dashboard route
+ * @return render the template
  */
 function dashboard() {
   global $templates;
-  echo $templates->render('partials::dashboard');
+
+  return $templates->render('partials::dashboard');
 }
 
 /**
- * Route - "GET /api" - to display an API route overview
- * @return void
+ * Route - "GET /api"
+ *
+ * Display a general API overview
+ * @return {String} JSON response
  */
 function routeApiOverview() {
   global $jsonObject;
@@ -35,12 +40,14 @@ function routeApiOverview() {
 
   $jsonObject['data'] = $routes;
 
-  echo json_encode($jsonObject);
+  return json_encode($jsonObject);
 }
 
 /**
- * Route - "GET /api/tlds" - list all available TLDs
- * @return void
+ * Route - "GET /api/tlds"
+ *
+ * List all available TLDs
+ * @return {String} JSON response
  */
 function routeApiGetTlds() {
   global $jsonObject, $config;
@@ -48,12 +55,17 @@ function routeApiGetTlds() {
   // Create array with available routes
   $jsonObject['data'] = $config->tlds;
 
-  echo json_encode($jsonObject);
+  return json_encode($jsonObject);
 }
 
 /**
- * Route - "GET /api/lookup/single/:domain" - Lookup a single domain
- * @return void
+ * Route - "GET /api/lookup/single/:domain"
+ *
+ * Lookup a single domain
+ * @param $request
+ * @param $response
+ * @param $args
+ * @return {String} JSON response
  */
 function routeApiGetLookupSingle($request, $response, $args) {
   global $jsonObject;
@@ -78,12 +90,22 @@ function routeApiGetLookupSingle($request, $response, $args) {
     $jsonObject['data']['registered'] = $status;
   }
 
-  echo json_encode($jsonObject);
+  return json_encode($jsonObject);
 }
 
 /**
  * Route - "POST /api/lookup/multi" - Whois multiple domain TLDs
  * @return void
+ */
+
+/**
+ * Route - "POST /api/lookup/multi"
+ *
+ * Whois multiple domain TLDs
+ * @param $request
+ * @param $response
+ * @param $args
+ * @return {String} JSON response
  */
 function routeApiPostLookupMulti($request, $response, $args) {
   global $jsonObject;
@@ -139,5 +161,5 @@ function routeApiPostLookupMulti($request, $response, $args) {
   // Push results array into "data" JSON
   $jsonObject['data'] = $results;
 
-  echo json_encode($jsonObject);
+  return json_encode($jsonObject);
 }
