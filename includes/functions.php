@@ -19,8 +19,8 @@ function getIntegerIndexOfObjectKey($object, $needle){
 
 /**
  * Run whois lookup using phpwhois library
- * @param  {String} $domain
- * @return {Object} whois results
+ * @param  {String} $domain The domain to lookup
+ * @return {Object|false}   Whois results
  */
 function runWhoisLookup($domain){
   $whois = new Whois();
@@ -35,6 +35,11 @@ function runWhoisLookup($domain){
   }
 }
 
+/**
+ * Check register status for single domain
+ * @param  {String} $domain The domain to lookup
+ * @return {String|false}   Result of the lookup
+ */
 function checkIfRegistered($domain){
   $whoisResult = runWhoisLookup($domain);
 

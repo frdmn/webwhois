@@ -1,19 +1,15 @@
 <?php
 
-/* General */
-
 // Standard exception data
 $jsonObject = array(
   'status' => 'success'
 );
 
-/* Routes */
-
 /**
  * Route - "GET /"
  *
  * The default dashboard route
- * @return render the template
+ * @return {String} HTML DOM
  */
 function dashboard() {
   global $templates;
@@ -62,9 +58,9 @@ function routeApiGetTlds() {
  * Route - "GET /api/lookup/single/:domain"
  *
  * Lookup a single domain
- * @param $request
- * @param $response
- * @param $args
+ * @param  {ServerRequestInterface} $request
+ * @param  {ResponseInterface} $response
+ * @param  {Array} $args
  * @return {String} JSON response
  */
 function routeApiGetLookupSingle($request, $response, $args) {
@@ -94,17 +90,12 @@ function routeApiGetLookupSingle($request, $response, $args) {
 }
 
 /**
- * Route - "POST /api/lookup/multi" - Whois multiple domain TLDs
- * @return void
- */
-
-/**
  * Route - "POST /api/lookup/multi"
  *
  * Whois multiple domain TLDs
- * @param $request
- * @param $response
- * @param $args
+ * @param  {ServerRequestInterface} $request
+ * @param  {ResponseInterface} $response
+ * @param  {Array} $args
  * @return {String} JSON response
  */
 function routeApiPostLookupMulti($request, $response, $args) {
