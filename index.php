@@ -56,6 +56,7 @@ $app->get('/', 'dashboard');
 $app->get('/api', 'routeApiOverview');
 $app->get('/api/tlds', 'routeApiGetTlds');
 $app->get('/api/lookup/single/{domain}', 'routeApiGetLookupSingle');
+$app->post('/api/lookup/multi', 'routeApiPostLookupMulti');
 
 // Run application
 $app->run();

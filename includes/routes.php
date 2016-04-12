@@ -29,7 +29,8 @@ function routeApiOverview() {
   $routes = array(
     'GET /api' => 'This API overview',
     'GET /api/tlds' => 'List all available TLDs',
-    'GET /api/lookup/single/{domain}' => 'Whois a single domain'
+    'GET /api/lookup/single/{domain}' => 'Whois a single domain',
+    'POST /api/lookup/multi' => 'Whois multiple domain TLDs'
     );
 
   $jsonObject['data'] = $routes;
@@ -77,10 +78,10 @@ function routeApiGetLookupSingle($request, $response, $args) {
 }
 
 /**
- * Route - "POST /api/lookup"
+ * Route - "POST /api/lookup/multi" - Whois multiple domain TLDs
  * @return void
  */
-function routeApiPostLookup($request) {
+function routeApiPostLookupMulti($request, $response, $args) {
   global $jsonObject, $app;
 
   $postBody = $request->getParsedBody();
@@ -95,7 +96,33 @@ function routeApiPostLookup($request) {
     $jsonObject['message'] = 'Couldn\'t find \'tlds\' parameter';
   }
 
-  // TODO: whois and return results
+  $tlds = explode(', ', $postBody['tlds']);
+  $results = [];
+
+  foreach ($tlds as $tld) {
+    $domain = $postBody['domain'].'.'.$tld;
+    $status = checkIfRegistered($domain);
+    $tldJsonObject = array();
+
+    if (!$status) {
+      $tldJsonObject['status'] = 'error';
+      $tldJsonObject['message'] = 'Problem while trying to lookup whois';
+    } else {
+      $tldJsonObject['status'] = 'success';
+    }
+
+    if ($status === 'yes') {
+      $tldJsonObject['registered'] = true;
+    } elseif ($status === 'yes') {
+      $tldJsonObject['registered'] = false;
+    } else {
+      $tldJsonObject['registered'] = $status;
+    }
+
+    $results[$domain] = $tldJsonObject;
+  }
+
+  $jsonObject['data'] = $results;
 
   echo json_encode($jsonObject);
 }
