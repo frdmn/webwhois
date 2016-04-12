@@ -29,7 +29,7 @@ function routeApiOverview() {
   $routes = array(
     'GET /api' => 'This API overview',
     'GET /api/tlds' => 'List all available TLDs',
-    'POST /api/lookup' => 'Get warranty with ID \'[ID]\''
+    'GET /api/lookup' => 'Whois a single domain'
     );
 
   $jsonObject['data'] = $routes;
@@ -51,7 +51,33 @@ function routeApiGetTlds() {
 }
 
 /**
- * Route - "POST /api/tlds" - list all available TLDs
+ * Route - "GET /api/lookup/:domain" - Lookup a single domain
+ * @return void
+ */
+function routeApiGetLookup($request, $response, $args) {
+  global $jsonObject;
+
+  $domain = $args['domain'];
+  $status = checkIfRegistered($domain);
+
+  if (!$status) {
+    $jsonObject['status'] = 'error';
+    $jsonObject['message'] = 'Problem while trying to lookup whois';
+  }
+
+  if ($status === 'yes') {
+    $jsonObject['data']['registered'] = true;
+  } elseif ($status === 'yes') {
+    $jsonObject['data']['registered'] = false;
+  } else {
+    $jsonObject['data']['registered'] = $status;
+  }
+
+  echo json_encode($jsonObject);
+}
+
+/**
+ * Route - "POST /api/lookup"
  * @return void
  */
 function routeApiPostLookup($request) {

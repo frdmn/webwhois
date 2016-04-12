@@ -17,3 +17,30 @@ function getIntegerIndexOfObjectKey($object, $needle){
   return false;
 }
 
+/**
+ * Run whois lookup using phpwhois library
+ * @param  {String} $domain
+ * @return {Object} whois results
+ */
+function runWhoisLookup($domain){
+  $whois = new Whois();
+  // $whois->useServer('academy','whois.autodns3.de');
+
+  $result = $whois->lookup($domain);
+
+  if ($result) {
+    return $result;
+  } else {
+    return false;
+  }
+}
+
+function checkIfRegistered($domain){
+  $whoisResult = runWhoisLookup($domain);
+
+  if ($whoisResult['regrinfo']['registered']) {
+    return $whoisResult['regrinfo']['registered'];
+  } else {
+    return false;
+  }
+}
