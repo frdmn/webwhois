@@ -34,12 +34,46 @@ $(function() {
     return false;
   }
 
+  /**
+   * Hide the TLD/package form (dropdown)
+   * @return {Boolean} true
+   */
+  var hideMultiLookupForm = function(){
+    $('form').removeClass('multi').addClass('single');
+    $('#tld-package').hide();
+    $('#dot').hide();
+    return true;
+  }
+
+  /**
+   * Show the TLD/package form (dropdown)
+   * @return {Boolean} true
+   */
+  var showMultiLookupForm = function(){
+    $('form').removeClass('single').addClass('multi');
+    $('#tld-package').show();
+    $('#dot').show();
+    return true;
+  }
+
   // Make sure to load config file
   loadConfigFile(function(config){
     // Insert the first domain package in the hidden input
     var defaultTlds = $('#dropdownmenu > li').first().data('tlds');
     $('#tlds').val(getDefaultSelectionTlds(config));
     $('#tld-display').text(config.general['default-selection']);
+  });
+
+  // Listen on each keypress in the domain input
+  $('#your-domain').keyup(function() {
+    var input = $('#your-domain').val();
+
+    // Check if it contains a dot
+    if (input.indexOf('.') > -1) {
+      hideMultiLookupForm();
+    } else {
+      showMultiLookupForm();
+    }
   });
 
   // Update fake "select" when user clicks on package in dropdown menu

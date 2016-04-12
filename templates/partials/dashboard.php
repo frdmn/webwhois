@@ -4,7 +4,7 @@
 ?>
 
 <div class="row">
-  <form method="post">
+  <form method="post" class="multi">
     <fieldset>
       <!-- Form Name -->
       <legend>Domain lookup</legend>
@@ -14,7 +14,7 @@
           <span class="input-group-addon">www.</span>
           <input type="text" class="form-control" id="your-domain" name="your-domain" placeholder="yourdomain">
           <span class="input-group-addon" id="dot">.</span>
-          <div class="input-group-btn">
+          <div class="input-group-btn" id="tld-package">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <span id="tld-display"></span> <span class="caret"></span>
             </button>
