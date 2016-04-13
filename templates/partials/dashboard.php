@@ -30,9 +30,7 @@
             <input type="hidden" id="tlds" name="tlds">
           </div><!-- /.input-group-btn -->
         </div><!-- /.input-group -->
-        <hr>
       </div><!-- /.form-inputs -->
     </fieldset>
-    <button type="submit" class="btn btn-primary">Search</button>
   </form>
 </div><!-- /.row -->
