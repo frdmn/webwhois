@@ -33,4 +33,31 @@
       </div><!-- /.form-inputs -->
     </fieldset>
   </form>
+  <hr>
+  <table class="table lookup-results">
+    <thead>
+      <tr>
+        <th class="col-md-1">#</th>
+        <th class="col-md-9">Domain</th>
+        <th class="col-md-2">Status</th>
+      </tr>
+    </thead>
+    <!-- <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td>Mark</td>
+        <td>Otto</td>
+      </tr>
+      <tr>
+        <th scope="row">2</th>
+        <td>Jacob</td>
+        <td>Thornton</td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td>Larry</td>
+        <td>the Bird</td>
+     </tr>
+    </tbody> -->
+  </table>
 </div><!-- /.row -->

@@ -38,11 +38,20 @@ $(function() {
    * Hide the TLD/package form (dropdown)
    * @return {Boolean} true
    */
-  var hideMultiLookupForm = function(){
-    $('form').removeClass('multi').addClass('single');
-    $('#tld-package').hide();
-    $('#dot').hide();
-    return true;
+  var toggleMultiLookupForm = function(state){
+    if (state === 'show') {
+      $('form').removeClass('single').addClass('multi');
+      $('#tld-package').show();
+      $('#dot').show();
+      return true;
+    } else if (state === 'hide') {
+      $('form').removeClass('multi').addClass('single');
+      $('#tld-package').hide();
+      $('#dot').hide();
+      return true;
+    } else {
+      return false;
+    }
   }
 
   /**
@@ -53,6 +62,26 @@ $(function() {
     $('form').removeClass('single').addClass('multi');
     $('#tld-package').show();
     $('#dot').show();
+    return true;
+  }
+
+  /**
+   * Function to lookup a single domain
+   * name via GET /api/lookup/single/{domain}
+   * @return {Boolean} true
+   */
+  var submitSingleLookup = function(){
+    console.log('single');
+    return true;
+  }
+
+  /**
+   * Function to lookup a multiple domains (TLDs)
+   * via POST /api/lookup/mutli
+   * @return {Boolean} true
+   */
+  var submitMultiLookup = function(){
+    console.log('multi');
     return true;
   }
 
@@ -68,8 +97,26 @@ $(function() {
       $('.submit').hide();
       return true;
     } else if (state === 'hide') {
-      $('.spinner').show();
-      $('.submit').hide();
+      $('.spinner').hide();
+      $('.submit').show();
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  /**
+   * Toggle (show and hide) the lookup
+   * results table
+   * @param  {String} state "hide" or "show"
+   * @return {Boolean}
+   */
+  var hideResultsTable = function (state){
+    if (state === 'show') {
+      $('.lookup-results').show();
+      return true;
+    } else if (state === 'hide') {
+      $('.lookup-results').hide();
       return true;
     } else {
       return false;
@@ -82,6 +129,24 @@ $(function() {
     var defaultTlds = $('#dropdownmenu > li').first().data('tlds');
     $('#tlds').val(getDefaultSelectionTlds(config));
     $('#tld-display').text(config.general['default-selection']);
+
+    // Hide loading spinner on page load
+    toggleLoadingSpinner('hide');
+    hideResultsTable('hide');
+  });
+
+  // Request lookup, when single form is active
+  $('.row').on('click', 'form.single button.submit', function(e){
+    e.preventDefault();
+    toggleLoadingSpinner('show');
+    submitSingleLookup();
+  });
+
+  // Request lookup, when multi form is active
+  $('.row').on('click', 'form.multi button.submit', function(e){
+    e.preventDefault();
+    toggleLoadingSpinner('show');
+    submitMultiLookup();
   });
 
   // Listen on each keypress in the domain input
@@ -90,9 +155,9 @@ $(function() {
 
     // Check if it contains a dot
     if (input.indexOf('.') > -1) {
-      hideMultiLookupForm();
+      toggleMultiLookupForm('hide');
     } else {
-      showMultiLookupForm();
+      toggleMultiLookupForm('show');
     }
   });
 
