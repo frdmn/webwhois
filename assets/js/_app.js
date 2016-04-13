@@ -56,6 +56,26 @@ $(function() {
     return true;
   }
 
+  /**
+   * Toggle (hide and show) the spinning loading
+   * wheel instead of the submit button
+   * @param  {String} state "hide" or "show"
+   * @return {Boolean}
+   */
+  var toggleLoadingSpinner = function(state){
+    if (state === 'show') {
+      $('.spinner').show();
+      $('.submit').hide();
+      return true;
+    } else if (state === 'hide') {
+      $('.spinner').show();
+      $('.submit').hide();
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   // Make sure to load config file
   loadConfigFile(function(config){
     // Insert the first domain package in the hidden input

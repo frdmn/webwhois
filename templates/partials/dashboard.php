@@ -7,7 +7,7 @@
   <form method="post" class="multi">
     <fieldset>
       <!-- Form Name -->
-      <legend>Domain lookup</legend>
+      <legend>Domain lookup <button class="btn btn-xs btn-primary pull-right submit">Lookup</button><img class="spinner pull-right" src="assets/icons/spinner.svg" width="24" height="24"></legend>
 
       <div class="form-inputs">
         <div class="input-group">
