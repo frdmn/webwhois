@@ -35,8 +35,9 @@ $(function() {
   }
 
   /**
-   * Hide the TLD/package form (dropdown)
-   * @return {Boolean} true
+   * Toggle the TLD/package form (dropdown)
+   * @param  {String} state "hide" or "show"
+   * @return {Boolean}
    */
   var toggleMultiLookupForm = function(state){
     if (state === 'show') {
@@ -52,37 +53,6 @@ $(function() {
     } else {
       return false;
     }
-  }
-
-  /**
-   * Show the TLD/package form (dropdown)
-   * @return {Boolean} true
-   */
-  var showMultiLookupForm = function(){
-    $('form').removeClass('single').addClass('multi');
-    $('#tld-package').show();
-    $('#dot').show();
-    return true;
-  }
-
-  /**
-   * Function to lookup a single domain
-   * name via GET /api/lookup/single/{domain}
-   * @return {Boolean} true
-   */
-  var submitSingleLookup = function(){
-    console.log('single');
-    return true;
-  }
-
-  /**
-   * Function to lookup a multiple domains (TLDs)
-   * via POST /api/lookup/mutli
-   * @return {Boolean} true
-   */
-  var submitMultiLookup = function(){
-    console.log('multi');
-    return true;
   }
 
   /**
@@ -111,7 +81,7 @@ $(function() {
    * @param  {String} state "hide" or "show"
    * @return {Boolean}
    */
-  var hideResultsTable = function (state){
+  var toggleResultsTable = function (state){
     if (state === 'show') {
       $('.lookup-results').show();
       return true;
@@ -123,6 +93,26 @@ $(function() {
     }
   }
 
+  /**
+   * Function to lookup a single domain
+   * name via GET /api/lookup/single/{domain}
+   * @return {Boolean} true
+   */
+  var submitSingleLookup = function(){
+    console.log('single');
+    return true;
+  }
+
+  /**
+   * Function to lookup a multiple domains (TLDs)
+   * via POST /api/lookup/mutli
+   * @return {Boolean} true
+   */
+  var submitMultiLookup = function(){
+    console.log('multi');
+    return true;
+  }
+
   // Make sure to load config file
   loadConfigFile(function(config){
     // Insert the first domain package in the hidden input
@@ -132,7 +122,7 @@ $(function() {
 
     // Hide loading spinner on page load
     toggleLoadingSpinner('hide');
-    hideResultsTable('hide');
+    toggleResultsTable('hide');
   });
 
   // Request lookup, when single form is active
