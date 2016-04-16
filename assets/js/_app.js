@@ -120,6 +120,8 @@ $(function() {
       if (data[domain].status === 'success') {
         // Append new table <tr> in htmlData
         htmlData += '<tr><th scope="row">' + domain + '</th><td>' + data[domain].registered + '</td></tr>';
+      } else {
+        console.log('Error', data[domain])
       }
     }
 
