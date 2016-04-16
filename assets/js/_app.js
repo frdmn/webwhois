@@ -100,7 +100,14 @@ $(function() {
    */
   var submitSingleLookup = function(callback){
     var domain = $('#your-domain').val();
+
+    toggleResultsTable('hide');
+    toggleLoadingSpinner('show');
+
     $.get('api/lookup/single/' + domain, function(data){
+      toggleResultsTable('show');
+      toggleLoadingSpinner('hide');
+
       return callback(data);
     });
   }
@@ -158,14 +165,10 @@ $(function() {
   // Request lookup, when single form is active
   $('.row').on('click', 'form.single button.submit', function(e){
     e.preventDefault();
-    toggleResultsTable('hide');
-    toggleLoadingSpinner('show');
     submitSingleLookup(function(cb){
       if (cb.status === 'success') {
         var result = cb.data;
         populateResultTable(result);
-        toggleResultsTable('show');
-        toggleLoadingSpinner('hide');
       } else {
         displayErrorMessage(cb.status.message);
       }
