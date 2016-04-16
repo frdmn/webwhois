@@ -132,7 +132,26 @@ $(function() {
    * @return {Object} jQuery object
    */
   var displayErrorMessage = function(msg){
-    return $('div.error-container').html('<div class="alert alert-danger" role="alert"><strong>Error</strong>: ' + msg + ' </div>');
+    $('div.error-container').html('<div class="alert alert-danger" role="alert"><strong>Error</strong>: ' + msg + ' </div>');
+
+    return toggleErrorContainer('show');
+  }
+
+  /**
+   * Toggle error container
+   * @param  {String} state "hide" or "show"
+   * @return {Boolean}
+   */
+  var toggleErrorContainer = function (state){
+    if (state === 'show') {
+      $('.error-container').show();
+      return true;
+    } else if (state === 'hide') {
+      $('.error-container').hide();
+      return true;
+    } else {
+      return false;
+    }
   }
 
   // Make sure to load config file
@@ -148,11 +167,9 @@ $(function() {
 
   // Request lookup, when single form is active
   $('.row').on('click', 'form.single .submit', function(e){
-    // Prevent form default action
-    e.preventDefault();
-
-    // Hide lookup results table
+    // Hide lookup results table and error container
     toggleResultsTable('hide');
+    toggleErrorContainer('hide');
 
     // Create ladda (loading spinner) instance and start spinning
     var ladda = Ladda.create(this);
@@ -168,7 +185,7 @@ $(function() {
         ladda.stop();
       } else {
         // Display possible errors
-        displayErrorMessage(cb.status.message);
+        displayErrorMessage(cb.message);
 
         // Stop loading spinner
         ladda.stop();
@@ -178,11 +195,9 @@ $(function() {
 
   // Request lookup, when multi form is active
   $('.row').on('click', 'form.multi .submit', function(e){
-    // Prevent form default action
-    e.preventDefault();
-
-    // Hide lookup results table
+    // Hide lookup results table and error container
     toggleResultsTable('hide');
+    toggleErrorContainer('hide');
 
     // Create ladda (loading spinner) instance and start spinning
     var ladda = Ladda.create(this);
@@ -198,7 +213,7 @@ $(function() {
         ladda.stop();
       } else {
         // Display possible errors
-        displayErrorMessage(cb.status.message);
+        displayErrorMessage(cb.message);
 
         // Stop loading spinner
         ladda.stop();
@@ -215,6 +230,14 @@ $(function() {
       toggleMultiLookupForm('hide');
     } else {
       toggleMultiLookupForm('show');
+    }
+  }).keydown(function(event){
+    if(event.keyCode == 13) {
+      // Prevent form default action
+      event.preventDefault();
+
+      // "Click" submit button
+      $('.submit').click();
     }
   });
 
