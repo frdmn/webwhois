@@ -77,13 +77,15 @@ function routeApiGetLookupSingle($request, $response, $args) {
     $jsonObject['message'] = 'Problem while trying to lookup whois';
   }
 
+  $jsonObject['data'][$domain]['status'] = 'success';
+
   // Evaluate $status
   if ($status === 'yes') {
-    $jsonObject['data']['registered'] = true;
+    $jsonObject['data'][$domain]['registered'] = true;
   } elseif ($status === 'yes') {
-    $jsonObject['data']['registered'] = false;
+    $jsonObject['data'][$domain]['registered'] = false;
   } else {
-    $jsonObject['data']['registered'] = $status;
+    $jsonObject['data'][$domain]['registered'] = $status;
   }
 
   return json_encode($jsonObject);
