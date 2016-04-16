@@ -62,28 +62,6 @@ $(function() {
   }
 
   /**
-   * Toggle (hide and show) the spinning loading
-   * wheel instead of the submit button
-   * @param  {String} state "hide" or "show"
-   * @return {Boolean}
-   */
-  var toggleLoadingSpinner = function(state){
-    if (state === 'show') {
-      // Show loading spinner and hide submit button
-      $('.spinner').show();
-      $('.submit').hide();
-      return true;
-    } else if (state === 'hide') {
-      // Hide loading spinner and show submit button
-      $('.spinner').hide();
-      $('.submit').show();
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  /**
    * Toggle (show and hide) the lookup
    * results table
    * @param  {String} state "hide" or "show"
@@ -165,54 +143,65 @@ $(function() {
     $('#tld-display').text(config.general['default-selection']);
 
     // Hide loading spinner on page load
-    toggleLoadingSpinner('hide');
     toggleResultsTable('hide');
   });
 
   // Request lookup, when single form is active
-  $('.row').on('click', 'form.single button.submit', function(e){
+  $('.row').on('click', 'form.single .submit', function(e){
     // Prevent form default action
     e.preventDefault();
 
-    // Hide lookup results table and show loading spinner
+    // Hide lookup results table
     toggleResultsTable('hide');
-    toggleLoadingSpinner('show');
+
+    // Create ladda (loading spinner) instance and start spinning
+    var ladda = Ladda.create(this);
+    ladda.start();
 
     submitSingleLookup(function(cb){
       if (cb.status === 'success') {
         // Populate result table with API response data
         populateResultTable(cb.data);
 
-        // Show lookup results table and hide loading spinner
+        // Show lookup results table and stop loading spinner
         toggleResultsTable('show');
-        toggleLoadingSpinner('hide');
+        ladda.stop();
       } else {
         // Display possible errors
         displayErrorMessage(cb.status.message);
+
+        // Stop loading spinner
+        ladda.stop();
       }
     });
   });
 
   // Request lookup, when multi form is active
-  $('.row').on('click', 'form.multi button.submit', function(e){
+  $('.row').on('click', 'form.multi .submit', function(e){
     // Prevent form default action
     e.preventDefault();
 
-    // Hide lookup results table and show loading spinner
+    // Hide lookup results table
     toggleResultsTable('hide');
-    toggleLoadingSpinner('show');
+
+    // Create ladda (loading spinner) instance and start spinning
+    var ladda = Ladda.create(this);
+    ladda.start();
 
     submitMultiLookup(function(cb){
       if (cb.status === 'success') {
         // Populate result table with API response data
         populateResultTable(cb.data);
 
-        // Show lookup results table and hide loading spinner
+        // Show lookup results table and stop loading spinner
         toggleResultsTable('show');
-        toggleLoadingSpinner('hide');
+        ladda.stop();
       } else {
         // Display possible errors
         displayErrorMessage(cb.status.message);
+
+        // Stop loading spinner
+        ladda.stop();
       }
     });
   });

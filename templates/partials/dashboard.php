@@ -9,7 +9,8 @@
   <form method="post" class="multi">
     <fieldset>
       <!-- Form Name -->
-      <legend>Domain lookup <button class="btn btn-xs btn-primary pull-right submit">Lookup</button><img class="spinner pull-right" src="assets/icons/spinner.svg" width="24" height="24"></legend>
+
+      <legend>Domain lookup <a href="#" class="btn btn-primary btn-xs pull-right submit ladda-button" data-style="expand-right" data-size="l"><span class="ladda-label">Lookup</span></a></legend>
 
       <div class="form-inputs">
         <div class="input-group">
