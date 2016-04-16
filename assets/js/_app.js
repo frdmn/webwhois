@@ -106,6 +106,16 @@ $(function() {
   }
 
   /**
+   * Function to lookup a multiple domains (TLDs)
+   * via POST /api/lookup/mutli
+   * @return {Boolean} true
+   */
+  var submitMultiLookup = function(){
+    console.log('multi');
+    return true;
+  }
+
+ /**
    * Fill lookup results in <table>
    * @param  {Object} data result data
    * @return {Object} jQuery object
@@ -125,13 +135,12 @@ $(function() {
   }
 
   /**
-   * Function to lookup a multiple domains (TLDs)
-   * via POST /api/lookup/mutli
-   * @return {Boolean} true
+   * Display given error message in Bootstrap alert
+   * @param  {String} msg
+   * @return {Object} jQuery object
    */
-  var submitMultiLookup = function(){
-    console.log('multi');
-    return true;
+  var displayErrorMessage = function(msg){
+    return $('div.error-container').html('<div class="alert alert-danger" role="alert"><strong>Error</strong>: ' + msg + ' </div>');
   }
 
   // Make sure to load config file
@@ -158,7 +167,7 @@ $(function() {
         toggleResultsTable('show');
         toggleLoadingSpinner('hide');
       } else {
-        error();
+        displayErrorMessage(cb.status.message);
       }
     });
   });

@@ -4,6 +4,8 @@
 ?>
 
 <div class="row">
+  <div class="error-container">
+  </div>
   <form method="post" class="multi">
     <fieldset>
       <!-- Form Name -->
