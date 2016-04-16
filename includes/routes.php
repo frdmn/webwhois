@@ -119,14 +119,14 @@ function routeApiPostLookupMulti($request, $response, $args) {
   // Check for "domain"
   if (!$postBody['domain'] || empty($postBody['domain'])) {
     $jsonObject['status'] = 'error';
-    $jsonObject['message'] = 'Couldn\'t find \'domain\' parameter';
+    $jsonObject['message'] = 'Couldn\'t find "domain" parameter';
     return json_encode($jsonObject);
   }
 
   // and for "tlds"
   if (!$postBody['tlds'] || empty($postBody['tlds'])) {
     $jsonObject['status'] = 'error';
-    $jsonObject['message'] = 'Couldn\'t find \'tlds\' parameter';
+    $jsonObject['message'] = 'Couldn\'t find "tlds" parameter';
     return json_encode($jsonObject);
   }
 
