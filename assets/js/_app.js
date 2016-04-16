@@ -238,8 +238,12 @@ $(function() {
       // Prevent form default action
       event.preventDefault();
 
-      // "Click" submit button
-      $('.submit').click();
+      // Apparently, $.click still works on <a> with Bootstrap's 'disabled' class,
+      // so we have do double check here, if someone hits enter (which triggers $.click)
+      if ($('#your-domain').val().length !== 0) {
+        // "Click" submit button
+        $('.submit').click();
+      }
     }
   });
 
@@ -252,4 +256,15 @@ $(function() {
     $('#tld-display').text(selectedDisplayName);
     $('#tlds').val(selectedTlds);
   });
+
+  // Disable button
+  $('.submit').addClass('disabled');
+  // Enable if "your-domain" is not empty
+  $('#your-domain').keyup(function(){
+    if($(this).val().length !=0){
+      $('.submit').removeClass('disabled');
+    } else {
+      $('.submit').addClass('disabled');
+    }
+  })
 });
