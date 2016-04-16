@@ -8,6 +8,55 @@ Simple, Lightweight and customizable domain lookup/whois system, which makes use
 
 Please take a look at the [API.md](API.md) Markdown file for a detailed API documentation.
 
+## Configuration
+
+```json
+{
+  "general": {
+    "title": "Whois System",
+    "description": "Example company's domain lookup tool.",
+    "debug": false,
+    "default-selection": "CNOBI"
+  },
+  "tldpackages": {
+    "CNOBI": {
+      "tlds": [
+        "com",
+        "net",
+        "org",
+        "biz",
+        "info"
+      ]
+    },
+    "TLDs in sale": {
+      "tlds": [
+        "academy",
+        "accountant",
+        "accountants",
+        "active",
+        "actor"
+      ]
+    }
+  },
+  "tlds": [
+    "academy",
+    "accountant",
+    "accountants",
+    "active",
+    "actor",
+    "biz",
+    "com",
+    "de",
+    "info",
+    "net",
+    "org"
+  ],
+  "whois-server": {
+    "de": "whois.denic.de"
+  }
+}
+```
+
 ## Installation
 
 1. Make sure you've installed all requirements:  
