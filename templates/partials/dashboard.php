@@ -40,7 +40,7 @@
     <thead>
       <tr>
         <th class="col-md-10">Domain</th>
-        <th class="col-md-2">Status</th>
+        <th class="col-md-2">Registered</th>
       </tr>
     </thead>
     <tbody></tbody>
