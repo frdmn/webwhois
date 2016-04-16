@@ -57,6 +57,7 @@ $app->get('/api', 'routeApiOverview');
 $app->get('/api/tlds', 'routeApiGetTlds');
 $app->get('/api/lookup/single/{domain}', 'routeApiGetLookupSingle');
 $app->post('/api/lookup/multi', 'routeApiPostLookupMulti');
+$app->get('/api/whois/{domain}', 'routeApiGetWhois');
 
 // Run application
 $app->run();

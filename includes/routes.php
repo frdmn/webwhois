@@ -30,9 +30,10 @@ function routeApiOverview() {
   $routes = array(
     'GET /api' => 'This API overview',
     'GET /api/tlds' => 'List all available TLDs',
-    'GET /api/lookup/single/{domain}' => 'Whois a single domain',
-    'POST /api/lookup/multi' => 'Whois multiple domain TLDs'
-    );
+    'GET /api/lookup/single/{domain}' => 'Check availablity of a single domain',
+    'POST /api/lookup/multi' => 'Check availablity of multiple domain (TLDs)',
+    'GET /api/whois/{domain}' => 'Whois a single domain'
+  );
 
   $jsonObject['data'] = $routes;
 
@@ -153,6 +154,34 @@ function routeApiPostLookupMulti($request, $response, $args) {
 
   // Push results array into "data" JSON
   $jsonObject['data'] = $results;
+
+  return json_encode($jsonObject);
+}
+
+/**
+ * Route - "GET /api/whois/:domain"
+ *
+ * Whois a single domain
+ * @param  {ServerRequestInterface} $request
+ * @param  {ResponseInterface} $response
+ * @param  {Array} $args
+ * @return {String} JSON response
+ */
+function routeApiGetWhois($request, $response, $args) {
+  global $jsonObject;
+
+  // Parse domain from request path
+  $domain = $args['domain'];
+  // Check if domain is registered
+  $whoisData = runWhoisLookup($domain);
+
+  // Make sure there was no problem during the lookup
+  if (!$whoisData) {
+    $jsonObject['status'] = 'error';
+    $jsonObject['message'] = 'Problem while trying to whois domain';
+  }
+
+  $jsonObject['data'] = $whoisData;
 
   return json_encode($jsonObject);
 }
