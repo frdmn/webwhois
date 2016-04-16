@@ -23,9 +23,21 @@ function getIntegerIndexOfObjectKey($object, $needle){
  * @return {Object|false}   Whois results
  */
 function runWhoisLookup($domain){
-  $whois = new Whois();
-  // $whois->useServer('academy','whois.autodns3.de');
+  global $config;
 
+  // Split input domain by domain and TLD
+  $domainParts = explode('.', $domain);
+  $tld = $domainParts[1];
+
+  // Create new phpwhois instance
+  $whois = new Whois();
+
+  // Check if custom whois server is set in config
+  if ($config->{'whois-server'}->$tld) {
+    $whois->useServer($tld, $config->{'whois-server'}->$tld);
+  }
+
+  // Store lookup results
   $result = $whois->lookup($domain);
 
   if ($result) {
