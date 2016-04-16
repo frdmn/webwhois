@@ -76,6 +76,7 @@ function routeApiGetLookupSingle($request, $response, $args) {
   if (!$status) {
     $jsonObject['status'] = 'error';
     $jsonObject['message'] = 'Problem while trying to lookup whois';
+    return json_encode($jsonObject);
   }
 
   $jsonObject['data'][$domain]['status'] = 'success';
@@ -108,15 +109,17 @@ function routeApiPostLookupMulti($request, $response, $args) {
   $postBody = $request->getParsedBody();
 
   // Check for "domain"
-  if (!$postBody['domain']) {
+  if (!$postBody['domain'] || empty($postBody['domain'])) {
     $jsonObject['status'] = 'error';
     $jsonObject['message'] = 'Couldn\'t find \'domain\' parameter';
+    return json_encode($jsonObject);
   }
 
   // and for "tlds"
-  if (!$postBody['tlds']) {
+  if (!$postBody['tlds'] || empty($postBody['tlds'])) {
     $jsonObject['status'] = 'error';
     $jsonObject['message'] = 'Couldn\'t find \'tlds\' parameter';
+    return json_encode($jsonObject);
   }
 
   // Split by ","
