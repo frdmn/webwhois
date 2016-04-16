@@ -72,6 +72,14 @@ function routeApiGetLookupSingle($request, $response, $args) {
   // Check if domain is registered
   $status = checkIfRegistered($domain);
 
+  $domainParts = explode('.', $domain);
+
+  if (count($domainParts) !== 2 || empty($domainParts[0]) || empty($domainParts[1]) ) {
+    $jsonObject['status'] = 'error';
+    $jsonObject['message'] = 'Invalid domain name';
+    return json_encode($jsonObject);
+  }
+
   // Make sure there was no problem during the lookup
   if (!$status) {
     $jsonObject['status'] = 'error';
