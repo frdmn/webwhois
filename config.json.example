@@ -1,6 +1,7 @@
 {
   "general": {
     "title": "Whois System",
+    "description": "Lightweight and customizable domain lookup/whois system.",
     "debug": false,
     "default-selection": "New gTLDs"
   },

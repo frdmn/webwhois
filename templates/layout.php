@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="iWelt Whois">
+    <meta name="description" content="<?= $config->general->description ?>">
     <meta name="author" content="Jonas Friedmann <j@frd.mn>">
 
     <title><?= $config->general->title ?> - <?= $this->e($title) ?></title>
