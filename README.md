@@ -122,7 +122,7 @@ Response:
     "data": {
         "rawdata": [
             "Access to CCTLD WHOIS information is provided to assist persons in \r",
-            "...ich"
+            "..."
         ],
         "regrinfo": {
             "domain": {
