@@ -41,13 +41,19 @@ $(function() {
    */
   var toggleMultiLookupForm = function(state){
     if (state === 'show') {
+      // Remove 'single', add 'multi' CSS class
       $('form').removeClass('single').addClass('multi');
+      // Show tld-package dropdown
       $('#tld-package').show();
+      // Show '.' input group addon
       $('#dot').show();
       return true;
     } else if (state === 'hide') {
+      // Remove 'multi', add 'single' CSS class
       $('form').removeClass('multi').addClass('single');
+      // Hide tld-package dropdown
       $('#tld-package').hide();
+      // Hide '.' input group addon
       $('#dot').hide();
       return true;
     } else {
@@ -63,10 +69,12 @@ $(function() {
    */
   var toggleLoadingSpinner = function(state){
     if (state === 'show') {
+      // Show loading spinner and hide submit button
       $('.spinner').show();
       $('.submit').hide();
       return true;
     } else if (state === 'hide') {
+      // Hide loading spinner and show submit button
       $('.spinner').hide();
       $('.submit').show();
       return true;
@@ -101,13 +109,7 @@ $(function() {
   var submitSingleLookup = function(callback){
     var domain = $('#your-domain').val();
 
-    toggleResultsTable('hide');
-    toggleLoadingSpinner('show');
-
     $.get('api/lookup/single/' + domain, function(data){
-      toggleResultsTable('show');
-      toggleLoadingSpinner('hide');
-
       return callback(data);
     });
   }
@@ -121,13 +123,7 @@ $(function() {
     var domain = $('#your-domain').val(),
         tlds = $('input#tlds').val();
 
-    toggleResultsTable('hide');
-    toggleLoadingSpinner('show');
-
     $.post( 'api/lookup/multi', { domain: domain, tlds: tlds}, function( data ) {
-      toggleResultsTable('show');
-      toggleLoadingSpinner('hide');
-
       return callback(data);
     });
  }
@@ -138,14 +134,15 @@ $(function() {
    * @return {Object} jQuery object
    */
   var populateResultTable = function(data){
-    var htmlData = {},
-        i = 0;
+    var htmlData = {};
 
+    // For each domain lookup result
     for (var domain in data) {
+      // Check for success
       if (data[domain].status === 'success') {
+        // Append new table <tr> in htmlData
         htmlData += '<tr><th scope="row">' + domain + '</th><td>' + data[domain].registered + '</td></tr>';
       }
-      i++;
     }
 
     return $('table.lookup-results tbody').html(htmlData);
@@ -174,11 +171,23 @@ $(function() {
 
   // Request lookup, when single form is active
   $('.row').on('click', 'form.single button.submit', function(e){
+    // Prevent form default action
     e.preventDefault();
+
+    // Hide lookup results table and show loading spinner
+    toggleResultsTable('hide');
+    toggleLoadingSpinner('show');
+
     submitSingleLookup(function(cb){
       if (cb.status === 'success') {
+        // Populate result table with API response data
         populateResultTable(cb.data);
+
+        // Show lookup results table and hide loading spinner
+        toggleResultsTable('show');
+        toggleLoadingSpinner('hide');
       } else {
+        // Display possible errors
         displayErrorMessage(cb.status.message);
       }
     });
@@ -186,11 +195,23 @@ $(function() {
 
   // Request lookup, when multi form is active
   $('.row').on('click', 'form.multi button.submit', function(e){
+    // Prevent form default action
     e.preventDefault();
+
+    // Hide lookup results table and show loading spinner
+    toggleResultsTable('hide');
+    toggleLoadingSpinner('show');
+
     submitMultiLookup(function(cb){
       if (cb.status === 'success') {
+        // Populate result table with API response data
         populateResultTable(cb.data);
+
+        // Show lookup results table and hide loading spinner
+        toggleResultsTable('show');
+        toggleLoadingSpinner('hide');
       } else {
+        // Display possible errors
         displayErrorMessage(cb.status.message);
       }
     });
