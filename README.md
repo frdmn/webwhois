@@ -1,6 +1,6 @@
 # webwhois [![CircleCI build status](https://img.shields.io/circleci/project/frdmn/webwhois.svg)](https://circleci.com/gh/frdmn/webwhois) [![devDependency status](https://david-dm.org/frdmn/webwhois/dev-status.svg)](https://david-dm.org/frdmn/webwhois#info=devDependencies)
 
-Simple, Lightweight and customizable domain lookup/whois system, which makes use of @[phpWhois/phpWhois](https://github.com/phpWhois/phpWhois) library. Comes with REST support and can be used embeddable or as standalone frontend
+Simple, Lightweight and customizable domain lookup/whois system, which makes use of the @[phpWhois/phpWhois](https://github.com/phpWhois/phpWhois) library. Comes with REST support and can be embedded or used as standalone frontend.
 
 ![](http://up.frd.mn/cccR9UByHH.png)
 
