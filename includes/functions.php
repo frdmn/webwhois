@@ -49,3 +49,11 @@ function checkIfRegistered($domain){
     return false;
   }
 }
+
+function isTldAllowed($config, $tld){
+  if (in_array($tld, $config->tlds)){
+    return true;
+  } else {
+    return false;
+  }
+}

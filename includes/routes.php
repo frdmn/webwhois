@@ -65,13 +65,10 @@ function routeApiGetTlds() {
  * @return {String} JSON response
  */
 function routeApiGetLookupSingle($request, $response, $args) {
-  global $jsonObject;
+  global $jsonObject, $config;
 
   // Parse domain from request path
   $domain = $args['domain'];
-  // Check if domain is registered
-  $status = checkIfRegistered($domain);
-
   $domainParts = explode('.', $domain);
 
   if (count($domainParts) !== 2 || empty($domainParts[0]) || empty($domainParts[1]) ) {
@@ -79,6 +76,16 @@ function routeApiGetLookupSingle($request, $response, $args) {
     $jsonObject['message'] = 'Invalid domain name';
     return json_encode($jsonObject);
   }
+
+  // Check if TLD is allowed
+  if (!isTldAllowed($config, $domainParts[1])) {
+    $jsonObject['status'] = 'error';
+    $jsonObject['message'] = 'Requested TLD is not allowed for lookups';
+    return json_encode($jsonObject);
+  }
+
+  // Check if domain is registered
+  $status = checkIfRegistered($domain);
 
   // Make sure there was no problem during the lookup
   if (!$status) {
@@ -92,7 +99,7 @@ function routeApiGetLookupSingle($request, $response, $args) {
   // Evaluate $status
   if ($status === 'yes') {
     $jsonObject['data'][$domain]['registered'] = true;
-  } elseif ($status === 'yes') {
+  } elseif ($status === 'no') {
     $jsonObject['data'][$domain]['registered'] = false;
   } else {
     $jsonObject['data'][$domain]['registered'] = $status;
@@ -111,7 +118,7 @@ function routeApiGetLookupSingle($request, $response, $args) {
  * @return {String} JSON response
  */
 function routeApiPostLookupMulti($request, $response, $args) {
-  global $jsonObject;
+  global $jsonObject, $config;
 
   // Parse POST parameter
   $postBody = $request->getParsedBody();
@@ -136,11 +143,21 @@ function routeApiPostLookupMulti($request, $response, $args) {
 
   // Loop through each given TLD
   foreach ($tlds as $tld) {
+    $tldJsonObject = array();
+
     // Construct full domain with TLD suffix
     $domain = $postBody['domain'].'.'.$tld;
+
+    // Check if TLD is allowed
+    if (!isTldAllowed($config, $tld)) {
+      $tldJsonObject['status'] = 'error';
+      $tldJsonObject['message'] = 'Requested TLD is not allowed for lookups';
+      $results[$domain] = $tldJsonObject;
+      continue;
+    }
+
     // Check if domain is registered
     $status = checkIfRegistered($domain);
-    $tldJsonObject = array();
 
     // Make sure there was no problem during the lookup
     if (!$status) {
@@ -153,7 +170,7 @@ function routeApiPostLookupMulti($request, $response, $args) {
     // Evaluate $status
     if ($status === 'yes') {
       $tldJsonObject['registered'] = true;
-    } elseif ($status === 'yes') {
+    } elseif ($status === 'no') {
       $tldJsonObject['registered'] = false;
     } else {
       $tldJsonObject['registered'] = $status;
@@ -179,12 +196,18 @@ function routeApiPostLookupMulti($request, $response, $args) {
  * @return {String} JSON response
  */
 function routeApiGetWhois($request, $response, $args) {
-  global $jsonObject;
+  global $jsonObject, $config;
 
   // Parse domain from request path
   $domain = $args['domain'];
-
   $domainParts = explode('.', $domain);
+
+  // Check if TLD is allowed
+  if (!isTldAllowed($config, $domainParts[1])) {
+    $jsonObject['status'] = 'error';
+    $jsonObject['message'] = 'Requested TLD is not allowed for lookups';
+    return json_encode($jsonObject);
+  }
 
   if (count($domainParts) !== 2 || empty($domainParts[0]) || empty($domainParts[1]) ) {
     $jsonObject['status'] = 'error';
