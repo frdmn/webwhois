@@ -117,10 +117,20 @@ $(function() {
    * via POST /api/lookup/mutli
    * @return {Boolean} true
    */
-  var submitMultiLookup = function(){
-    console.log('multi');
-    return true;
-  }
+  var submitMultiLookup = function(callback){
+    var domain = $('#your-domain').val(),
+        tlds = $('input#tlds').val();
+
+    toggleResultsTable('hide');
+    toggleLoadingSpinner('show');
+
+    $.post( 'api/lookup/multi', { domain: domain, tlds: tlds}, function( data ) {
+      toggleResultsTable('show');
+      toggleLoadingSpinner('hide');
+
+      return callback(data);
+    });
+ }
 
  /**
    * Fill lookup results in <table>
@@ -167,8 +177,7 @@ $(function() {
     e.preventDefault();
     submitSingleLookup(function(cb){
       if (cb.status === 'success') {
-        var result = cb.data;
-        populateResultTable(result);
+        populateResultTable(cb.data);
       } else {
         displayErrorMessage(cb.status.message);
       }
@@ -178,8 +187,13 @@ $(function() {
   // Request lookup, when multi form is active
   $('.row').on('click', 'form.multi button.submit', function(e){
     e.preventDefault();
-    toggleLoadingSpinner('show');
-    submitMultiLookup();
+    submitMultiLookup(function(cb){
+      if (cb.status === 'success') {
+        populateResultTable(cb.data);
+      } else {
+        displayErrorMessage(cb.status.message);
+      }
+    });
   });
 
   // Listen on each keypress in the domain input
@@ -197,8 +211,10 @@ $(function() {
   // Update fake "select" when user clicks on package in dropdown menu
   $('#dropdownmenu > li').click(function(e){
     e.preventDefault();
-    var selected = $(this).text();
-    $('#tlds').val(selected);
-    $('#tld-display').text(selected);
+
+    var selectedDisplayName = $(this).text();
+    var selectedTlds = $(this).data('tlds');
+    $('#tld-display').text(selectedDisplayName);
+    $('#tlds').val(selectedTlds);
   });
 });
