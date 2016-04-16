@@ -4,13 +4,13 @@
 ?>
 
 <div class="row">
-  <div class="error-container">
-  </div>
   <form method="post" class="multi">
     <fieldset>
       <!-- Form Name -->
 
       <legend>Domain lookup <a href="#" class="btn btn-primary btn-xs pull-right submit ladda-button" data-style="expand-right" data-size="l"><span class="ladda-label">Lookup</span></a></legend>
+
+      <div class="error-container"></div>
 
       <div class="form-inputs">
         <div class="input-group">
