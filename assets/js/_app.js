@@ -98,9 +98,30 @@ $(function() {
    * name via GET /api/lookup/single/{domain}
    * @return {Boolean} true
    */
-  var submitSingleLookup = function(){
-    console.log('single');
-    return true;
+  var submitSingleLookup = function(callback){
+    var domain = $('#your-domain').val();
+    $.get('api/lookup/single/' + domain, function(data){
+      return callback(data);
+    });
+  }
+
+  /**
+   * Fill lookup results in <table>
+   * @param  {Object} data result data
+   * @return {Object} jQuery object
+   */
+  var populateResultTable = function(data){
+    var htmlData = {},
+        i = 0;
+
+    for (var domain in data) {
+      if (data[domain].status === 'success') {
+        htmlData += '<tr><th scope="row">' + domain + '</th><td>' + data[domain].registered + '</td></tr>';
+      }
+      i++;
+    }
+
+    return $('table.lookup-results tbody').html(htmlData);
   }
 
   /**
@@ -128,8 +149,18 @@ $(function() {
   // Request lookup, when single form is active
   $('.row').on('click', 'form.single button.submit', function(e){
     e.preventDefault();
+    toggleResultsTable('hide');
     toggleLoadingSpinner('show');
-    submitSingleLookup();
+    submitSingleLookup(function(cb){
+      if (cb.status === 'success') {
+        var result = cb.data;
+        populateResultTable(result);
+        toggleResultsTable('show');
+        toggleLoadingSpinner('hide');
+      } else {
+        error();
+      }
+    });
   });
 
   // Request lookup, when multi form is active
