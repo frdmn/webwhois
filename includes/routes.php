@@ -183,6 +183,15 @@ function routeApiGetWhois($request, $response, $args) {
 
   // Parse domain from request path
   $domain = $args['domain'];
+
+  $domainParts = explode('.', $domain);
+
+  if (count($domainParts) !== 2 || empty($domainParts[0]) || empty($domainParts[1]) ) {
+    $jsonObject['status'] = 'error';
+    $jsonObject['message'] = 'Invalid domain name';
+    return json_encode($jsonObject);
+  }
+
   // Check if domain is registered
   $whoisData = runWhoisLookup($domain);
 
