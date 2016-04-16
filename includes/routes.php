@@ -68,7 +68,7 @@ function routeApiGetLookupSingle($request, $response, $args) {
   global $jsonObject, $config;
 
   // Parse domain from request path
-  $domain = $args['domain'];
+  $domain = filter_var($args['domain'], FILTER_SANITIZE_STRING);
   $domainParts = explode('.', $domain);
 
   if (count($domainParts) !== 2 || empty($domainParts[0]) || empty($domainParts[1]) ) {
@@ -138,15 +138,26 @@ function routeApiPostLookupMulti($request, $response, $args) {
   }
 
   // Split by ","
-  $tlds = explode(', ', $postBody['tlds']);
+  $tlds = explode(',', str_replace(' ', '', $postBody['tlds']));
   $results = [];
 
   // Loop through each given TLD
   foreach ($tlds as $tld) {
     $tldJsonObject = array();
 
+    $domain = filter_var($postBody['domain'], FILTER_SANITIZE_STRING);
+    $tld = filter_var($tld, FILTER_SANITIZE_STRING);
+
     // Construct full domain with TLD suffix
-    $domain = $postBody['domain'].'.'.$tld;
+    $domain = $domain.'.'.$tld;
+
+    // Check for valid TLD
+    if (!$tld) {
+      $tldJsonObject['status'] = 'error';
+      $tldJsonObject['message'] = 'Invalid TLD';
+      $results[$domain] = $tldJsonObject;
+      continue;
+    }
 
     // Check if TLD is allowed
     if (!isTldAllowed($config, $tld)) {
@@ -199,7 +210,7 @@ function routeApiGetWhois($request, $response, $args) {
   global $jsonObject, $config;
 
   // Parse domain from request path
-  $domain = $args['domain'];
+  $domain = filter_var($args['domain'], FILTER_SANITIZE_STRING);
   $domainParts = explode('.', $domain);
 
   // Check if TLD is allowed
