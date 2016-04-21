@@ -21,7 +21,17 @@ Temporary Items
 .apdisk
 
 #####=== Node ===#####
+*.log
+*.pid
+*.seed
+.lock-wscript
+build/Release
+coverage
+lib-cov
+logs
 node_modules
+npm-debug.log
+pids
 
 #####=== PHP/Composer ===#####
 vendor
