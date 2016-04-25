@@ -254,9 +254,9 @@ router.post('/lookup/multi', function(req, res, next) {
       }
 
       if (data.data === true) {
-        tldResponseObject.registered = true;
-      } else if (data.data === false) {
         tldResponseObject.registered = false;
+      } else if (data.data === false) {
+        tldResponseObject.registered = true;
       };
 
       results[fullDomain] = tldResponseObject;
