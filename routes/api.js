@@ -5,6 +5,7 @@ var whois = require('whois')
 var jsonObject = {
   'status': 'success'
 };
+
 /**
  * Check if specific TLD is allowed via
  * configuration file
@@ -105,7 +106,7 @@ router.get('/', function(req, res, next) {
  * @return {String} JSON response
  */
 router.get('/tlds', function(req, res, next) {
-  var config = req.app.locals.config;
+  var config = req.app.locals.configuration;
 
   jsonObject.data = config.tlds;
 
@@ -122,7 +123,7 @@ router.get('/tlds', function(req, res, next) {
  * @return {String} JSON response
  */
 router.get('/lookup/single/:domain', function(req, res, next) {
-  var config = req.app.locals.config;
+  var config = req.app.locals.configuration;
   var whoisServers = req.app.locals.servers;
 
   // Parse domain from request path
@@ -179,7 +180,7 @@ router.get('/lookup/single/:domain', function(req, res, next) {
  * @return {String} JSON response
  */
 router.get('/whois/:domain', function(req, res, next) {
-  var config = req.app.locals.config;
+  var config = req.app.locals.configuration;
   // Parse domain from request path
   var domain = req.params.domain;
   var domainParts = domain.split('.');
