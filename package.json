@@ -23,7 +23,8 @@
     "express": "~4.13.4",
     "hbs": "~3.1.0",
     "morgan": "~1.6.1",
-    "serve-favicon": "~2.3.0"
+    "serve-favicon": "~2.3.0",
+    "whois": "^2.1.5"
   },
   "devDependencies": {
     "gulp": "^3.9.0",
