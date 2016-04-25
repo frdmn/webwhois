@@ -8,6 +8,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var configuration = require('./config.json')
+var servers = require('./servers.json')
 
 var routeIndex = require('./routes/index');
 var routeApi = require('./routes/api');
@@ -49,6 +50,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 configuration.version = fs.readFileSync('./VERSION', 'utf8');
 app.locals.configuration = configuration;
+app.locals.servers = servers;
 
 app.use('/', routeIndex);
 app.use('/api', routeApi);
