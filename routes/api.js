@@ -160,17 +160,17 @@ router.get('/lookup/single/:domain', function(req, res, next) {
     }
 
     // Create object for result
-    var singleResult = Object.assign({}, jsonObjectTemplate);
+    var tldJsonObject = Object.assign({}, jsonObjectTemplate);
 
     if (data.data === true) {
-      singleResult.registered = false;
+      tldJsonObject.registered = false;
     } else if (data.data === false) {
-      singleResult.registered = true;
+      tldJsonObject.registered = true;
     }
 
     // Put sinlgeResult into jsonObject
     jsonObject.data = {};
-    jsonObject.data[domain] = singleResult;
+    jsonObject.data[domain] = tldJsonObject;
 
     return res.send(jsonObject);
   });
@@ -212,7 +212,7 @@ router.post('/lookup/multi', function(req, res, next) {
   var tldArray = tlds.replace(/\s/g, '').split(',');
 
   async.eachSeries(tldArray, function (tld, callback) {
-    var tldJsonObject = {},
+    var tldJsonObject = Object.assign({}, jsonObjectTemplate),
         fullDomain = domain + '.' + tld;
 
     // Check if TLD is allowed
@@ -234,16 +234,13 @@ router.post('/lookup/multi', function(req, res, next) {
         return;
       }
 
-      // Create object for result
-      var singleResult = Object.assign({}, jsonObjectTemplate);
-
       if (data.data === true) {
-        singleResult.registered = true;
+        tldJsonObject.registered = true;
       } else if (data.data === false) {
-        singleResult.registered = false;
+        tldJsonObject.registered = false;
       };
 
-      results[fullDomain] = singleResult;
+      results[fullDomain] = tldJsonObject;
       callback();
     });
   }, function (err) {
