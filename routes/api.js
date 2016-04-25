@@ -160,13 +160,12 @@ router.get('/lookup/single/:domain', function(req, res, next) {
     }
 
     // Create object for result
-    var singleResult = {};
-    singleResult.success = true;
+    var singleResult = Object.assign({}, jsonObjectTemplate);
 
     if (data.data === true) {
-      singleResult.registered = true;
-    } else if (data.data === false) {
       singleResult.registered = false;
+    } else if (data.data === false) {
+      singleResult.registered = true;
     }
 
     // Put sinlgeResult into jsonObject
@@ -236,8 +235,7 @@ router.post('/lookup/multi', function(req, res, next) {
       }
 
       // Create object for result
-      var singleResult = {};
-      singleResult.success = true;
+      var singleResult = Object.assign({}, jsonObjectTemplate);
 
       if (data.data === true) {
         singleResult.registered = true;
