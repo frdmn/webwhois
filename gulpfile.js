@@ -8,11 +8,11 @@ var $ = require('gulp-load-plugins')();
 // Object with directory paths
 var dirs = {
   bower: './vendor/bower_components',
-  css: './assets/css',
-  fonts: './assets/fonts',
-  images: './assets/images',
-  icons: './assets/icons',
-  js: './assets/js'
+  css: './public/stylesheets',
+  fonts: './public/fonts',
+  images: './public/images',
+  icons: './public/icons',
+  js: './public/javascripts'
 };
 
 // Autoprefixer options

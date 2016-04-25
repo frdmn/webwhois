@@ -1,8 +1,3 @@
-<?php
-  $this->layout('layout', ['title' => 'Dashboard']);
-  global $config;
-?>
-
 <div class="row">
   <form method="post" class="multi">
     <fieldset>
@@ -19,18 +14,18 @@
           <span class="input-group-addon" id="dot">.</span>
           <div class="input-group-btn" id="tld-package">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <span id="tld-display"></span> <span class="caret"></span>
+              <span id="tld-display">{{{config.general.default-selection}}}</span> <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" id="dropdownmenu">
-              <?php foreach ($config->tldpackages as $pkgname => $pkg): ?>
-                <li data-tlds="<?= join(', ', $pkg->tlds) ?>"><a href="#"><?= $this->e($pkgname) ?></a></li>
-              <?php endforeach; ?>
+              {{#each config.tldpackages}}
+                <li data-tlds="{{join this.tlds delimiter=", "}}"><a href="#">{{{@key}}}</a></li>
+              {{/each}}
               <li role="separator" class="divider"></li>
-              <?php foreach ($config->tlds as $index => $tld): ?>
-                <li data-tlds="<?= $this->e($tld) ?>"><a href="#"><?= $this->e($tld) ?></a></li>
-              <?php endforeach; ?>
+              {{#each config.tlds}}
+                <li data-tlds="{{{this}}}"><a href="#">{{{this}}}</a></li>
+              {{/each}}
             </ul><!-- /.dropdown-menu -->
-            <input type="hidden" id="tlds" name="tlds">
+            <input type="hidden" id="tlds" name="tlds" value="{{searchAndJoinTLDsForSelection config config.general.default-selection}}">
           </div><!-- /.input-group-btn -->
         </div><!-- /.input-group -->
       </div><!-- /.form-inputs -->
