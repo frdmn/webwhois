@@ -51,7 +51,7 @@ configuration.version = fs.readFileSync('./VERSION', 'utf8');
 app.locals.configuration = configuration;
 
 app.use('/', routeIndex);
-app.use('/users', routeApi);
+app.use('/api', routeApi);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
