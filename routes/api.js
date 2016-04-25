@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var async = require('async');
 var whois = require('whois')
 
 var jsonObjectTemplate = {
@@ -172,6 +173,83 @@ router.get('/lookup/single/:domain', function(req, res, next) {
     jsonObject.data = {};
     jsonObject.data[domain] = singleResult;
 
+    return res.send(jsonObject);
+  });
+});
+
+/**
+ * Route - "POST /api/lookup/multi"
+ *
+ * Whois multiple domain TLDs
+ * @param req
+ * @param res
+ * @param next
+ * @return {String} JSON response
+ */
+router.post('/lookup/multi', function(req, res, next) {
+  var jsonObject = Object.assign({}, jsonObjectTemplate);
+
+  var config = req.app.locals.configuration;
+  var whoisServers = req.app.locals.servers;
+
+  var domain = req.body.domain,
+      tlds = req.body.tlds,
+      results = {};
+
+  // Check for "domain"
+  if (!domain || domain.length === 0) {
+    jsonObject.status = 'error';
+    jsonObject.message = 'Couldn\'t find "domain" parameter';
+    return res.send(jsonObject);
+  }
+
+  // and for "tlds"
+  if (!tlds || tlds.length === 0) {
+    jsonObject.status = 'error';
+    jsonObject.message = 'Couldn\'t find "tlds" parameter';
+    return res.send(jsonObject);
+  }
+
+  var tldArray = tlds.replace(/\s/g, '').split(',');
+
+  async.eachSeries(tldArray, function (tld, callback) {
+    var tldJsonObject = {},
+        fullDomain = domain + '.' + tld;
+
+    // Check if TLD is allowed
+    if (!isTldAllowed(config, tld)) {
+      tldJsonObject.status = 'error';
+      tldJsonObject.message = 'Requested TLD is not allowed for lookups';
+      results[fullDomain] = tldJsonObject;
+      callback();
+      return;
+    }
+
+    // Check availability of domain
+    checkAvailability(fullDomain, whoisServers, function(data){
+      if (data.status === 'error') {
+        tldJsonObject.status = 'error';
+        tldJsonObject.message = data.message;
+        results[fullDomain] = tldJsonObject;
+        callback();
+        return;
+      }
+
+      // Create object for result
+      var singleResult = {};
+      singleResult.success = true;
+
+      if (data.data === true) {
+        singleResult.registered = true;
+      } else if (data.data === false) {
+        singleResult.registered = false;
+      };
+
+      results[fullDomain] = singleResult;
+      callback();
+    });
+  }, function (err) {
+    jsonObject.data = results;
     return res.send(jsonObject);
   });
 });
