@@ -38,7 +38,7 @@ function isTldAllowed(config, tld){
  * @return {Callback}
  */
 function whoisDomain(domain, callback){
-  whois.lookup(domain, function(err, data) {
+  whois.lookup(domain, {"verbose": true}, function(err, data) {
     if (err) {
       return callback(false);
     }
