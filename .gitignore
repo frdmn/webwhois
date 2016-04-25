@@ -39,8 +39,8 @@ composer.lock
 
 #####=== webwhois ===#####
 .dashbrew
-config.json
-servers.json
+config/config.json
+config/servers.json
 bower_components
 public/stylesheets/*.css
 public/javascripts/modernizr.js

@@ -1,0 +1,44 @@
+{
+  "general": {
+    "title": "Whois System",
+    "description": "Lightweight and customizable domain lookup/whois system.",
+    "debug": false,
+    "default-selection": "New gTLDs"
+  },
+  "tldpackages": {
+    "com / net / org / biz / info": {
+      "tlds": [
+        "com",
+        "net",
+        "org",
+        "biz",
+        "info"
+      ]
+    },
+    "New gTLDs": {
+      "tlds": [
+        "academy",
+        "accountant",
+        "accountants",
+        "active",
+        "actor"
+      ]
+    }
+  },
+  "tlds": [
+    "academy",
+    "accountant",
+    "accountants",
+    "active",
+    "actor",
+    "biz",
+    "com",
+    "de",
+    "info",
+    "net",
+    "org"
+  ],
+  "whois-server": {
+    "de": "whois.denic.de"
+  }
+}
