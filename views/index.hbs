@@ -25,7 +25,7 @@
                 <li data-tlds="{{{this}}}"><a href="#">{{{this}}}</a></li>
               {{/each}}
             </ul><!-- /.dropdown-menu -->
-            <input type="hidden" id="tlds" name="tlds">
+            <input type="hidden" id="tlds" name="tlds" value="{{searchAndJoinTLDsForSelection config config.general.default-selection}}">
           </div><!-- /.input-group-btn -->
         </div><!-- /.input-group -->
       </div><!-- /.form-inputs -->

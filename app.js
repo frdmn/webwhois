@@ -19,6 +19,24 @@ hbs.registerHelper("join", function(context, block) {
   return context.join(block.hash.delimiter);
 });
 
+// "searchAndJoinTLDsForSelection" Handlebars helper
+hbs.registerHelper("searchAndJoinTLDsForSelection", function(config, selection) {
+  // Try to find the "selection" in the packages
+  if (config.tldpackages[selection]) {
+    return config.tldpackages[selection].tlds.join(', ');
+  }
+
+  // Otherwise assume a single TLD is meant
+  if (config.tlds.indexOf(selection) === -1) {
+    return false;
+  } else {
+    var index = config.tlds.indexOf(selection);
+    return config.tlds[index];
+  }
+
+  return false;
+});
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
