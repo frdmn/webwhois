@@ -1,7 +1,8 @@
-var express = require('express');
+var express = require('express'),
+    async = require('async'),
+    whois = require('whois');
+
 var router = express.Router();
-var async = require('async');
-var whois = require('whois')
 
 /**
  * Copy the default response object
@@ -54,8 +55,8 @@ function whoisDomain(domain, callback){
  */
 function checkAvailability(domain, whoisServers, callback){
   // Split domain
-  var domainParts = domain.split('.');
-  var options;
+  var domainParts = domain.split('.'),
+      options;
 
   // Create response object
   // Create new response object from template
@@ -144,12 +145,12 @@ router.get('/lookup/single/:domain', function(req, res, next) {
   var responseObject = createResponseObject();
 
   // Store configuration file from app locals
-  var config = req.app.locals.configuration;
-  var whoisServers = req.app.locals.servers;
+  var config = req.app.locals.configuration,
+      whoisServers = req.app.locals.servers;
 
   // Parse domain from request path
-  var domain = req.params.domain;
-  var domainParts = domain.split('.');
+  var domain = req.params.domain,
+      domainParts = domain.split('.');
 
   // Check if valid domain format
   if (domainParts.length !== 2 || domainParts[0].length < 1 || domainParts[1].length < 1 ) {
@@ -203,13 +204,13 @@ router.post('/lookup/multi', function(req, res, next) {
   var responseObject = createResponseObject();
 
   // Store configuration file and server configuration from app locals
-  var config = req.app.locals.configuration;
-  var whoisServers = req.app.locals.servers;
+  var config = req.app.locals.configuration,
+      whoisServers = req.app.locals.servers,
+      results = {};
 
   // Retrieve POST body parameter
   var domain = req.body.domain,
-      tlds = req.body.tlds,
-      results = {};
+      tlds = req.body.tlds;
 
   // Check for "domain"
   if (!domain || domain.length === 0) {
@@ -284,8 +285,8 @@ router.get('/whois/:domain', function(req, res, next) {
   var config = req.app.locals.configuration;
 
   // Parse domain from request path
-  var domain = req.params.domain;
-  var domainParts = domain.split('.');
+  var domain = req.params.domain,
+      domainParts = domain.split('.');
 
   // Check if valid domain format
   if (domainParts.length !== 2 || domainParts[0].length < 1 || domainParts[1].length < 1 ) {
