@@ -3,9 +3,18 @@ var router = express.Router();
 var async = require('async');
 var whois = require('whois')
 
-var jsonObjectTemplate = {
-  'status': 'success'
-};
+/**
+ * Copy the default response object
+ * and return the clone
+ * @return {Object}
+ */
+function createResponseObject(){
+  var template = {
+    'status': 'success'
+  };
+
+  return Object.assign({}, template);
+}
 
 /**
  * Check if specific TLD is allowed via
@@ -49,8 +58,8 @@ function checkAvailability(domain, whoisServers, callback){
   var options;
 
   // Create response object
-  var responseObject = {};
-  responseObject.status = 'success';
+  // Create new response object from template
+  var responseObject = createResponseObject();
 
   // Load TLD specifc configuration from servers.json
   if (whoisServers[domainParts[1]]){
@@ -87,7 +96,8 @@ function checkAvailability(domain, whoisServers, callback){
  * @return {String} JSON response
  */
 router.get('/', function(req, res, next) {
-  var jsonObject = Object.assign({}, jsonObjectTemplate);
+  // Create new response object from template
+  var responseObject = createResponseObject();
 
   var routes = {
     'GET /api': 'This API overview',
@@ -97,9 +107,9 @@ router.get('/', function(req, res, next) {
     'GET /api/whois/:domain': 'Whois a single domain'
   };
 
-  jsonObject.data = routes;
+  responseObject.data = routes;
 
-  return res.send(jsonObject);
+  return res.send(responseObject);
 });
 
 /**
@@ -109,13 +119,15 @@ router.get('/', function(req, res, next) {
  * @return {String} JSON response
  */
 router.get('/tlds', function(req, res, next) {
-  var jsonObject = Object.assign({}, jsonObjectTemplate);
+  // Create new response object from template
+  var responseObject = createResponseObject();
 
+  // Store configuration file from app locals
   var config = req.app.locals.configuration;
 
-  jsonObject.data = config.tlds;
+  responseObject.data = config.tlds;
 
-  return res.send(jsonObject);
+  return res.send(responseObject);
 });
 
 /**
@@ -128,8 +140,10 @@ router.get('/tlds', function(req, res, next) {
  * @return {String} JSON response
  */
 router.get('/lookup/single/:domain', function(req, res, next) {
-  var jsonObject = Object.assign({}, jsonObjectTemplate);
+  // Create new response object from template
+  var responseObject = createResponseObject();
 
+  // Store configuration file from app locals
   var config = req.app.locals.configuration;
   var whoisServers = req.app.locals.servers;
 
@@ -139,40 +153,40 @@ router.get('/lookup/single/:domain', function(req, res, next) {
 
   // Check if valid domain format
   if (domainParts.length !== 2 || domainParts[0].length < 1 || domainParts[1].length < 1 ) {
-    jsonObject.status = 'error';
-    jsonObject.message = 'Invalid domain name';
-    return res.send(jsonObject);
+    responseObject.status = 'error';
+    responseObject.message = 'Invalid domain name';
+    return res.send(responseObject);
   }
 
   // Check if TLD is allowed
   if (!isTldAllowed(config, domainParts[1])) {
-    jsonObject.status = 'error';
-    jsonObject.message = 'Requested TLD is not allowed for lookups';
-    return res.send(jsonObject);
+    responseObject.status = 'error';
+    responseObject.message = 'Requested TLD is not allowed for lookups';
+    return res.send(responseObject);
   }
 
   // Check availability of domain
   checkAvailability(domain, whoisServers, function(data){
     if (data.status === 'error') {
-      jsonObject.status = 'error';
-      jsonObject.message = data.message;
-      return res.send(jsonObject);
+      responseObject.status = 'error';
+      responseObject.message = data.message;
+      return res.send(responseObject);
     }
 
-    // Create object for result
-    var tldJsonObject = Object.assign({}, jsonObjectTemplate);
+    // Create response object for each domain
+    var tldResponseObject = createResponseObject();
 
     if (data.data === true) {
-      tldJsonObject.registered = false;
+      tldResponseObject.registered = false;
     } else if (data.data === false) {
-      tldJsonObject.registered = true;
+      tldResponseObject.registered = true;
     }
 
-    // Put sinlgeResult into jsonObject
-    jsonObject.data = {};
-    jsonObject.data[domain] = tldJsonObject;
+    // Put tldResponseObject into responseObject
+    responseObject.data = {};
+    responseObject.data[domain] = tldResponseObject;
 
-    return res.send(jsonObject);
+    return res.send(responseObject);
   });
 });
 
@@ -186,40 +200,44 @@ router.get('/lookup/single/:domain', function(req, res, next) {
  * @return {String} JSON response
  */
 router.post('/lookup/multi', function(req, res, next) {
-  var jsonObject = Object.assign({}, jsonObjectTemplate);
+  var responseObject = createResponseObject();
 
+  // Store configuration file and server configuration from app locals
   var config = req.app.locals.configuration;
   var whoisServers = req.app.locals.servers;
 
+  // Retrieve POST body parameter
   var domain = req.body.domain,
       tlds = req.body.tlds,
       results = {};
 
   // Check for "domain"
   if (!domain || domain.length === 0) {
-    jsonObject.status = 'error';
-    jsonObject.message = 'Couldn\'t find "domain" parameter';
-    return res.send(jsonObject);
+    responseObject.status = 'error';
+    responseObject.message = 'Couldn\'t find "domain" parameter';
+    return res.send(responseObject);
   }
 
   // and for "tlds"
   if (!tlds || tlds.length === 0) {
-    jsonObject.status = 'error';
-    jsonObject.message = 'Couldn\'t find "tlds" parameter';
-    return res.send(jsonObject);
+    responseObject.status = 'error';
+    responseObject.message = 'Couldn\'t find "tlds" parameter';
+    return res.send(responseObject);
   }
 
+  // Remove whitespaces und split by ','
   var tldArray = tlds.replace(/\s/g, '').split(',');
 
+  // Start parallel lookup task for each available TLD
   async.each(tldArray, function (tld, callback) {
-    var tldJsonObject = Object.assign({}, jsonObjectTemplate),
+    var tldResponseObject = createResponseObject(),
         fullDomain = domain + '.' + tld;
 
     // Check if TLD is allowed
     if (!isTldAllowed(config, tld)) {
-      tldJsonObject.status = 'error';
-      tldJsonObject.message = 'Requested TLD is not allowed for lookups';
-      results[fullDomain] = tldJsonObject;
+      tldResponseObject.status = 'error';
+      tldResponseObject.message = 'Requested TLD is not allowed for lookups';
+      results[fullDomain] = tldResponseObject;
       callback();
       return;
     }
@@ -227,25 +245,25 @@ router.post('/lookup/multi', function(req, res, next) {
     // Check availability of domain
     checkAvailability(fullDomain, whoisServers, function(data){
       if (data.status === 'error') {
-        tldJsonObject.status = 'error';
-        tldJsonObject.message = data.message;
-        results[fullDomain] = tldJsonObject;
+        tldResponseObject.status = 'error';
+        tldResponseObject.message = data.message;
+        results[fullDomain] = tldResponseObject;
         callback();
         return;
       }
 
       if (data.data === true) {
-        tldJsonObject.registered = true;
+        tldResponseObject.registered = true;
       } else if (data.data === false) {
-        tldJsonObject.registered = false;
+        tldResponseObject.registered = false;
       };
 
-      results[fullDomain] = tldJsonObject;
+      results[fullDomain] = tldResponseObject;
       callback();
     });
   }, function (err) {
-    jsonObject.data = results;
-    return res.send(jsonObject);
+    responseObject.data = results;
+    return res.send(responseObject);
   });
 });
 
@@ -259,38 +277,41 @@ router.post('/lookup/multi', function(req, res, next) {
  * @return {String} JSON response
  */
 router.get('/whois/:domain', function(req, res, next) {
-  var jsonObject = Object.assign({}, jsonObjectTemplate);
+  // Create new response object from template
+  var responseObject = createResponseObject();
 
+  // Store configuration file from app locals
   var config = req.app.locals.configuration;
+
   // Parse domain from request path
   var domain = req.params.domain;
   var domainParts = domain.split('.');
 
   // Check if valid domain format
   if (domainParts.length !== 2 || domainParts[0].length < 1 || domainParts[1].length < 1 ) {
-    jsonObject.status = 'error';
-    jsonObject.message = 'Invalid domain name';
-    return res.send(jsonObject);
+    responseObject.status = 'error';
+    responseObject.message = 'Invalid domain name';
+    return res.send(responseObject);
   }
 
   // Check if TLD is allowed
   if (!isTldAllowed(config, domainParts[1])) {
-    jsonObject.status = 'error';
-    jsonObject.message = 'Requested TLD is not allowed for lookups';
-    return res.send(jsonObject);
+    responseObject.status = 'error';
+    responseObject.message = 'Requested TLD is not allowed for lookups';
+    return res.send(responseObject);
   }
 
   // Lookup domain whois
   whoisDomain(domain, function(data){
     if (!data) {
-      jsonObject.status = 'error';
-      jsonObject.message = 'Requested TLD is not allowed for lookups';
-      return res.send(jsonObject);
+      responseObject.status = 'error';
+      responseObject.message = 'Requested TLD is not allowed for lookups';
+      return res.send(responseObject);
     }
 
-    jsonObject.data = data;
+    responseObject.data = data;
 
-    return res.send(jsonObject);
+    return res.send(responseObject);
   });
 });
 
