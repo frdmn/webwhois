@@ -211,7 +211,7 @@ router.post('/lookup/multi', function(req, res, next) {
 
   var tldArray = tlds.replace(/\s/g, '').split(',');
 
-  async.eachSeries(tldArray, function (tld, callback) {
+  async.each(tldArray, function (tld, callback) {
     var tldJsonObject = Object.assign({}, jsonObjectTemplate),
         fullDomain = domain + '.' + tld;
 
