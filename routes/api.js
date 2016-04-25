@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var whois = require('whois')
 
-var jsonObject = {
+var jsonObjectTemplate = {
   'status': 'success'
 };
 
@@ -86,6 +86,8 @@ function checkAvailability(domain, whoisServers, callback){
  * @return {String} JSON response
  */
 router.get('/', function(req, res, next) {
+  var jsonObject = Object.assign({}, jsonObjectTemplate);
+
   var routes = {
     'GET /api': 'This API overview',
     'GET /api/tlds': 'List all available TLDs',
@@ -106,6 +108,8 @@ router.get('/', function(req, res, next) {
  * @return {String} JSON response
  */
 router.get('/tlds', function(req, res, next) {
+  var jsonObject = Object.assign({}, jsonObjectTemplate);
+
   var config = req.app.locals.configuration;
 
   jsonObject.data = config.tlds;
@@ -123,6 +127,8 @@ router.get('/tlds', function(req, res, next) {
  * @return {String} JSON response
  */
 router.get('/lookup/single/:domain', function(req, res, next) {
+  var jsonObject = Object.assign({}, jsonObjectTemplate);
+
   var config = req.app.locals.configuration;
   var whoisServers = req.app.locals.servers;
 
@@ -180,6 +186,8 @@ router.get('/lookup/single/:domain', function(req, res, next) {
  * @return {String} JSON response
  */
 router.get('/whois/:domain', function(req, res, next) {
+  var jsonObject = Object.assign({}, jsonObjectTemplate);
+
   var config = req.app.locals.configuration;
   // Parse domain from request path
   var domain = req.params.domain;
