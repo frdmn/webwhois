@@ -33,10 +33,6 @@ node_modules
 npm-debug.log
 pids
 
-#####=== PHP/Composer ===#####
-vendor
-composer.lock
-
 #####=== webwhois ===#####
 .dashbrew
 config/config.json

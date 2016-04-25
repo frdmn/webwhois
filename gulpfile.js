@@ -7,7 +7,7 @@ var $ = require('gulp-load-plugins')();
 
 // Object with directory paths
 var dirs = {
-  bower: './vendor/bower_components',
+  bower: './bower_components',
   css: './public/stylesheets',
   fonts: './public/fonts',
   images: './public/images',
