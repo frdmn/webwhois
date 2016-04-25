@@ -3,6 +3,7 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var fs = require('fs');
+var hbs = require('hbs');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
@@ -12,6 +13,11 @@ var routeIndex = require('./routes/index');
 var routeApi = require('./routes/api');
 
 var app = express();
+
+// "join" Handlebars helper
+hbs.registerHelper("join", function(context, block) {
+  return context.join(block.hash.delimiter);
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

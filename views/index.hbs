@@ -1,2 +1,44 @@
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
+<div class="row">
+  <form method="post" class="multi">
+    <fieldset>
+      <!-- Form Name -->
+
+      <legend>Domain lookup <a href="#" class="btn btn-primary btn-xs pull-right submit ladda-button" data-style="expand-right" data-size="l"><span class="ladda-label">Lookup</span></a></legend>
+
+      <div class="error-container"></div>
+
+      <div class="form-inputs">
+        <div class="input-group">
+          <span class="input-group-addon">www.</span>
+          <input type="text" class="form-control" id="your-domain" name="your-domain" placeholder="yourdomain">
+          <span class="input-group-addon" id="dot">.</span>
+          <div class="input-group-btn" id="tld-package">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span id="tld-display">{{{config.general.default-selection}}}</span> <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" id="dropdownmenu">
+              {{#each config.tldpackages}}
+                <li data-tlds="{{join this.tlds delimiter=", "}}"><a href="#">{{{@key}}}</a></li>
+              {{/each}}
+              <li role="separator" class="divider"></li>
+              {{#each config.tlds}}
+                <li data-tlds="{{{this}}}"><a href="#">{{{this}}}</a></li>
+              {{/each}}
+            </ul><!-- /.dropdown-menu -->
+            <input type="hidden" id="tlds" name="tlds">
+          </div><!-- /.input-group-btn -->
+        </div><!-- /.input-group -->
+      </div><!-- /.form-inputs -->
+    </fieldset>
+  </form>
+  <hr>
+  <table class="table lookup-results">
+    <thead>
+      <tr>
+        <th class="col-md-10">Domain</th>
+        <th class="col-md-2">Registered</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div><!-- /.row -->
