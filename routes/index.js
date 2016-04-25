@@ -5,7 +5,7 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
   res.render('index', {
     title: 'Dashboard',
-    configuration: req.app.locals.configuration
+    config: req.app.locals.configuration
   });
 });
 

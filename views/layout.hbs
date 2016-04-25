@@ -1,10 +1,51 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>{{title}}</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="application-name" content="webwhois">
+    <meta name="author" content="Jonas Friedmann <j@frd.mn>">
+    <meta name="description" content="{{{config.general.description}}}">
+
+    <title>{{{config.general.title}}}{{#if title}} - {{{title}}}{{/if}}</title>
+
+    <!-- Compiled CSS -->
+    <link href="stylesheets/style.css" rel="stylesheet">
   </head>
+
   <body>
-    {{{body}}}
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">{{{config.general.title}}}</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Dashboard</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+      {{{body}}}
+    </div><!-- /.container -->
+
+    <footer class="footer">
+      <div class="container">
+        <p class="text-muted pull-left">Made by <strong><a href="https://frd.mn" target="_blank" href="#">frdmn</a></strong> under <a href="LICENSE">MIT</a> license.</p>
+        <p class="text-muted pull-right"><i class="icon-large icon-github"></i><a href="https://github.com/frdmn/webwhois" target="_blank">webwhois</a> version {{{config.version}}}</p>
+      </div>
+    </footer>
+
+    <script src="javascripts/build.js"></script>
   </body>
 </html>
