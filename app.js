@@ -6,6 +6,7 @@ var fs = require('fs');
 var hbs = require('hbs');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var responseTime = require('response-time')
 
 var configuration = require('./config.json')
 var servers = require('./servers.json')
@@ -42,6 +43,7 @@ hbs.registerHelper("searchAndJoinTLDsForSelection", function(config, selection) 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
+app.use(responseTime());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
