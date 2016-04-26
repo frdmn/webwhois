@@ -37,8 +37,5 @@
     "info",
     "net",
     "org"
-  ],
-  "whois-server": {
-    "de": "whois.denic.de"
-  }
+  ]
 }
