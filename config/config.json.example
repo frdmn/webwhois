@@ -3,10 +3,10 @@
     "title": "Whois System",
     "description": "Lightweight and customizable domain lookup/whois system.",
     "debug": false,
-    "default-selection": "New gTLDs"
+    "default-selection": "CNOBI"
   },
   "tldpackages": {
-    "com / net / org / biz / info": {
+    "CNOBI": {
       "tlds": [
         "com",
         "net",
