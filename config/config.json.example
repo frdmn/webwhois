@@ -1,7 +1,9 @@
 {
-  "general": {
+  "appearance": {
     "title": "Whois System",
-    "description": "Lightweight and customizable domain lookup/whois system.",
+    "description": "Lightweight and customizable domain lookup/whois system."
+  },
+  "general": {
     "debug": false,
     "default-selection": "CNOBI"
   },
