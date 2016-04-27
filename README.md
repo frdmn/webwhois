@@ -1,6 +1,6 @@
 # webwhois [![CircleCI build status](https://img.shields.io/circleci/project/frdmn/webwhois.svg)](https://circleci.com/gh/frdmn/webwhois) [![devDependency status](https://david-dm.org/frdmn/webwhois/dev-status.svg)](https://david-dm.org/frdmn/webwhois#info=devDependencies)
 
-Simple, Lightweight and customizable domain lookup/whois system, which makes use of the @[phpWhois/phpWhois](https://github.com/phpWhois/phpWhois) library. Comes with REST support and can be embedded or used as standalone frontend.
+Simple, Lightweight and customizable domain lookup/whois system inlcuding AutoDNS3 WhoisProxy support. Comes with REST support and can be embedded or used as standalone frontend.
 
 ![](http://up.frd.mn/cccR9UByHH.png)
 
@@ -50,10 +50,7 @@ Please take a look at the [API.md](API.md) Markdown file for a detailed API docu
     "info",
     "net",
     "org"
-  ],
-  "whois-server": {
-    "de": "whois.denic.de"
-  }
+  ]
 }
 ```
 
@@ -114,7 +111,6 @@ Please take a look at the [API.md](API.md) Markdown file for a detailed API docu
 
 ## Requirements / Dependencies
 
-* PHP >= 5.5 (Composer)
 * Node >= 5.0 (Bower and Gulp)
 
 ## Version
