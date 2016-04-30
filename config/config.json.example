@@ -4,9 +4,9 @@
     "description": "Lightweight and customizable domain lookup/whois system."
   },
   "general": {
-    "autodns-whoisproxy": false,
+    "autodnsWhoisproxy": false,
     "debug": false,
-    "default-selection": "CNOBI"
+    "defaultSelection": "CNOBI"
   },
   "tldpackages": {
     "CNOBI": {

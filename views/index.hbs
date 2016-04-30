@@ -14,7 +14,7 @@
           <span class="input-group-addon" id="dot">.</span>
           <div class="input-group-btn" id="tld-package">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <span id="tld-display">{{{config.general.default-selection}}}</span> <span class="caret"></span>
+              <span id="tld-display">{{{config.general.defaultSelection}}}</span> <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" id="dropdownmenu">
               {{#each config.tldpackages}}
@@ -25,7 +25,7 @@
                 <li data-tlds="{{{this}}}"><a href="#">{{{this}}}</a></li>
               {{/each}}
             </ul><!-- /.dropdown-menu -->
-            <input type="hidden" id="tlds" name="tlds" value="{{searchAndJoinTLDsForSelection config config.general.default-selection}}">
+            <input type="hidden" id="tlds" name="tlds" value="{{searchAndJoinTLDsForSelection config config.general.defaultSelection}}">
           </div><!-- /.input-group-btn -->
         </div><!-- /.input-group -->
       </div><!-- /.form-inputs -->
