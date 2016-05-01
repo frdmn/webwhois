@@ -1,6 +1,6 @@
 # webwhois [![CircleCI build status](https://img.shields.io/circleci/project/frdmn/webwhois.svg)](https://circleci.com/gh/frdmn/webwhois) [![devDependency status](https://david-dm.org/frdmn/webwhois/dev-status.svg)](https://david-dm.org/frdmn/webwhois#info=devDependencies)
 
-Simple, Lightweight and customizable domain lookup/whois system inlcuding AutoDNS3 WhoisProxy support. Comes with REST support and can be embedded or used as standalone frontend.
+Simple, Lightweight and customizable domain lookup/whois system including AutoDNS3 WhoisProxy support. Comes with a REST interface and can be embedded or used as standalone frontend.
 
 ![](http://up.frd.mn/cccR9UByHH.png)
 
@@ -12,11 +12,14 @@ Please take a look at the [API.md](API.md) Markdown file for a detailed API docu
 
 ```json
 {
-  "general": {
+  "appearance": {
     "title": "Whois System",
-    "description": "Example company's domain lookup tool.",
+    "description": "Lightweight and customizable domain lookup/whois system."
+  },
+  "general": {
+    "autodnsWhoisproxy": false,
     "debug": false,
-    "default-selection": "CNOBI"
+    "defaultSelection": "CNOBI"
   },
   "tldpackages": {
     "CNOBI": {
@@ -28,7 +31,7 @@ Please take a look at the [API.md](API.md) Markdown file for a detailed API docu
         "info"
       ]
     },
-    "TLDs in sale": {
+    "New gTLDs": {
       "tlds": [
         "academy",
         "accountant",
@@ -111,6 +114,7 @@ Please take a look at the [API.md](API.md) Markdown file for a detailed API docu
 
 ## Requirements / Dependencies
 
+* AutoDNS [WhoisProxy](https://www.internetx.com/domains/autodns/whoisproxy/)
 * Node >= 5.0 (Bower and Gulp)
 
 ## Version
