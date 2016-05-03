@@ -2,49 +2,9 @@ var express = require('express'),
     async = require('async'),
     whois = require('whois');
 
+var functions = require('../lib/api');
+
 var router = express.Router();
-
-/**
- * Copy the default response object
- * and return the clone
- * @return {Object}
- */
-function createResponseObject(){
-  var template = {
-    'status': 'success'
-  };
-
-  return Object.assign({}, template);
-}
-
-/**
- * Check if specific TLD is allowed via
- * configuration file
- * @param  {Object}  $config
- * @param  {String}  $tld
- * @return {Boolean}
- */
-function isTldAllowed(config, tld){
-  if (config.tlds.indexOf(tld) === -1) {
-    return false;
-  } else {
-    return true;
-  }
-}
-
-/**
- * Whois domain name
- * @param  {String}   domain
- * @return {Callback}
- */
-function whoisDomain(domain, callback){
-  whois.lookup(domain, {"verbose": true}, function(err, data) {
-    if (err) {
-      return callback(false);
-    }
-    callback(data);
-  })
-}
 
 /**
  * Check availability of a domain using the configured
@@ -60,7 +20,7 @@ function checkAvailability(domain, whoisServers, callback){
 
   // Create response object
   // Create new response object from template
-  var responseObject = createResponseObject();
+  var responseObject = functions.createResponseObject();
 
   // Load TLD specifc configuration from servers.json
   if (whoisServers[domainParts[1]]){
@@ -98,7 +58,7 @@ function checkAvailability(domain, whoisServers, callback){
  */
 router.get('/', function(req, res, next) {
   // Create new response object from template
-  var responseObject = createResponseObject();
+  var responseObject = functions.createResponseObject();
 
   var routes = {
     'GET /api': 'This API overview',
@@ -121,7 +81,7 @@ router.get('/', function(req, res, next) {
  */
 router.get('/tlds', function(req, res, next) {
   // Create new response object from template
-  var responseObject = createResponseObject();
+  var responseObject = functions.createResponseObject();
 
   // Store configuration file from app locals
   var config = req.app.locals.configuration;
@@ -142,7 +102,7 @@ router.get('/tlds', function(req, res, next) {
  */
 router.get('/lookup/single/:domain', function(req, res, next) {
   // Create new response object from template
-  var responseObject = createResponseObject();
+  var responseObject = functions.createResponseObject();
 
   // Store configuration file from app locals
   var config = req.app.locals.configuration,
@@ -160,7 +120,7 @@ router.get('/lookup/single/:domain', function(req, res, next) {
   }
 
   // Check if TLD is allowed
-  if (!isTldAllowed(config, domainParts[1])) {
+  if (!functions.isTldAllowed(config, domainParts[1])) {
     responseObject.status = 'error';
     responseObject.message = 'Requested TLD is not allowed for lookups';
     return res.send(responseObject);
@@ -175,7 +135,7 @@ router.get('/lookup/single/:domain', function(req, res, next) {
     }
 
     // Create response object for each domain
-    var tldResponseObject = createResponseObject();
+    var tldResponseObject = functions.createResponseObject();
 
     if (data.data === true) {
       tldResponseObject.registered = false;
@@ -201,7 +161,7 @@ router.get('/lookup/single/:domain', function(req, res, next) {
  * @return {String} JSON response
  */
 router.post('/lookup/multi', function(req, res, next) {
-  var responseObject = createResponseObject();
+  var responseObject = functions.createResponseObject();
 
   // Store configuration file and server configuration from app locals
   var config = req.app.locals.configuration,
@@ -231,11 +191,11 @@ router.post('/lookup/multi', function(req, res, next) {
 
   // Start parallel lookup task for each available TLD
   async.each(tldArray, function (tld, callback) {
-    var tldResponseObject = createResponseObject(),
+    var tldResponseObject = functions.createResponseObject(),
         fullDomain = domain + '.' + tld;
 
     // Check if TLD is allowed
-    if (!isTldAllowed(config, tld)) {
+    if (!functions.isTldAllowed(config, tld)) {
       tldResponseObject.status = 'error';
       tldResponseObject.message = 'Requested TLD is not allowed for lookups';
       results[fullDomain] = tldResponseObject;
@@ -279,7 +239,7 @@ router.post('/lookup/multi', function(req, res, next) {
  */
 router.get('/whois/:domain', function(req, res, next) {
   // Create new response object from template
-  var responseObject = createResponseObject();
+  var responseObject = functions.createResponseObject();
 
   // Store configuration file from app locals
   var config = req.app.locals.configuration;
@@ -296,24 +256,29 @@ router.get('/whois/:domain', function(req, res, next) {
   }
 
   // Check if TLD is allowed
-  if (!isTldAllowed(config, domainParts[1])) {
+  if (!functions.isTldAllowed(config, domainParts[1])) {
     responseObject.status = 'error';
     responseObject.message = 'Requested TLD is not allowed for lookups';
     return res.send(responseObject);
   }
 
-  // Lookup domain whois
-  whoisDomain(domain, function(data){
-    if (!data) {
-      responseObject.status = 'error';
-      responseObject.message = 'Requested TLD is not allowed for lookups';
+  // Check if AutoDNS proxy feature is enabled
+  if (config.general.autodnsWhoisproxy) {
+    console.log(config.general.autodnsWhoisproxy);
+  } else {
+  // Otherwise use public whois servers ...
+    functions.whoisDomain(domain, function(data){
+      if (!data) {
+        responseObject.status = 'error';
+        responseObject.message = 'Requested TLD is not allowed for lookups';
+        return res.send(responseObject);
+      }
+
+      responseObject.data = data;
+
       return res.send(responseObject);
-    }
-
-    responseObject.data = data;
-
-    return res.send(responseObject);
-  });
+    });
+  }
 });
 
 module.exports = router;
