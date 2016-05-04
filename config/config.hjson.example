@@ -1,0 +1,66 @@
+{
+  ###
+  # Appearance and visual settings
+  ###
+  "appearance": {
+    // The title of your webwhois page
+    "title": "Whois System",
+    // Meta/SEO description
+    "description": "Lightweight and customizable domain lookup/whois system."
+  },
+  ###
+  # General settings
+  ###
+  "general": {
+    // Which whois connector should be used? Can either be:
+    // - "public" for the public whois systems or
+    // - "autodns" for InternetX's / AutoDNS' custom WhoisProxy (https://www.internetx.com/domains/autodns/whoisproxy/)
+    "whois": "public",
+    // Enable/disable debug mode (logged to stdout by default)
+    "debug": false,
+    // Specify the default selection for the dropdown menu in the dashboard
+    "defaultSelection": "CNOBI"
+  },
+  ###
+  # Option to setup "packages"
+  # (Make sure the packages only contain TLDs which are allowed)
+  ###
+  "tldpackages": {
+    // Packagename
+    "CNOBI": {
+      "tlds": [
+        // TLDs in package
+        "com",
+        "net",
+        "org",
+        "biz",
+        "info"
+      ]
+    },
+    "New gTLDs": {
+      "tlds": [
+        "academy",
+        "accountant",
+        "accountants",
+        "active",
+        "actor"
+      ]
+    }
+  },
+  ###
+  # Allowed TLDs
+  ###
+  "tlds": [
+    "academy",
+    "accountant",
+    "accountants",
+    "active",
+    "actor",
+    "biz",
+    "com",
+    "de",
+    "info",
+    "net",
+    "org"
+  ]
+}

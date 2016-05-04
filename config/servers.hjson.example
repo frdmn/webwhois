@@ -1,6 +1,10 @@
 {
+  // The TLD you want to customize
   "academy": {
+    // Use special whois server for "academy" lookups
     "server": "whois.nic.academy",
+    // The string which is included in the whois lookup result when the domain is still
+    // free or available
     "freeIndicator": "Domain not found. \r"
   },
   "accountants": {

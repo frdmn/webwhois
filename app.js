@@ -8,8 +8,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var responseTime = require('response-time')
 
-var configuration = require('./config/config.json')
-var servers = require('./config/servers.json')
+var configuration = require('./config/config.hjson')
+var servers = require('./config/servers.hjson')
 
 var routeIndex = require('./routes/index');
 var routeApi = require('./routes/api');
