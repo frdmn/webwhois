@@ -2,53 +2,9 @@ var express = require('express'),
     async = require('async'),
     whois = require('whois');
 
-var functions = require('../lib/api');
+var functions = require('../lib/functions');
 
 var router = express.Router();
-
-/**
- * Check availability of a domain using the configured
- * servers.json optiona
- * @param  {String}   domain
- * @param  {Object}   whoisServers
- * @return {Callback}
- */
-function checkAvailability(domain, whoisServers, callback){
-  // Split domain
-  var domainParts = domain.split('.'),
-      options;
-
-  // Create response object
-  // Create new response object from template
-  var responseObject = functions.createResponseObject();
-
-  // Load TLD specifc configuration from servers.json
-  if (whoisServers[domainParts[1]]){
-    options = whoisServers[domainParts[1]];
-  } else {
-    responseObject.status = 'error';
-    responseObject.message = 'No specific TLD configuration found in servers.json';
-    return callback(responseObject);
-  }
-
-  // Whois domain name
-  whois.lookup(domain, options, function(err, data) {
-    if (err) {
-      responseObject.status = 'error';
-      responseObject.message = 'Error calling whois()';
-      return callback(responseObject);
-    }
-
-    // If configured "free" indicator is not found, return false
-    if (data.indexOf(options.freeIndicator) === -1) {
-      responseObject.data = false;
-    } else {
-      responseObject.data = true;
-    }
-
-    return callback(responseObject);
-  })
-}
 
 /**
  * Route - "GET /api"
@@ -127,7 +83,7 @@ router.get('/lookup/single/:domain', function(req, res, next) {
   }
 
   // Check availability of domain
-  checkAvailability(domain, whoisServers, function(data){
+  functions.checkAvailability(domain, whoisServers, function(data){
     if (data.status === 'error') {
       responseObject.status = 'error';
       responseObject.message = data.message;
@@ -204,7 +160,7 @@ router.post('/lookup/multi', function(req, res, next) {
     }
 
     // Check availability of domain
-    checkAvailability(fullDomain, whoisServers, function(data){
+    functions.checkAvailability(fullDomain, whoisServers, function(data){
       if (data.status === 'error') {
         tldResponseObject.status = 'error';
         tldResponseObject.message = data.message;
