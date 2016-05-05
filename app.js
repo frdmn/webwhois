@@ -1,3 +1,4 @@
+// Modules
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -8,12 +9,18 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var responseTime = require('response-time')
 
+// HJSON support
+require("hjson/lib/require-config");
+
+// Configuration files
 var configuration = require('./config/config.hjson')
 var servers = require('./config/servers.hjson')
 
+// Routes
 var routeIndex = require('./routes/index');
 var routeApi = require('./routes/api');
 
+// Create express app
 var app = express();
 
 // "join" Handlebars helper
