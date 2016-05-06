@@ -219,22 +219,17 @@ router.get('/whois/:domain', function(req, res, next) {
   }
 
   // Check if AutoDNS proxy feature is enabled
-  if (config.general.autodnsWhoisproxy) {
-    console.log(config.general.autodnsWhoisproxy);
-  } else {
-  // Otherwise use public whois servers ...
-    functions.whoisDomain(domain, function(data){
-      if (!data) {
-        responseObject.status = 'error';
-        responseObject.message = 'Requested TLD is not allowed for lookups';
-        return res.send(responseObject);
-      }
-
-      responseObject.data = data;
-
+  functions.whoisDomain(domain, function(data){
+    if (!data) {
+      responseObject.status = 'error';
+      responseObject.message = 'Requested TLD is not allowed for lookups';
       return res.send(responseObject);
-    });
-  }
+    }
+
+    responseObject.data = data;
+
+    return res.send(responseObject);
+  });
 });
 
 module.exports = router;
