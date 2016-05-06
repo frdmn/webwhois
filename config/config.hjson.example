@@ -12,10 +12,6 @@
   # General settings
   ###
   "general": {
-    // Which whois connector should be used? Can either be:
-    // - "public" for the public whois systems or
-    // - "autodns" for InternetX's / AutoDNS' custom WhoisProxy (https://www.internetx.com/domains/autodns/whoisproxy/)
-    "whois": "public",
     // Enable/disable debug mode (logged to stdout by default)
     "debug": false,
     // Specify the default selection for the dropdown menu in the dashboard
