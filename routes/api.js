@@ -48,15 +48,15 @@ router.get('/tlds', function(req, res, next) {
 });
 
 /**
- * Route - "GET /api/lookup/single/:domain"
+ * Route - "GET /api/lookup/domain/:domain"
  *
- * Lookup a single domain
+ * Lookup a single domain name
  * @param req
  * @param res
  * @param next
  * @return {String} JSON response
  */
-router.get('/lookup/single/:domain', function(req, res, next) {
+router.get('/lookup/domain/:domain', function(req, res, next) {
   // Create new response object from template
   var responseObject = functions.createResponseObject();
 
@@ -82,8 +82,13 @@ router.get('/lookup/single/:domain', function(req, res, next) {
     return res.send(responseObject);
   }
 
+
+  var domains = [
+    domain
+  ];
+
   // Check availability of domain
-  functions.checkAvailability(domain, whoisServers, function(data){
+  functions.checkAvailabilityMulti(domains, function(data){
     if (data.status === 'error') {
       responseObject.status = 'error';
       responseObject.message = data.message;
@@ -103,7 +108,7 @@ router.get('/lookup/single/:domain', function(req, res, next) {
     responseObject.data = {};
     responseObject.data[domain] = tldResponseObject;
 
-    return res.send(responseObject);
+    return res.send(data);
   });
 });
 
@@ -160,7 +165,7 @@ router.post('/lookup/multi', function(req, res, next) {
     }
 
     // Check availability of domain
-    functions.checkAvailability(fullDomain, whoisServers, function(data){
+    functions.checkAvailabilityMulti(fullDomain, whoisServers, function(data){
       if (data.status === 'error') {
         tldResponseObject.status = 'error';
         tldResponseObject.message = data.message;
