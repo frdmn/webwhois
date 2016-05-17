@@ -19,8 +19,8 @@ router.get('/', function(req, res, next) {
   var routes = {
     'GET /api': 'This API overview',
     'GET /api/tlds': 'List all available TLDs',
-    'GET /api/lookup/single/:domain': 'Check availablity of a single domain',
-    'POST /api/lookup/multi': 'Check availablity of multiple domain (TLDs)',
+    'GET /api/lookup/domain/:domain': 'Check availablity of a single domain',
+    'POST /api/lookup/package': 'Check availablity of for several domains (using a TLD package)',
     'GET /api/whois/:domain': 'Whois a single domain'
   };
 
@@ -113,25 +113,25 @@ router.get('/lookup/domain/:domain', function(req, res, next) {
 });
 
 /**
- * Route - "POST /api/lookup/multi"
+ * Route - "POST /api/lookup/package"
  *
- * Whois multiple domain TLDs
+ * Whois multiple domain TLDs using a package
  * @param req
  * @param res
  * @param next
  * @return {String} JSON response
  */
-router.post('/lookup/multi', function(req, res, next) {
+router.post('/lookup/package', function(req, res, next) {
   var responseObject = functions.createResponseObject();
 
   // Store configuration file and server configuration from app locals
   var config = req.app.locals.configuration,
-      whoisServers = req.app.locals.servers,
-      results = {};
+      whoisServers = req.app.locals.servers
+      domains = [];
 
   // Retrieve POST body parameter
   var domain = req.body.domain,
-      tlds = req.body.tlds;
+      package = req.body.package;
 
   // Check for "domain"
   if (!domain || domain.length === 0) {
@@ -141,51 +141,49 @@ router.post('/lookup/multi', function(req, res, next) {
   }
 
   // and for "tlds"
-  if (!tlds || tlds.length === 0) {
+  if (!package || package.length === 0) {
     responseObject.status = 'error';
-    responseObject.message = 'Couldn\'t find "tlds" parameter';
+    responseObject.message = 'Couldn\'t find "package" parameter';
     return res.send(responseObject);
   }
 
-  // Remove whitespaces und split by ','
-  var tldArray = tlds.replace(/\s/g, '').split(',');
+  // Select package from configuration
+  var tldArray = config.tldpackages[package].tlds;
 
-  // Start parallel lookup task for each available TLD
-  async.each(tldArray, function (tld, callback) {
-    var tldResponseObject = functions.createResponseObject(),
-        fullDomain = domain + '.' + tld;
+  // Check for existence
+  if (!tldArray || package.length === 0) {
+    responseObject.status = 'error';
+    responseObject.message = 'Couldn\'t find package "' + package + '"';
+    return res.send(responseObject);
+  }
 
-    // Check if TLD is allowed
-    if (!functions.isTldAllowed(config, tld)) {
-      tldResponseObject.status = 'error';
-      tldResponseObject.message = 'Requested TLD is not allowed for lookups';
-      results[fullDomain] = tldResponseObject;
-      callback();
-      return;
+  // Loop over available TLDs and create full domains
+  for (var index = 0; index < tldArray.length; ++index) {
+    domains.push(domain + '.' + tldArray[index]);
+  }
+
+  // Check availability of domain
+  functions.checkAvailabilityMulti(domains, function(data){
+    if (data.status === 'error') {
+      responseObject.status = 'error';
+      responseObject.message = data.message;
+      return res.send(responseObject);
     }
 
-    // Check availability of domain
-    functions.checkAvailabilityMulti(fullDomain, whoisServers, function(data){
-      if (data.status === 'error') {
-        tldResponseObject.status = 'error';
-        tldResponseObject.message = data.message;
-        results[fullDomain] = tldResponseObject;
-        callback();
-        return;
-      }
+    // Create response object for each domain
+    var tldResponseObject = functions.createResponseObject();
 
-      if (data.data === true) {
-        tldResponseObject.registered = false;
-      } else if (data.data === false) {
-        tldResponseObject.registered = true;
-      };
+    if (data.data === true) {
+      tldResponseObject.registered = false;
+    } else if (data.data === false) {
+      tldResponseObject.registered = true;
+    }
 
-      results[fullDomain] = tldResponseObject;
-      callback();
-    });
-  }, function (err) {
-    responseObject.data = results;
-    return res.send(responseObject);
+    // Put tldResponseObject into responseObject
+    responseObject.data = {};
+    responseObject.data[domain] = tldResponseObject;
+
+    return res.send(data);
   });
 });
 
