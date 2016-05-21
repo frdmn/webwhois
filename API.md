@@ -15,9 +15,9 @@ Response:
     "data": {
         "GET /api": "This API overview",
         "GET /api/tlds": "List all available TLDs",
-        "GET /api/lookup/single/{domain}": "Check availablity of a single domain",
-        "POST /api/lookup/multi": "Check availablity of multiple domain (TLDs)",
-        "GET /api/whois/{domain}": "Whois a single domain"
+        "GET /api/lookup/domain/:domain": "Check availablity of a single domain",
+        "POST /api/lookup/package": "Check availablity of multiple domain (TLDs)",
+        "GET /api/whois/:domain": "Whois a single domain"
     },
     "status": "success"
 }
@@ -54,7 +54,7 @@ Response:
 
 ### Check availablity of a single domain
 
-#### GET /api/lookup/single/{domain}
+#### GET /api/lookup/single/:domain
 
 Body Parameters:
 
@@ -65,10 +65,7 @@ Response:
 ```json
 {
     "data": {
-        "frd.mn": {
-            "registered": true,
-            "status": "success"
-        }
+        "frd.de": false
     },
     "status": "success"
 }
@@ -76,26 +73,23 @@ Response:
 
 ### Check availablity of multiple domains
 
-#### POST /api/lookup/multi
+#### POST /api/lookup/package
 
 Body Parameters:
 
 - **domain** (required)
-- **tlds** (required) - One or multiple TLDs seperated by ', '
+- **package** (required)
 
 Response:
 
 ```json
 {
     "data": {
-        "frd.de": {
-            "registered": true,
-            "status": "success"
-        },
-        "frd.mn": {
-            "registered": true,
-            "status": "success"
-        }
+        "test.academy": false,
+        "test.accountant": true,
+        "test.accountants": true,
+        "test.active": true,
+        "test.actor": true
     },
     "status": "success"
 }
@@ -103,7 +97,7 @@ Response:
 
 ### Raw whois lookup of a single domain
 
-#### GET /api/whois/{domain}
+#### GET /api/whois/:domain
 
 Body Parameters:
 
