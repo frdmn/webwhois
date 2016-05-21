@@ -14,7 +14,6 @@ require("hjson/lib/require-config");
 
 // Configuration files
 var configuration = require('./config/config.hjson')
-var servers = require('./config/servers.hjson')
 
 // Routes
 var routeIndex = require('./routes/index');
@@ -59,7 +58,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 configuration.version = fs.readFileSync('./VERSION', 'utf8');
 app.locals.configuration = configuration;
-app.locals.servers = servers;
 
 app.use('/', routeIndex);
 app.use('/api', routeApi);

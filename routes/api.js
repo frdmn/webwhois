@@ -61,8 +61,7 @@ router.get('/lookup/domain/:domain', function(req, res, next) {
   var responseObject = functions.createResponseObject();
 
   // Store configuration file from app locals
-  var config = req.app.locals.configuration,
-      whoisServers = req.app.locals.servers;
+  var config = req.app.locals.configuration;
 
   // Parse domain from request path
   var domain = req.params.domain,
@@ -124,9 +123,8 @@ router.get('/lookup/domain/:domain', function(req, res, next) {
 router.post('/lookup/package', function(req, res, next) {
   var responseObject = functions.createResponseObject();
 
-  // Store configuration file and server configuration from app locals
+  // Store configuration file from app locals
   var config = req.app.locals.configuration,
-      whoisServers = req.app.locals.servers
       domains = [];
 
   // Retrieve POST body parameter

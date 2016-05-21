@@ -36,7 +36,6 @@ pids
 #####=== webwhois ===#####
 .dashbrew
 config/config.hjson
-config/servers.hjson
 bower_components
 public/stylesheets/*.css
 public/javascripts/modernizr.js
