@@ -65,7 +65,10 @@ Response:
 ```json
 {
     "data": {
-        "frd.de": false
+        "test.de": {
+            "available": false,
+            "status": "success"
+        }
     },
     "status": "success"
 }
@@ -85,11 +88,26 @@ Response:
 ```json
 {
     "data": {
-        "test.academy": false,
-        "test.accountant": true,
-        "test.accountants": true,
-        "test.active": true,
-        "test.actor": true
+        "test.academy": {
+            "available": false,
+            "status": "success"
+        },
+        "test.accountant": {
+            "available": true,
+            "status": "success"
+        },
+        "test.accountants": {
+            "available": true,
+            "status": "success"
+        },
+        "test.active": {
+            "available": false,
+            "status": "success"
+        },
+        "test.actor": {
+            "available": false,
+            "status": "success"
+        }
     },
     "status": "success"
 }
