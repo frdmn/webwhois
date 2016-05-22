@@ -87,7 +87,7 @@ router.get('/lookup/domain/:domain', function(req, res, next) {
   ];
 
   // Check availability of domain
-  functions.checkAvailabilityMulti(domains, function(data){
+  functions.checkAvailability(domains, function(data){
     if (data.status === 'error') {
       responseObject.status = 'error';
       responseObject.message = data.message;
@@ -161,7 +161,7 @@ router.post('/lookup/package', function(req, res, next) {
   }
 
   // Check availability of domain
-  functions.checkAvailabilityMulti(domains, function(data){
+  functions.checkAvailability(domains, function(data){
     if (data.status === 'error') {
       responseObject.status = 'error';
       responseObject.message = data.message;
