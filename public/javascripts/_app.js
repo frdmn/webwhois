@@ -83,10 +83,15 @@ $(function() {
     for (var domain in data) {
       // Check for success
       if (data[domain].status === 'success') {
+        console.log(data[domain].available);
         // Append new table <tr> in htmlData
-        htmlData += '<tr><th scope="row">' + domain + '</th><td>' + data[domain].registered + '</td></tr>';
+        if (data[domain].available === true ) {
+          htmlData += '<tr><th scope="row">' + domain + '</th><td><span class="glyphicon glyphicon-ok"></span></td></tr>';
+        } else {
+          htmlData += '<tr><th scope="row">' + domain + '</th><td><span class="glyphicon glyphicon-remove"></span></td></tr>';
+        }
       } else {
-        console.log('Error', data[domain])
+        htmlData += '<tr><th scope="row">' + domain + ' (' + data[domain].message + ')</th><td><span class="glyphicon glyphicon-exclamation-sign"></span></td></tr>';
       }
     }
 
@@ -214,7 +219,6 @@ $(function() {
     var selectedDisplayName = $(this).text();
     var selectedTlds = $(this).data('tlds');
     $('#tld-display').text(selectedDisplayName);
-    $('#tlds').val(selectedTlds);
   });
 
   // Disable button
