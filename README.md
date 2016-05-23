@@ -2,7 +2,7 @@
 
 Simple, Lightweight and customizable domain lookup/whois system including AutoDNS3 WhoisProxy support. Comes with a REST interface and can be embedded or used as standalone frontend.
 
-![](http://up.frd.mn/cccR9UByHH.png)
+![](http://up.frd.mn/SkQmEmAhxr.png)
 
 ## API documentation
 
