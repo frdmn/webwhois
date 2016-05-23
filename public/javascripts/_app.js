@@ -52,7 +52,7 @@ $(function() {
   var submitSingleLookup = function(callback){
     var domain = $('#your-domain').val();
 
-    $.get('api/lookup/single/' + domain, function(data){
+    $.get('api/lookup/domain/' + domain, function(data){
       return callback(data);
     });
   }
@@ -64,9 +64,9 @@ $(function() {
    */
   var submitMultiLookup = function(callback){
     var domain = $('#your-domain').val(),
-        tlds = $('input#tlds').val();
+        package = $('#tld-display').text();
 
-    $.post( 'api/lookup/multi', { domain: domain, tlds: tlds}, function( data ) {
+    $.post( 'api/lookup/package', { domain: domain, package: package}, function( data ) {
       return callback(data);
     });
  }
