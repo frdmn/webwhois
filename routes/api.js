@@ -145,8 +145,13 @@ router.post('/lookup/package', function(req, res, next) {
     return res.send(responseObject);
   }
 
-  // Select package from configuration
-  var tldArray = config.tldpackages[package].tlds;
+  // Check if "package" is really indeed a package and not only a single TLD
+  if (config.tldpackages[package] && config.tldpackages[package].tlds) {
+    var tldArray = config.tldpackages[package].tlds;
+  } else {
+    // ... only a single TLD, use that one instead
+    var tldArray = [package];
+  }
 
   // Check for existence
   if (!tldArray || package.length === 0) {
