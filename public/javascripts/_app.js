@@ -83,7 +83,6 @@ $(function() {
     for (var domain in data) {
       // Check for success
       if (data[domain].status === 'success') {
-        console.log(data[domain].available);
         // Append new table <tr> in htmlData
         if (data[domain].available === true ) {
           htmlData += '<tr><th scope="row">' + domain + '</th><td><span class="glyphicon glyphicon-ok"></span></td></tr>';
