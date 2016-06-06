@@ -226,9 +226,9 @@ router.get('/whois/:domain', function(req, res, next) {
 
   // Check if AutoDNS proxy feature is enabled
   functions.whoisDomain(domain, function(data){
-    if (!data) {
+    if (data.status === 'error') {
       responseObject.status = 'error';
-      responseObject.message = 'Requested TLD is not allowed for lookups';
+      responseObject.message = data.message;
       return res.send(responseObject);
     }
 
