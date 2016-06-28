@@ -7,7 +7,7 @@ var fs = require('fs');
 var hbs = require('hbs');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var responseTime = require('response-time')
+var responseTime = require('response-time');
 
 // HJSON support
 require("hjson/lib/require-config");
