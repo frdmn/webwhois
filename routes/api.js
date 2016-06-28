@@ -19,7 +19,7 @@ router.get('/', function(req, res, next) {
   var routes = {
     'GET /api': 'This API overview',
     'GET /api/tlds': 'List all available TLDs',
-    'GET /api/lookup/domain/:domain': 'Check availablity of a single domain',
+    'POST /api/lookup/domain': 'Check availablity of a single domain',
     'POST /api/lookup/package': 'Check availablity of for several domains (using a TLD package)',
     'GET /api/whois/:domain': 'Whois a single domain'
   };
@@ -56,7 +56,7 @@ router.get('/tlds', function(req, res, next) {
  * @param next
  * @return {String} JSON response
  */
-router.get('/lookup/domain/:domain', function(req, res, next) {
+router.post('/lookup/domain', function(req, res, next) {
   // Create new response object from template
   var responseObject = functions.createResponseObject();
 
@@ -64,7 +64,7 @@ router.get('/lookup/domain/:domain', function(req, res, next) {
   var config = req.app.locals.configuration;
 
   // Parse domain from request path
-  var domain = req.params.domain,
+  var domain = req.body.domain,
       domainParts = domain.split('.');
 
   // Check if valid domain format
