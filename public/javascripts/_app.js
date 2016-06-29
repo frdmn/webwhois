@@ -3,6 +3,7 @@
  * @return {Bool} true
  */
 var enableInputs = function(){
+  document.getElementById("your-domain").disabled = false;
   document.getElementsByClassName("submit")[0].classList.add('enabled');
   document.getElementsByClassName("submit")[0].classList.remove('disabled');
   return true;
@@ -13,6 +14,7 @@ var enableInputs = function(){
  * @return {Bool} true
  */
 var disableInputs = function(){
+  document.getElementById("your-domain").disabled = true;
   document.getElementsByClassName("submit")[0].classList.add('disabled');
   document.getElementsByClassName("submit")[0].classList.remove('enabled');
   return true;
