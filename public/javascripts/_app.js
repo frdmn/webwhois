@@ -1,3 +1,23 @@
+/**
+ * Plain JS function to disable inputs before jQuery is loaded
+ * @return {Bool} true
+ */
+var enableInputs = function(){
+  document.getElementsByClassName("submit")[0].classList.add('enabled');
+  document.getElementsByClassName("submit")[0].classList.remove('disabled');
+  return true;
+}
+
+/**
+ * Plain JS function to disable inputs before jQuery is loaded
+ * @return {Bool} true
+ */
+var disableInputs = function(){
+  document.getElementsByClassName("submit")[0].classList.add('disabled');
+  document.getElementsByClassName("submit")[0].classList.remove('enabled');
+  return true;
+}
+
 $(function() {
   /**
    * Toggle the TLD/package form (dropdown)
@@ -222,13 +242,5 @@ $(function() {
   });
 
   // Disable button
-  $('.submit').addClass('disabled');
-  // Enable if "your-domain" is not empty
-  $('#your-domain').keyup(function(){
-    if($(this).val().length !=0){
-      $('.submit').removeClass('disabled');
-    } else {
-      $('.submit').addClass('disabled');
-    }
-  })
+  disableInputs();
 });
