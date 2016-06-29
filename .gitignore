@@ -42,3 +42,5 @@ public/javascripts/modernizr.js
 public/javascripts/build.js
 public/fonts
 public/images
+!logs/.gitkeep/*
+logs/.gitkeep

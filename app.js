@@ -8,7 +8,9 @@ var express = require('express')
     , cookieParser = require('cookie-parser')
     , bodyParser = require('body-parser')
     , responseTime = require('response-time')
-    , recaptcha = require('express-recaptcha');
+    , recaptcha = require('express-recaptcha')
+    , FileStreamRotator = require('file-stream-rotator')
+    , morgan = require('morgan')
 
 // Add HJSON support
 require("hjson/lib/require-config");
@@ -21,6 +23,16 @@ recaptcha.init(configuration.general.recaptchaSite, configuration.general.recapt
   size: 'normal',
   callback: 'enableInputs'
 });
+
+// Setup logger
+var logDirectory = path.join(__dirname, 'logs')
+fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory)
+var accessLogStream = FileStreamRotator.getStream({
+  date_format: 'YYYYMMDD',
+  filename: path.join(logDirectory, '%DATE%.log'),
+  frequency: 'daily',
+  verbose: false
+})
 
 // Routes
 var routeIndex = require('./routes/index');
@@ -56,8 +68,9 @@ hbs.registerHelper("searchAndJoinTLDsForSelection", function(config, selection) 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
+// Configure middlewares
 app.use(responseTime());
-app.use(logger('dev'));
+app.use(morgan('combined', {stream: accessLogStream}))
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -69,17 +82,17 @@ app.locals.configuration = configuration;
 app.use('/', routeIndex);
 app.use('/api', routeApi);
 
-// catch 404 and forward to error handler
+// Catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
 
-// error handlers
+// Error handlers
 
-// development error handler
-// will print stacktrace
+// Development error handler
+// Will print stacktrace
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
@@ -90,8 +103,8 @@ if (app.get('env') === 'development') {
   });
 }
 
-// production error handler
-// no stacktraces leaked to user
+// Production error handler
+// No stacktraces leaked to user
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error', {
