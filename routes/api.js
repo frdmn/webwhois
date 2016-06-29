@@ -1,10 +1,9 @@
-var express = require('express'),
-    async = require('async'),
-    whois = require('whois');
-
-var functions = require('../lib/functions');
-
-var router = express.Router();
+var express = require('express')
+    , async = require('async')
+    , whois = require('whois')
+    , functions = require('../lib/functions')
+    , router = express.Router()
+    , recaptcha = require('express-recaptcha');
 
 /**
  * Route - "GET /api"
@@ -56,7 +55,7 @@ router.get('/tlds', function(req, res, next) {
  * @param next
  * @return {String} JSON response
  */
-router.post('/lookup/domain', function(req, res, next) {
+router.post('/lookup/domain', recaptcha.middleware.verify, function(req, res, next) {
   // Create new response object from template
   var responseObject = functions.createResponseObject();
 
@@ -66,6 +65,12 @@ router.post('/lookup/domain', function(req, res, next) {
   // Parse domain from request path
   var domain = req.body.domain,
       domainParts = domain.split('.');
+
+  if (req.recaptcha.error !== null) {
+    responseObject.status = 'error';
+    responseObject.message = 'Invalid captcha (' + req.recaptcha.error + ')';
+    return res.send(responseObject);
+  }
 
   // Check if valid domain format
   if (domainParts.length !== 2 || domainParts[0].length < 1 || domainParts[1].length < 1 ) {
@@ -80,7 +85,6 @@ router.post('/lookup/domain', function(req, res, next) {
     responseObject.message = 'Requested TLD is not allowed for lookups';
     return res.send(responseObject);
   }
-
 
   var domains = [
     domain
@@ -120,7 +124,7 @@ router.post('/lookup/domain', function(req, res, next) {
  * @param next
  * @return {String} JSON response
  */
-router.post('/lookup/package', function(req, res, next) {
+router.post('/lookup/package', recaptcha.middleware.verify,  function(req, res, next) {
   var responseObject = functions.createResponseObject();
 
   // Store configuration file from app locals
@@ -130,6 +134,12 @@ router.post('/lookup/package', function(req, res, next) {
   // Retrieve POST body parameter
   var domain = req.body.domain,
       package = req.body.package;
+
+  if (req.recaptcha.error !== null) {
+    responseObject.status = 'error';
+    responseObject.message = 'Invalid captcha (' + req.recaptcha.error + ')';
+    return res.send(responseObject);
+  }
 
   // Check for "domain"
   if (!domain || domain.length === 0) {

@@ -1,11 +1,13 @@
-var express = require('express');
-var router = express.Router();
+var express = require('express')
+    , router = express.Router()
+    , recaptcha = require('express-recaptcha');
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', recaptcha.middleware.render, function(req, res, next) {
   res.render('index', {
     title: 'Dashboard',
-    config: req.app.locals.configuration
+    config: req.app.locals.configuration,
+    captcha: req.recaptcha
   });
 });
 

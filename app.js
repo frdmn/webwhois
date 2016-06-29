@@ -1,19 +1,26 @@
 // Modules
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var fs = require('fs');
-var hbs = require('hbs');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var responseTime = require('response-time');
+var express = require('express')
+    , path = require('path')
+    , favicon = require('serve-favicon')
+    , logger = require('morgan')
+    , fs = require('fs')
+    , hbs = require('hbs')
+    , cookieParser = require('cookie-parser')
+    , bodyParser = require('body-parser')
+    , responseTime = require('response-time')
+    , recaptcha = require('express-recaptcha');
 
-// HJSON support
+// Add HJSON support
 require("hjson/lib/require-config");
 
 // Configuration files
 var configuration = require('./config/config.hjson')
+
+// Set options and initalize recaptcha
+recaptcha.init(configuration.general.recaptchaSite, configuration.general.recaptchaSecret, {
+  size: 'normal',
+  callback: 'enableInputs'
+});
 
 // Routes
 var routeIndex = require('./routes/index');

@@ -72,9 +72,10 @@ $(function() {
    * @return {Boolean} true
    */
   var submitSingleLookup = function(callback){
-    var domain = $('#your-domain').val();
+    var domain = $('#your-domain').val()
+        captchaResponse = $('.g-recaptcha-response').val();
 
-    $.post( 'api/lookup/domain', { domain: domain }, function( data ){
+    $.post( 'api/lookup/domain', { domain: domain, 'g-recaptcha-response': captchaResponse }, function( data ){
       return callback(data);
     });
   }
@@ -89,7 +90,7 @@ $(function() {
         package = $('#tld-display').text(),
         captchaResponse = $('.g-recaptcha-response').val();
 
-    $.post( 'api/lookup/package', { domain: domain, package: package, 'g-recaptcha-response': captchaResponse}, function( data ) {
+    $.post( 'api/lookup/package', { domain: domain, package: package, 'g-recaptcha-response': captchaResponse }, function( data ) {
       return callback(data);
     });
  }
@@ -179,6 +180,9 @@ $(function() {
         // Stop loading spinner
         ladda.stop();
       }
+      // Reset recaptcha
+      grecaptcha.reset();
+      disableInputs();
     });
   });
 
@@ -207,6 +211,9 @@ $(function() {
         // Stop loading spinner
         ladda.stop();
       }
+      // Reset recaptcha
+      grecaptcha.reset();
+      disableInputs();
     });
   });
 
