@@ -32,6 +32,9 @@ $(function() {
       $('#tld-package').show();
       // Show '.' input group addon
       $('#dot').show();
+      // Remove round corners from "your-domain" input
+      $('#your-domain').css("border-top-right-radius","0px");
+      $('#your-domain').css("border-bottom-right-radius","0px");
       return true;
     } else if (state === 'hide') {
       // Remove 'multi', add 'single' CSS class
@@ -40,6 +43,9 @@ $(function() {
       $('#tld-package').hide();
       // Hide '.' input group addon
       $('#dot').hide();
+      // Add round corners for "your-domain" input
+      $('#your-domain').css("border-top-right-radius","4px");
+      $('#your-domain').css("border-bottom-right-radius","4px");
       return true;
     } else {
       return false;

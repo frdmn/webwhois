@@ -35,3 +35,13 @@ span#dot {
 .chosen-container .chosen-drop {
   width: 100%!important;
 }
+
+// Remove round corners
+.chosen-single {
+  border-radius: 0px !important;
+  border-top-left-radius: 0px  !important;
+  border-bottom-left-radius: 0px !important;
+  border-top-right-radius: 4px  !important;
+  border-bottom-right-radius: 4px !important;
+  border-left: 0px !important;
+}
