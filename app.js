@@ -63,6 +63,14 @@ hbs.registerHelper("searchAndJoinTLDsForSelection", function(config, selection) 
   return false;
 });
 
+// "ifCond" Handlebars helper
+hbs.registerHelper('ifCond', function(v1, v2, options) {
+  if(v1 === v2) {
+    return options.fn(this);
+  }
+  return options.inverse(this);
+});
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))
    .set('view engine', 'hbs');

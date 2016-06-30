@@ -15,12 +15,20 @@
             <select class="form-control">
               <optgroup label="Packages">
                 {{#each config.tldpackages}}
-                  <option data-tlds="{{join this.tlds delimiter=", "}}">{{{@key}}}</option>
+                  {{#ifCond ../config.appearance.defaultSelection @key}}
+                    <option data-tlds="{{join this.tlds delimiter=", "}}" selected>{{{@key}}}</option>
+                  {{else}}
+                    <option data-tlds="{{join this.tlds delimiter=", "}}">{{{@key}}}</option>
+                  {{/ifCond}}
                 {{/each}}
               </optgroup>
               <optgroup label="TLDs">
                 {{#each config.tlds}}
-                  <option data-tlds="{{{this}}}">{{{this}}}</option>
+                  {{#ifCond ../config.appearance.defaultSelection this}}
+                    <option data-tlds="{{{this}}}" selected>{{{this}}}</option>
+                  {{else}}
+                    <option data-tlds="{{{this}}}">{{{this}}}</option>
+                  {{/ifCond}}
                 {{/each}}
               </optgroup>
             </select><!-- /.form-control -->

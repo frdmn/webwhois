@@ -6,7 +6,9 @@
     // The title of your webwhois page
     "title": "Whois System",
     // Meta/SEO description
-    "description": "Lightweight and customizable domain lookup/whois system."
+    "description": "Lightweight and customizable domain lookup/whois system.",
+    // Specify the default selection for the dropdown menu in the dashboard
+    "defaultSelection": "CNOBI"
   },
   ###
   # General settings
@@ -14,8 +16,6 @@
   "general": {
     // Enable/disable debug mode (logged to stdout by default)
     "debug": false,
-    // Specify the default selection for the dropdown menu in the dashboard
-    "defaultSelection": "CNOBI",
     // Generate site and secret tokens and enter them herr
     // (https://www.google.com/recaptcha/admin#site)
     "enableCaptcha": false,
