@@ -3,7 +3,8 @@ var express = require('express')
     , whois = require('whois')
     , functions = require('../lib/functions')
     , router = express.Router()
-    , recaptcha = require('express-recaptcha');
+    , recaptcha = require('express-recaptcha')
+    , configuration = require('../config/config.hjson');
 
 /**
  * Route - "GET /api"
@@ -38,10 +39,8 @@ router.get('/tlds', function(req, res, next) {
   // Create new response object from template
   var responseObject = functions.createResponseObject();
 
-  // Store configuration file from app locals
-  var config = req.app.locals.configuration;
-
-  responseObject.data = config.tlds;
+  // Add TLDs from configuration
+  responseObject.data = configuration.tlds;
 
   return res.send(responseObject);
 });
@@ -58,9 +57,6 @@ router.get('/tlds', function(req, res, next) {
 router.post('/lookup/domain', recaptcha.middleware.verify, function(req, res, next) {
   // Create new response object from template
   var responseObject = functions.createResponseObject();
-
-  // Store configuration file from app locals
-  var config = req.app.locals.configuration;
 
   // Parse domain from request path
   var domain = req.body.domain,
@@ -80,7 +76,7 @@ router.post('/lookup/domain', recaptcha.middleware.verify, function(req, res, ne
   }
 
   // Check if TLD is allowed
-  if (!functions.isTldAllowed(config, domainParts[1])) {
+  if (!functions.isTldAllowed(configuration, domainParts[1])) {
     responseObject.status = 'error';
     responseObject.message = 'Requested TLD is not allowed for lookups';
     return res.send(responseObject);
@@ -128,8 +124,7 @@ router.post('/lookup/package', recaptcha.middleware.verify,  function(req, res, 
   var responseObject = functions.createResponseObject();
 
   // Store configuration file from app locals
-  var config = req.app.locals.configuration,
-      domains = [];
+  var domains = [];
 
   // Retrieve POST body parameter
   var domain = req.body.domain,
@@ -156,8 +151,8 @@ router.post('/lookup/package', recaptcha.middleware.verify,  function(req, res, 
   }
 
   // Check if "package" is really indeed a package and not only a single TLD
-  if (config.tldpackages[package] && config.tldpackages[package].tlds) {
-    var tldArray = config.tldpackages[package].tlds;
+  if (configuration.tldpackages[package] && configuration.tldpackages[package].tlds) {
+    var tldArray = configuration.tldpackages[package].tlds;
   } else {
     // ... only a single TLD, use that one instead
     var tldArray = [package];
@@ -213,9 +208,6 @@ router.get('/whois/:domain', function(req, res, next) {
   // Create new response object from template
   var responseObject = functions.createResponseObject();
 
-  // Store configuration file from app locals
-  var config = req.app.locals.configuration;
-
   // Parse domain from request path
   var domain = req.params.domain,
       domainParts = domain.split('.');
@@ -228,7 +220,7 @@ router.get('/whois/:domain', function(req, res, next) {
   }
 
   // Check if TLD is allowed
-  if (!functions.isTldAllowed(config, domainParts[1])) {
+  if (!functions.isTldAllowed(configuration, domainParts[1])) {
     responseObject.status = 'error';
     responseObject.message = 'Requested TLD is not allowed for lookups';
     return res.send(responseObject);
