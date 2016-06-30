@@ -7,33 +7,6 @@ var express = require('express')
     , configuration = require('../config/config.hjson');
 
 /**
- * Route - "GET /api"
- *
- * Display a general API directory/overview
- * @return {String} JSON response
- */
-router.get('/', function(req, res, next) {
-  // Create new response object from template
-  var responseObject = functions.createResponseObject();
-
-  var routes = {
-    'GET /api': 'This API overview',
-    'GET /api/tlds': 'List all available TLDs',
-    'POST /api/lookup/domain': 'Check availablity of a single domain',
-    'POST /api/lookup/package': 'Check availablity of for several domains (using a TLD package)',
-  };
-
-  // If raw whois is enabled, add that to route directory
-  if (configuration.general.enableWhoisRoute) {
-    routes['POST /api/whois'] = 'Whois a single domain';
-  }
-
-  responseObject.data = routes;
-
-  return res.send(responseObject);
-});
-
-/**
  * Route - "GET /api/tlds"
  *
  * List all available TLDs
@@ -264,6 +237,33 @@ router.post('/whois', recaptcha.middleware.verify, function(req, res, next) {
 
     return res.send(responseObject);
   });
+});
+
+/**
+ * Fallback / catch-all route - "GET /api/*"
+ *
+ * Display a general API directory/overview
+ * @return {String} JSON response
+ */
+router.all('*', function(req, res, next) {
+  // Create new response object from template
+  var responseObject = functions.createResponseObject();
+
+  var routes = {
+    'GET /api/*': 'This API overview',
+    'GET /api/tlds': 'List all available TLDs',
+    'POST /api/lookup/domain': 'Check availablity of a single domain',
+    'POST /api/lookup/package': 'Check availablity of for several domains (using a TLD package)',
+  };
+
+  // If raw whois is enabled, add that to route directory
+  if (configuration.general.enableWhoisRoute) {
+    routes['POST /api/whois'] = 'Whois a single domain';
+  }
+
+  responseObject.data = routes;
+
+  return res.send(responseObject);
 });
 
 module.exports = router;
