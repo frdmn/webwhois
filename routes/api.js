@@ -21,7 +21,7 @@ router.get('/', function(req, res, next) {
     'GET /api/tlds': 'List all available TLDs',
     'POST /api/lookup/domain': 'Check availablity of a single domain',
     'POST /api/lookup/package': 'Check availablity of for several domains (using a TLD package)',
-    'GET /api/whois/:domain': 'Whois a single domain'
+    'POST /api/whois': 'Whois a single domain'
   };
 
   responseObject.data = routes;
@@ -204,12 +204,12 @@ router.post('/lookup/package', recaptcha.middleware.verify,  function(req, res, 
  * @param next
  * @return {String} JSON response
  */
-router.get('/whois/:domain', function(req, res, next) {
+router.post('/whois', function(req, res, next) {
   // Create new response object from template
   var responseObject = functions.createResponseObject();
 
   // Parse domain from request path
-  var domain = req.params.domain,
+  var domain = req.body.domain,
       domainParts = domain.split('.');
 
   // Check if valid domain format
