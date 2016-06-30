@@ -19,23 +19,23 @@ var configuration = require('./config/config.hjson')
 
 // Set options and initalize recaptcha
 recaptcha.init(configuration.general.recaptchaSite, configuration.general.recaptchaSecret, {
-  size: 'normal',
-  callback: 'enableInputs'
+  size: 'normal'
+  , callback: 'enableInputs'
 });
 
 // Setup logger
 var logDirectory = path.join(__dirname, 'logs')
 fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory)
 var accessLogStream = FileStreamRotator.getStream({
-  date_format: 'YYYYMMDD',
-  filename: path.join(logDirectory, '%DATE%.log'),
-  frequency: 'daily',
-  verbose: false
+  date_format: 'YYYYMMDD'
+  , filename: path.join(logDirectory, '%DATE%.log')
+  , frequency: 'daily'
+  , verbose: false
 })
 
 // Routes
-var routeIndex = require('./routes/index');
-var routeApi = require('./routes/api');
+var routeIndex = require('./routes/index')
+    , routeApi = require('./routes/api');
 
 // Create express app
 var app = express();
@@ -64,22 +64,22 @@ hbs.registerHelper("searchAndJoinTLDsForSelection", function(config, selection) 
 });
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hbs');
+app.set('views', path.join(__dirname, 'views'))
+   .set('view engine', 'hbs');
 
 // Configure middlewares
-app.use(responseTime());
-app.use(morgan('combined', {stream: accessLogStream}))
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(responseTime())
+   .use(morgan('combined', {stream: accessLogStream}))
+   .use(bodyParser.json())
+   .use(bodyParser.urlencoded({ extended: false }))
+   .use(cookieParser())
+   .use(express.static(path.join(__dirname, 'public')));
 
 configuration.version = fs.readFileSync('./VERSION', 'utf8');
 app.locals.configuration = configuration;
 
-app.use('/', routeIndex);
-app.use('/api', routeApi);
+app.use('/', routeIndex)
+   .use('/api', routeApi);
 
 // Catch 404 and forward to error handler
 app.use(function(req, res, next) {

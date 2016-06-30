@@ -1,3 +1,4 @@
+// Require modules
 var express = require('express')
     , async = require('async')
     , whois = require('whois')
@@ -36,8 +37,8 @@ router.post('/lookup/domain', recaptcha.middleware.verify, function(req, res, ne
   var responseObject = functions.createResponseObject();
 
   // Parse domain from request path
-  var domain = req.body.domain,
-      domainParts = domain.split('.');
+  var domain = req.body.domain
+      , domainParts = domain.split('.');
 
   // If captcha is enabled, check for validation
   if (configuration.general.enableCaptcha) {
@@ -107,8 +108,8 @@ router.post('/lookup/package', recaptcha.middleware.verify,  function(req, res, 
   var domains = [];
 
   // Retrieve POST body parameter
-  var domain = req.body.domain,
-      package = req.body.package;
+  var domain = req.body.domain
+      , package = req.body.package;
 
   // If captcha is enabled, check for validation
   if (configuration.general.enableCaptcha) {
@@ -192,8 +193,8 @@ router.post('/whois', recaptcha.middleware.verify, function(req, res, next) {
   var responseObject = functions.createResponseObject();
 
   // Parse domain from request path
-  var domain = req.body.domain,
-      domainParts = domain.split('.');
+  var domain = req.body.domain
+      , domainParts = domain.split('.');
 
   // Abbort if raw whois is not enabled
   if (!configuration.general.enableWhoisRoute) {
@@ -250,10 +251,10 @@ router.all('*', function(req, res, next) {
   var responseObject = functions.createResponseObject();
 
   var routes = {
-    'GET /api/*': 'This API overview',
-    'GET /api/tlds': 'List all available TLDs',
-    'POST /api/lookup/domain': 'Check availablity of a single domain',
-    'POST /api/lookup/package': 'Check availablity of for several domains (using a TLD package)',
+    'GET /api/*': 'This API overview'
+    , 'GET /api/tlds': 'List all available TLDs'
+    , 'POST /api/lookup/domain': 'Check availablity of a single domain'
+    , 'POST /api/lookup/package': 'Check availablity of for several domains (using a TLD package)'
   };
 
   // If raw whois is enabled, add that to route directory

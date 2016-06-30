@@ -1,13 +1,22 @@
+// Require modules
 var express = require('express')
     , router = express.Router()
     , recaptcha = require('express-recaptcha');
 
-/* GET home page. */
+/**
+ * Route - "GET /" (actual frontend)
+ *
+ * Lookup a single domain name
+ * @param req
+ * @param res
+ * @param next
+ * @return {String} JSON response
+ */
 router.get('/', recaptcha.middleware.render, function(req, res, next) {
   res.render('index', {
-    title: 'Dashboard',
-    config: req.app.locals.configuration,
-    captcha: req.recaptcha
+    title: 'Dashboard'
+    , config: req.app.locals.configuration
+    , captcha: req.recaptcha
   });
 });
 
