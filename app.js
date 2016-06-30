@@ -2,7 +2,6 @@
 var express = require('express')
     , path = require('path')
     , favicon = require('serve-favicon')
-    , logger = require('morgan')
     , fs = require('fs')
     , hbs = require('hbs')
     , cookieParser = require('cookie-parser')
