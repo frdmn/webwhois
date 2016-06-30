@@ -9,7 +9,7 @@ var express = require('express')
 /**
  * Route - "GET /api"
  *
- * Display a general API overview
+ * Display a general API directory/overview
  * @return {String} JSON response
  */
 router.get('/', function(req, res, next) {
@@ -21,8 +21,12 @@ router.get('/', function(req, res, next) {
     'GET /api/tlds': 'List all available TLDs',
     'POST /api/lookup/domain': 'Check availablity of a single domain',
     'POST /api/lookup/package': 'Check availablity of for several domains (using a TLD package)',
-    'POST /api/whois': 'Whois a single domain'
   };
+
+  // If raw whois is enabled, add that to route directory
+  if (configuration.general.enableWhoisRoute) {
+    routes['POST /api/whois'] = 'Whois a single domain';
+  }
 
   responseObject.data = routes;
 
@@ -217,6 +221,13 @@ router.post('/whois', recaptcha.middleware.verify, function(req, res, next) {
   // Parse domain from request path
   var domain = req.body.domain,
       domainParts = domain.split('.');
+
+  // Abbort if raw whois is not enabled
+  if (!configuration.general.enableWhoisRoute) {
+    responseObject.status = 'error';
+    responseObject.message = 'Raw whois route not enabled in configuration.';
+    return res.send(responseObject);
+  }
 
   // If captcha is enabled, check for validation
   if (configuration.general.enableCaptcha) {

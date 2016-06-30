@@ -20,7 +20,9 @@
     // (https://www.google.com/recaptcha/admin#site)
     "enableCaptcha": false,
     "recaptchaSite": "S8Xf9XAqnv2iX6JxbQQkdH3ubAeJUDpg2yxhFyVT",
-    "recaptchaSecret": "stSMHD1iIz4MPm8tvtiMmw02cLBkhnphsKq8FsSX"
+    "recaptchaSecret": "stSMHD1iIz4MPm8tvtiMmw02cLBkhnphsKq8FsSX",
+    // Enable API route to lookup raw whois requests
+    "enableWhoisRoute": false
   },
   ###
   # Option to setup "packages"
