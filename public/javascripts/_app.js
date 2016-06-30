@@ -70,10 +70,18 @@ $(function() {
    * @return {Boolean} true
    */
   var submitSingleLookup = function(callback){
-    var domain = $('#your-domain').val()
-        captchaResponse = $('.g-recaptcha-response').val();
+    var domain = $('#your-domain').val();
 
-    $.post( 'api/lookup/domain', { domain: domain, 'g-recaptcha-response': captchaResponse }, function( data ){
+    var postParameter = {
+      domain: domain
+    };
+
+    // If captcha is enabled
+    if($('.captcha').length > 0){
+      postParameter['g-recaptcha-response'] = $('.g-recaptcha-response').val();
+    }
+
+    $.post( 'api/lookup/domain', postParameter, function( data ){
       return callback(data);
     });
   }
@@ -85,10 +93,19 @@ $(function() {
    */
   var submitMultiLookup = function(callback){
     var domain = $('#your-domain').val(),
-        package = $('#tld-display').text(),
-        captchaResponse = $('.g-recaptcha-response').val();
+        package = $('#tld-display').text();
 
-    $.post( 'api/lookup/package', { domain: domain, package: package, 'g-recaptcha-response': captchaResponse }, function( data ) {
+    var postParameter = {
+      domain: domain,
+      package: package
+    };
+
+    // If captcha is enabled
+    if($('.captcha').length > 0){
+      postParameter['g-recaptcha-response'] = $('.g-recaptcha-response').val();
+    }
+
+    $.post( 'api/lookup/package', postParameter, function( data ) {
       return callback(data);
     });
  }
@@ -178,9 +195,13 @@ $(function() {
         // Stop loading spinner
         ladda.stop();
       }
-      // Reset recaptcha
-      grecaptcha.reset();
-      disableInputs();
+
+      // If captcha is enabled
+      if($('.captcha').length > 0){
+        // Reset recaptcha
+        grecaptcha.reset();
+        disableInputs();
+      }
     });
   });
 
@@ -209,9 +230,13 @@ $(function() {
         // Stop loading spinner
         ladda.stop();
       }
-      // Reset recaptcha
-      grecaptcha.reset();
-      disableInputs();
+
+      // If captcha is enabled
+      if($('.captcha').length > 0){
+        // Reset recaptcha
+        grecaptcha.reset();
+        disableInputs();
+      }
     });
   });
 
@@ -248,6 +273,9 @@ $(function() {
     $('#tld-display').text(selectedDisplayName);
   });
 
-  // Disable button
-  disableInputs();
+  // If captcha is enabled
+  if($('.captcha').length > 0){
+    // Disable button
+    disableInputs();
+  }
 });

@@ -18,6 +18,7 @@
     "defaultSelection": "CNOBI",
     // Generate site and secret tokens and enter them herr
     // (https://www.google.com/recaptcha/admin#site)
+    "enableCaptcha": false,
     "recaptchaSite": "S8Xf9XAqnv2iX6JxbQQkdH3ubAeJUDpg2yxhFyVT",
     "recaptchaSecret": "stSMHD1iIz4MPm8tvtiMmw02cLBkhnphsKq8FsSX"
   },

@@ -62,10 +62,13 @@ router.post('/lookup/domain', recaptcha.middleware.verify, function(req, res, ne
   var domain = req.body.domain,
       domainParts = domain.split('.');
 
-  if (req.recaptcha.error !== null) {
-    responseObject.status = 'error';
-    responseObject.message = 'Invalid captcha (' + req.recaptcha.error + ')';
-    return res.send(responseObject);
+  // If captcha is enabled, check for validation
+  if (configuration.general.enableCaptcha) {
+    if (req.recaptcha.error !== null) {
+      responseObject.status = 'error';
+      responseObject.message = 'Invalid captcha (' + req.recaptcha.error + ')';
+      return res.send(responseObject);
+    }
   }
 
   // Check if valid domain format
@@ -130,10 +133,13 @@ router.post('/lookup/package', recaptcha.middleware.verify,  function(req, res, 
   var domain = req.body.domain,
       package = req.body.package;
 
-  if (req.recaptcha.error !== null) {
-    responseObject.status = 'error';
-    responseObject.message = 'Invalid captcha (' + req.recaptcha.error + ')';
-    return res.send(responseObject);
+  // If captcha is enabled, check for validation
+  if (configuration.general.enableCaptcha) {
+    if (req.recaptcha.error !== null) {
+      responseObject.status = 'error';
+      responseObject.message = 'Invalid captcha (' + req.recaptcha.error + ')';
+      return res.send(responseObject);
+    }
   }
 
   // Check for "domain"
@@ -204,13 +210,22 @@ router.post('/lookup/package', recaptcha.middleware.verify,  function(req, res, 
  * @param next
  * @return {String} JSON response
  */
-router.post('/whois', function(req, res, next) {
+router.post('/whois', recaptcha.middleware.verify, function(req, res, next) {
   // Create new response object from template
   var responseObject = functions.createResponseObject();
 
   // Parse domain from request path
   var domain = req.body.domain,
       domainParts = domain.split('.');
+
+  // If captcha is enabled, check for validation
+  if (configuration.general.enableCaptcha) {
+    if (req.recaptcha.error !== null) {
+      responseObject.status = 'error';
+      responseObject.message = 'Invalid captcha (' + req.recaptcha.error + ')';
+      return res.send(responseObject);
+    }
+  }
 
   // Check if valid domain format
   if (domainParts.length !== 2 || domainParts[0].length < 1 || domainParts[1].length < 1 ) {

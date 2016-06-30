@@ -31,7 +31,11 @@
     <hr>
     <div class="form-group">
       <center>
-        {{{captcha}}}
+        {{#if config.general.enableCaptcha}}
+          <div class="captcha">
+            {{{captcha}}}
+          </div>
+        {{/if}}
         <a href="#" class="btn btn-primary btn-lg submit ladda-button" data-style="expand-right" data-size="l"><span class="ladda-label">Lookup</span></a>
       </center
     </div>
