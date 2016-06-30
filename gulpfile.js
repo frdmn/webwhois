@@ -46,6 +46,12 @@ gulp.task('styles', function () {
     .pipe(gulp.dest(dirs.css));
 });
 
+// Copy images
+gulp.task('images', function () {
+  gulp.src([dirs.bower + '/bootstrap-chosen/*.png'])
+    .pipe(gulp.dest(dirs.images + '/'));
+});
+
 // Copy fonts
 gulp.task('fonts', function () {
   gulp.src([dirs.bower + '/bootstrap-sass/assets/fonts/bootstrap/*'])
@@ -128,5 +134,5 @@ gulp.task('phplint', function (cb) {
 })
 
 // Register default and dev task
-gulp.task('default', ['styles', 'fonts', 'scripts:copy', 'scripts', 'imagemin'], function () {});
+gulp.task('default', ['styles', 'fonts', 'scripts:copy', 'scripts', 'images', 'imagemin'], function () {});
 gulp.task('dev', ['default', 'connect', 'watch'], function () {});
