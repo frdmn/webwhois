@@ -20,6 +20,8 @@
   "dependencies": {
     "bootstrap-sass": "boostrap-sass#~3.3.6",
     "modernizr": "2.8.1",
-    "ladda-bootstrap": "^0.1.0"
+    "ladda-bootstrap": "^0.1.0",
+    "bootstrap-chosen": "^1.0.1",
+    "chosen": "^1.6.1"
   }
 }

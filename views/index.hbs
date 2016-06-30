@@ -11,20 +11,20 @@
           <span class="input-group-addon">www.</span>
           <input type="text" class="form-control" id="your-domain" name="your-domain" placeholder="yourdomain">
           <span class="input-group-addon" id="dot">.</span>
-          <div class="input-group-btn" id="tld-package">
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <span id="tld-display">{{{config.general.defaultSelection}}}</span> <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" id="dropdownmenu">
-              {{#each config.tldpackages}}
-                <li data-tlds="{{join this.tlds delimiter=", "}}"><a href="#">{{{@key}}}</a></li>
-              {{/each}}
-              <li role="separator" class="divider"></li>
-              {{#each config.tlds}}
-                <li data-tlds="{{{this}}}"><a href="#">{{{this}}}</a></li>
-              {{/each}}
-            </ul><!-- /.dropdown-menu -->
-          </div><!-- /.input-group-btn -->
+          <div class="chosen-wrapper" id="tld-package">
+            <select class="form-control">
+              <optgroup label="Packages">
+                {{#each config.tldpackages}}
+                  <option data-tlds="{{join this.tlds delimiter=", "}}">{{{@key}}}</option>
+                {{/each}}
+              </optgroup>
+              <optgroup label="TLDs">
+                {{#each config.tlds}}
+                  <option data-tlds="{{{this}}}">{{{this}}}</option>
+                {{/each}}
+              </optgroup>
+            </select><!-- /.form-control -->
+          </div>
         </div><!-- /.input-group -->
       </div><!-- /.form-inputs -->
     </fieldset>

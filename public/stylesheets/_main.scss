@@ -11,3 +11,27 @@ body {
 span#dot {
   border-left: 0px;
 }
+
+// Adjust positioning of the select input and chosen
+.chosen-wrapper {
+  display: table-cell;
+  vertical-align: top;
+
+  @media (min-width: $screen-sm-min) {
+    width: 200px;
+  }
+}
+
+.chosen-container {
+  width:98%!important;
+}
+
+.chosen-container .chosen-search input[type="text"] {
+  padding:2px 4%!important;
+  width:90%!important;
+  margin:5px 2%;
+}
+
+.chosen-container .chosen-drop {
+  width: 100%!important;
+}

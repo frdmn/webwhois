@@ -93,7 +93,7 @@ $(function() {
    */
   var submitMultiLookup = function(callback){
     var domain = $('#your-domain').val(),
-        package = $('#tld-display').text();
+        package = $("select.form-control option:selected").text();
 
     var postParameter = {
       domain: domain,
@@ -278,4 +278,7 @@ $(function() {
     // Disable button
     disableInputs();
   }
+
+  // Turn select into a chosen search input
+  $("select").chosen()
 });

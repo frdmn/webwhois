@@ -1,6 +1,8 @@
 /* Variables */
 
 $icon-font-path: "../fonts/";
+$chosen-sprite-path: '../images/chosen-sprite.png';
+$chosen-sprite-retina-path: '../images/chosen-sprite@2x.png';
 
 /* Bower imports */
 
@@ -8,6 +10,9 @@ $icon-font-path: "../fonts/";
 @import 'bower_components/bootstrap-sass/assets/stylesheets/bootstrap';
 // ladda-bootstrap loading buttons
 @import 'bower_components/ladda-bootstrap/css/ladda';
+// Add chosen
+@import 'bower_components/chosen/chosen';
+@import 'bower_components/bootstrap-chosen/bootstrap-chosen';
 
 /* Partials */
 

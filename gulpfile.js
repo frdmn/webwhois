@@ -67,6 +67,7 @@ gulp.task('scripts', function (done) {
     dirs.bower + '/bootstrap-sass/assets/javascripts/bootstrap.js',
     dirs.bower + '/spin.js/spin.js',
     dirs.bower + '/ladda-bootstrap/js/ladda.js',
+    dirs.bower + '/chosen/chosen.jquery.js',
     dirs.js + '/*.js',
     '!' + dirs.js + '/modernizr.js',
     '!' + dirs.js + '/build.js'
