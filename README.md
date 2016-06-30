@@ -1,8 +1,8 @@
 # webwhois [![CircleCI build status](https://img.shields.io/circleci/project/frdmn/webwhois.svg)](https://circleci.com/gh/frdmn/webwhois) [![devDependency status](https://david-dm.org/frdmn/webwhois/dev-status.svg)](https://david-dm.org/frdmn/webwhois#info=devDependencies)
 
-Simple, Lightweight and customizable domain lookup/whois system including AutoDNS3 WhoisProxy support. Comes with a REST interface and can be embedded or used as standalone frontend.
+Simple, lightweight, customizable and web-based domain lookup system including AutoDNS3' WhoisProxy support. Comes with a REST interface and can be embedded or used as standalone frontend.
 
-![](http://up.frd.mn/SkQmEmAhxr.png)
+![](http://i.imgur.com/tMLEYJN.png)
 
 ## API documentation
 
@@ -24,12 +24,6 @@ You can find a (commented) example configuration file in [`config/config.hjson.e
 
     ```shell
     git clone https://github.com/frdmn/webwhois
-    ```
-
-1. Install PHP dependencies using Composer:  
-
-    ```shell
-    composer install
     ```
 
 1. Install the web libraries using Bower:  
