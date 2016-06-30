@@ -10,52 +10,7 @@ Please take a look at the [API.md](API.md) Markdown file for a detailed API docu
 
 ## Configuration
 
-```json
-{
-  "appearance": {
-    "title": "Whois System",
-    "description": "Lightweight and customizable domain lookup/whois system."
-  },
-  "general": {
-    "autodnsWhoisproxy": false,
-    "debug": false,
-    "defaultSelection": "CNOBI"
-  },
-  "tldpackages": {
-    "CNOBI": {
-      "tlds": [
-        "com",
-        "net",
-        "org",
-        "biz",
-        "info"
-      ]
-    },
-    "New gTLDs": {
-      "tlds": [
-        "academy",
-        "accountant",
-        "accountants",
-        "active",
-        "actor"
-      ]
-    }
-  },
-  "tlds": [
-    "academy",
-    "accountant",
-    "accountants",
-    "active",
-    "actor",
-    "biz",
-    "com",
-    "de",
-    "info",
-    "net",
-    "org"
-  ]
-}
-```
+You can find a (commented) example configuration file in [`config/config.hjson.example`](config/config.hjson.example).
 
 ## Installation
 
