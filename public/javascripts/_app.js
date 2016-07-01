@@ -130,16 +130,16 @@ $(function() {
       if (data[domain].status === 'success') {
         // Append new table <tr> in htmlData
         if (data[domain].available === true ) {
-          htmlData += '<tr><th scope="row">' + domain + '</th><td class="text-center"><span class="glyphicon glyphicon-ok"></span></td><td class="text-center"><input type="checkbox" value=""></td></tr>';
+          htmlData += '<tr data-domain="' + domain + '"><th scope="row">' + domain + '</th><td class="text-center"><span class="glyphicon glyphicon-ok"></span></td><td class="text-center"><input type="checkbox" value=""></td></tr>';
         } else {
-          htmlData += '<tr><th scope="row">' + domain + '</th><td class="text-center"><span class="glyphicon glyphicon-remove"></span></td><td class="text-center"><input type="checkbox" value="" disabled></td></tr>';
+          htmlData += '<tr data-domain="' + domain + '"><th scope="row">' + domain + '</th><td class="text-center"><span class="glyphicon glyphicon-remove"></span></td><td class="text-center"><input type="checkbox" value="" disabled></td></tr>';
         }
       } else {
-        htmlData += '<tr><th scope="row">' + domain + ' (' + data[domain].message + ')</th><td class="text-center"><span class="glyphicon glyphicon-exclamation-sign"></span></td><td class="text-center"><input type="checkbox" value="" disabled></td></tr>';
+        htmlData += '<tr data-domain="' + domain + '"><th scope="row">' + domain + ' (' + data[domain].message + ')</th><td class="text-center"><span class="glyphicon glyphicon-exclamation-sign"></span></td><td class="text-center"><input type="checkbox" value="" disabled></td></tr>';
       }
     }
 
-    return $('table.lookup-results tbody').html(htmlData);
+    return $('.lookup-results table tbody').html(htmlData);
   }
 
   /**
@@ -281,8 +281,34 @@ $(function() {
 
   // On click on table rows
   $('body').delegate('table tr','click',function(e){
+    if ($('input[type=checkbox]:checked').length > 0) {
+      $('.purchase').addClass('enabled').removeClass('disabled');
+    } else {
+      $('.purchase').addClass('disabled').removeClass('enabled');
+    }
+
+    // Toggle checkbox
     $(this).find('input[type=checkbox]').click();
-  })
+  });
+
+  // On click on purchase button
+  $('body').delegate('.purchase','click',function(e){
+    var domains = '';
+
+    // Construct domain chain string
+    $( "input[type=checkbox]:checked" ).each(function( index ) {
+      domains = domains + $( this ).parent().parent().text() + ', ';
+    });
+
+    // URL encode the string
+    var encodedDomains = encodeURIComponent(domains.slice(0,-2));
+
+    // Open in new window
+    window.open('https://www.iwelt.de/index.php?id=125&tx_powermail_pi1[field][1]=' + encodedDomains + '&L=0&qry=5486', '_blank');
+  });
+
+  // Disable purchase button by default
+  $('.purchase').addClass('disabled').removeClass('enabled');
 
   // If captcha is enabled
   if($('.captcha').length > 0){
