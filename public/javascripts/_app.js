@@ -130,12 +130,12 @@ $(function() {
       if (data[domain].status === 'success') {
         // Append new table <tr> in htmlData
         if (data[domain].available === true ) {
-          htmlData += '<tr><th scope="row">' + domain + '</th><td><span class="glyphicon glyphicon-ok"></span></td></tr>';
+          htmlData += '<tr><th scope="row">' + domain + '</th><td class="text-center"><span class="glyphicon glyphicon-ok"></span></td><td class="text-center"><input type="checkbox" value=""></td></tr>';
         } else {
-          htmlData += '<tr><th scope="row">' + domain + '</th><td><span class="glyphicon glyphicon-remove"></span></td></tr>';
+          htmlData += '<tr><th scope="row">' + domain + '</th><td class="text-center"><span class="glyphicon glyphicon-remove"></span></td><td class="text-center"><input type="checkbox" value="" disabled></td></tr>';
         }
       } else {
-        htmlData += '<tr><th scope="row">' + domain + ' (' + data[domain].message + ')</th><td><span class="glyphicon glyphicon-exclamation-sign"></span></td></tr>';
+        htmlData += '<tr><th scope="row">' + domain + ' (' + data[domain].message + ')</th><td class="text-center"><span class="glyphicon glyphicon-exclamation-sign"></span></td><td class="text-center"><input type="checkbox" value="" disabled></td></tr>';
       }
     }
 
@@ -278,6 +278,11 @@ $(function() {
     var selectedTlds = $(this).data('tlds');
     $('#tld-display').text(selectedDisplayName);
   });
+
+  // On click on table rows
+  $('body').delegate('table tr','click',function(e){
+    $(this).find('input[type=checkbox]').click();
+  })
 
   // If captcha is enabled
   if($('.captcha').length > 0){
