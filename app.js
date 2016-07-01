@@ -15,7 +15,7 @@ var express = require('express')
 require("hjson/lib/require-config");
 
 // Configuration files
-var configuration = require('./config/config.hjson')
+var configuration = require('./config.hjson')
 
 // Set options and initalize recaptcha
 recaptcha.init(configuration.general.recaptchaSite, configuration.general.recaptchaSecret, {

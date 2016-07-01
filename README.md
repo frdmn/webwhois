@@ -10,7 +10,7 @@ Please take a look at the [API.md](API.md) Markdown file for a detailed API docu
 
 ## Configuration
 
-You can find a (commented) example configuration file in [`config/config.hjson.example`](config/config.hjson.example).
+You can find a (commented) example configuration file in [`config.hjson.example`](config.hjson.example).
 
 ## Installation
 
