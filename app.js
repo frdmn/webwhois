@@ -34,8 +34,8 @@ var accessLogStream = FileStreamRotator.getStream({
 })
 
 // Routes
-var routeIndex = require('./routes/index')
-    , routeApi = require('./routes/api');
+var routeIndex = require('./lib/routes/index')
+    , routeApi = require('./lib/routes/api');
 
 // Create express app
 var app = express();
