@@ -9,7 +9,7 @@ var express = require('express')
     , responseTime = require('response-time')
     , recaptcha = require('express-recaptcha')
     , FileStreamRotator = require('file-stream-rotator')
-    , morgan = require('morgan')
+    , morgan = require('morgan');
 
 // Add HJSON support
 require("hjson/lib/require-config");
@@ -28,7 +28,7 @@ var logDirectory = path.join(__dirname, 'logs')
 fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory)
 var accessLogStream = FileStreamRotator.getStream({
   date_format: 'YYYYMMDD'
-  , filename: path.join(logDirectory, '%DATE%.log')
+  , filename: path.join(logDirectory, '%DATE%_access.log')
   , frequency: 'daily'
   , verbose: false
 })
