@@ -24,14 +24,14 @@ recaptcha.init(configuration.general.recaptchaSite, configuration.general.recapt
 });
 
 // Setup logger
-var logDirectory = path.join(__dirname, 'logs')
-fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory)
+var logDirectory = path.join(__dirname, 'logs');
+fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);
 var accessLogStream = FileStreamRotator.getStream({
   date_format: 'YYYYMMDD'
   , filename: path.join(logDirectory, '%DATE%_access.log')
   , frequency: 'daily'
   , verbose: false
-})
+});
 
 // Routes
 var routeIndex = require('./lib/routes/index')
