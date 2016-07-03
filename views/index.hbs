@@ -2,7 +2,7 @@
   <form method="post" class="multi">
     <fieldset>
       <!-- Form Name -->
-      <legend>Domain lookup</legend>
+      <legend>{{texts.DOMAIN_LOOKUP}}</legend>
 
       <div class="error-container"></div>
 
@@ -13,7 +13,7 @@
           <span class="input-group-addon" id="dot">.</span>
           <div class="chosen-wrapper" id="tld-package">
             <select class="form-control">
-              <optgroup label="Packages">
+              <optgroup label="{{texts.PACKAGES}}">
                 {{#each config.tldpackages}}
                   {{#ifCond ../config.appearance.defaultSelection @key}}
                     <option data-tlds="{{join this.tlds delimiter=", "}}" selected>{{{@key}}}</option>
@@ -22,7 +22,7 @@
                   {{/ifCond}}
                 {{/each}}
               </optgroup>
-              <optgroup label="TLDs">
+              <optgroup label="{{texts.TLDS}}">
                 {{#each config.tlds}}
                   {{#ifCond ../config.appearance.defaultSelection this}}
                     <option data-tlds="{{{this}}}" selected>{{{this}}}</option>
@@ -44,7 +44,7 @@
             {{{captcha}}}
           </div>
         {{/if}}
-        <a href="#" class="btn btn-primary btn-lg submit ladda-button" data-style="expand-right" data-size="l"><span class="ladda-label">Lookup</span></a>
+        <a href="#" class="btn btn-primary btn-lg submit ladda-button" data-style="expand-right" data-size="l"><span class="ladda-label">{{texts.LOOKUP}}</span></a>
       </center
     </div>
   </form>
@@ -53,13 +53,13 @@
     <table class="table table-hover">
       <thead>
         <tr>
-          <th class="col-md-10">Domain</th>
-          <th class="col-md-1">Available</th>
-          <th class="col-md-1">Purchase</th>
+          <th class="col-md-10">{{texts.DOMAIN}}</th>
+          <th class="col-md-1">{{texts.AVAILABILITY}}</th>
+          <th class="col-md-1">{{texts.ORDER}}</th>
         </tr>
       </thead>
       <tbody></tbody>
     </table>
-    <a href="#" class="btn btn-success pull-right btn-sm purchase">Purchase</a>
+    <a href="#" class="btn btn-success pull-right btn-sm purchase">{{texts.ORDER}}</a>
   </div>
 </div><!-- /.row -->
