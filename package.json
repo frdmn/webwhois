@@ -27,6 +27,7 @@
     "fsr-logger": "^0.1.0",
     "hbs": "~3.1.0",
     "hjson": "^1.8.4",
+    "i18n-express": "^1.0.3",
     "morgan": "^1.6.1",
     "response-time": "^2.3.1",
     "serve-favicon": "~2.3.0",

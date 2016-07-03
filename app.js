@@ -9,6 +9,7 @@ var express = require('express')
     , responseTime = require('response-time')
     , recaptcha = require('express-recaptcha')
     , FileStreamRotator = require('file-stream-rotator')
+    , i18n = require("i18n-express")
     , morgan = require('morgan');
 
 // Add HJSON support
@@ -81,6 +82,11 @@ app.use(responseTime())
    .use(bodyParser.json())
    .use(bodyParser.urlencoded({ extended: false }))
    .use(cookieParser())
+   .use(i18n({
+      translationsPath: path.join(__dirname, 'i18n'),
+      siteLangs: ['en','de'],
+      paramLangName: 'lang'
+   }))
    .use(express.static(path.join(__dirname, 'public')));
 
 configuration.version = fs.readFileSync('./VERSION', 'utf8');
