@@ -1,8 +1,17 @@
 # webwhois [![CircleCI build status](https://img.shields.io/circleci/project/frdmn/webwhois.svg)](https://circleci.com/gh/frdmn/webwhois) [![devDependency status](https://david-dm.org/frdmn/webwhois/dev-status.svg)](https://david-dm.org/frdmn/webwhois#info=devDependencies)
 
-Simple, lightweight, customizable and web-based domain lookup system including AutoDNS3' WhoisProxy support. Comes with a REST interface and can be embedded or used as standalone frontend.
+Simple, web-based domain availability lookup system. Can be embedded or used as standalone frontend.
 
 ![](http://i.imgur.com/tMLEYJN.png)
+
+## Features
+
+- [RESTful backend/API](API.md)
+- [AutoDNS WhoisProxy](https://www.internetx.com/domains/autodns/whoisproxy/) support
+- Twitter Bootstrap based frontend
+- reCAPTCHA support
+- i18n/l10n
+- Highly customizable/configurable
 
 ## API documentation
 
