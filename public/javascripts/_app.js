@@ -280,15 +280,24 @@ $(function() {
   });
 
   // On click on table rows
-  $('body').delegate('table tr','click',function(e){
+  $('body').delegate('tbody tr','click',function(event){
+    var $checkbox = $(this).find('input');
+
+    // Toggle checkbox and hightlighting of current row
+    if ($checkbox.prop('checked')) {
+      $checkbox.prop('checked', false);
+      $(this).removeClass('table-selected');
+    } else {
+      $checkbox.prop('checked', true);
+      $(this).addClass('table-selected');
+    }
+
+    // Enable/disable purchase button
     if ($('input[type=checkbox]:checked').length > 0) {
       $('.purchase').addClass('enabled').removeClass('disabled');
     } else {
       $('.purchase').addClass('disabled').removeClass('enabled');
     }
-
-    // Toggle checkbox
-    $(this).find('input[type=checkbox]').click();
   });
 
   // On click on purchase button
