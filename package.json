@@ -1,6 +1,6 @@
 {
   "name": "webwhois",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Lightweight and customizable domain lookup/whois system.",
   "author": "Jonas Friedmann <j@frd.mn>",
   "homepage": "https://github.com/frdmn/webwhois#readme",
