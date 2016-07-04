@@ -130,12 +130,12 @@ $(function() {
       if (data[domain].status === 'success') {
         // Append new table <tr> in htmlData
         if (data[domain].available === true ) {
-          htmlData += '<tr data-domain="' + domain + '"><th scope="row">' + domain + '</th><td class="text-center"><span class="glyphicon glyphicon-ok"></span></td><td class="text-center"><input type="checkbox" value=""></td></tr>';
+          htmlData += '<tr data-domain="' + domain + '" data-available="available"><th scope="row">' + domain + '</th><td class="text-center"><span class="glyphicon glyphicon-ok"></span></td><td class="text-center"><input type="checkbox" value=""></td></tr>';
         } else {
-          htmlData += '<tr data-domain="' + domain + '"><th scope="row">' + domain + '</th><td class="text-center"><span class="glyphicon glyphicon-remove"></span></td><td class="text-center"><input type="checkbox" value="" disabled></td></tr>';
+          htmlData += '<tr data-domain="' + domain + '" data-available="unavailable"><th scope="row">' + domain + '</th><td class="text-center"><span class="glyphicon glyphicon-remove"></span></td><td class="text-center"><input type="checkbox" value="" disabled></td></tr>';
         }
       } else {
-        htmlData += '<tr data-domain="' + domain + '"><th scope="row">' + domain + ' (' + data[domain].message + ')</th><td class="text-center"><span class="glyphicon glyphicon-exclamation-sign"></span></td><td class="text-center"><input type="checkbox" value="" disabled></td></tr>';
+        htmlData += '<tr data-domain="' + domain + '" data-available="error"><th scope="row">' + domain + ' (' + data[domain].message + ')</th><td class="text-center"><span class="glyphicon glyphicon-exclamation-sign"></span></td><td class="text-center"><input type="checkbox" value="" disabled></td></tr>';
       }
     }
 
@@ -281,22 +281,24 @@ $(function() {
 
   // On click on table rows
   $('body').delegate('tbody tr','click',function(event){
-    var $checkbox = $(this).find('input');
+    if ($(this).data('available') === 'available') {
+      var $checkbox = $(this).find('input');
 
-    // Toggle checkbox and hightlighting of current row
-    if ($checkbox.prop('checked')) {
-      $checkbox.prop('checked', false);
-      $(this).removeClass('table-selected');
-    } else {
-      $checkbox.prop('checked', true);
-      $(this).addClass('table-selected');
-    }
+      // Toggle checkbox and hightlighting of current row
+      if ($checkbox.prop('checked')) {
+        $checkbox.prop('checked', false);
+        $(this).removeClass('table-selected');
+      } else {
+        $checkbox.prop('checked', true);
+        $(this).addClass('table-selected');
+      }
 
-    // Enable/disable purchase button
-    if ($('input[type=checkbox]:checked').length > 0) {
-      $('.purchase').addClass('enabled').removeClass('disabled');
-    } else {
-      $('.purchase').addClass('disabled').removeClass('enabled');
+      // Enable/disable purchase button
+      if ($('input[type=checkbox]:checked').length > 0) {
+        $('.purchase').addClass('enabled').removeClass('disabled');
+      } else {
+        $('.purchase').addClass('disabled').removeClass('enabled');
+      }
     }
   });
 
