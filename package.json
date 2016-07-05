@@ -13,7 +13,7 @@
   },
   "scripts": {
     "test": "bower install && gulp && true",
-    "start": "node ./bin/www"
+    "start": "DEBUG=webwhois:* node ./bin/www"
   },
   "main": "gulpfile.js",
   "dependencies": {
