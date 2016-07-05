@@ -47,6 +47,12 @@ You can find a (commented) example configuration file in [`config.hjson.example`
     gulp  
     ```
 
+1. Start using `npm`:  
+
+    ```shell
+    npm start  
+    ```
+
 ## Contributing
 
 1. Fork it
