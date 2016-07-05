@@ -10,7 +10,8 @@ var express = require('express')
     , recaptcha = require('express-recaptcha')
     , FileStreamRotator = require('file-stream-rotator')
     , i18n = require("i18n-express")
-    , morgan = require('morgan');
+    , morgan = require('morgan')
+    , debug = require('debug')('webwhois:app');
 
 // Add HJSON support
 require("hjson/lib/require-config");
@@ -18,10 +19,10 @@ require("hjson/lib/require-config");
 // Try to load configuration file
 try {
   var configuration = require('./config.hjson')
-  debug()
+  debug('Successfully loaded HJSON file ./config.hjson');
 } catch(e) {
   // Exit in case there is none
-  console.log('Couldn\'t find configuration file "config.hjson"!');
+  console.error('Couldn\'t find configuration file "config.hjson"!');
   process.exit(1);
 }
 
@@ -31,9 +32,14 @@ recaptcha.init(configuration.general.recaptchaSite, configuration.general.recapt
   , callback: 'enableInputs'
 });
 
-// Setup logger
+// Setup log directories
 var logDirectory = path.join(__dirname, 'logs');
-fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);
+if (!fs.existsSync(logDirectory)) {
+  fs.mkdirSync(logDirectory);
+  debug('No logs/ directory found. Recreating...');
+}
+
+// And access log file rotation
 var accessLogStream = FileStreamRotator.getStream({
   date_format: 'YYYYMMDD'
   , filename: path.join(logDirectory, '%DATE%_access.log')
@@ -41,40 +47,9 @@ var accessLogStream = FileStreamRotator.getStream({
   , verbose: false
 });
 
-// Routes
+// Express router
 var routeIndex = require('./lib/routes/index')
     , routeApi = require('./lib/routes/api');
-
-// Handlebars helper - "join"
-hbs.registerHelper("join", function(context, block) {
-  return context.join(block.hash.delimiter);
-});
-
-// Handlebars helper - "searchAndJoinTLDsForSelection"
-hbs.registerHelper("searchAndJoinTLDsForSelection", function(config, selection) {
-  // Try to find the "selection" in the packages
-  if (config.tldpackages[selection]) {
-    return config.tldpackages[selection].tlds.join(', ');
-  }
-
-  // Otherwise assume a single TLD is meant
-  if (config.tlds.indexOf(selection) === -1) {
-    return false;
-  } else {
-    var index = config.tlds.indexOf(selection);
-    return config.tlds[index];
-  }
-
-  return false;
-});
-
-// Handlebars helper - "ifCond"
-hbs.registerHelper('ifCond', function(v1, v2, options) {
-  if(v1 === v2) {
-    return options.fn(this);
-  }
-  return options.inverse(this);
-});
 
 // Create express app
 var app = express()
@@ -131,5 +106,29 @@ app.use(function(err, req, res, next) {
   });
 });
 
+/**
+ * Handlebars helper - "join"
+ * @usage
+ *   {{join arrayObject delimiter=", "}}
+ */
+hbs.registerHelper("join", function(context, block) {
+  return context.join(block.hash.delimiter);
+});
+
+/**
+ * Handlebars helper - "ifCond"
+ * @usage
+ *   {{#ifCond thisObject equalsThat}}
+ *     show this
+ *   {{else}}
+ *     show that
+ *   {{/ifCond}}
+ */
+hbs.registerHelper('ifCond', function(v1, v2, options) {
+  if(v1 === v2) {
+    return options.fn(this);
+  }
+  return options.inverse(this);
+});
 
 module.exports = app;
