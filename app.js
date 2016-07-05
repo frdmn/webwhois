@@ -1,4 +1,4 @@
-// Modules
+// Rquire modules
 var express = require('express')
     , path = require('path')
     , favicon = require('serve-favicon')
@@ -18,6 +18,7 @@ require("hjson/lib/require-config");
 // Try to load configuration file
 try {
   var configuration = require('./config.hjson')
+  debug()
 } catch(e) {
   // Exit in case there is none
   console.log('Couldn\'t find configuration file "config.hjson"!');
@@ -44,15 +45,12 @@ var accessLogStream = FileStreamRotator.getStream({
 var routeIndex = require('./lib/routes/index')
     , routeApi = require('./lib/routes/api');
 
-// Create express app
-var app = express();
-
-// "join" Handlebars helper
+// Handlebars helper - "join"
 hbs.registerHelper("join", function(context, block) {
   return context.join(block.hash.delimiter);
 });
 
-// "searchAndJoinTLDsForSelection" Handlebars helper
+// Handlebars helper - "searchAndJoinTLDsForSelection"
 hbs.registerHelper("searchAndJoinTLDsForSelection", function(config, selection) {
   // Try to find the "selection" in the packages
   if (config.tldpackages[selection]) {
@@ -70,7 +68,7 @@ hbs.registerHelper("searchAndJoinTLDsForSelection", function(config, selection) 
   return false;
 });
 
-// "ifCond" Handlebars helper
+// Handlebars helper - "ifCond"
 hbs.registerHelper('ifCond', function(v1, v2, options) {
   if(v1 === v2) {
     return options.fn(this);
@@ -78,8 +76,9 @@ hbs.registerHelper('ifCond', function(v1, v2, options) {
   return options.inverse(this);
 });
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'))
+// Create express app
+var app = express()
+   .set('views', path.join(__dirname, 'views'))
    .set('view engine', 'hbs');
 
 // Configure middlewares
@@ -95,9 +94,11 @@ app.use(responseTime())
    }))
    .use(express.static(path.join(__dirname, 'public')));
 
+// Inject current version string into config object
 configuration.version = fs.readFileSync('./VERSION', 'utf8');
 app.locals.configuration = configuration;
 
+// Mount router for frontend and API
 app.use('/', routeIndex)
    .use('/api', routeApi);
 
@@ -108,8 +109,7 @@ app.use(function(req, res, next) {
   next(err);
 });
 
-// Development error handler
-// Will print stacktrace
+// Development error handler (print stacktraces)
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
@@ -121,8 +121,7 @@ if (app.get('env') === 'development') {
   });
 }
 
-// Production error handler
-// No stacktraces leaked to user
+// Production error handler (without printing stacktraces)
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error', {
