@@ -20,6 +20,19 @@ var disableInputs = function(){
 
 $(function() {
   /**
+   * check if the current page is being loaded
+   * via an frame
+   * @return {Bool}
+   */
+  var inIframe = function() {
+    try {
+      return window.self !== window.top;
+    } catch (e) {
+      return true;
+    }
+  }
+
+  /**
    * Toggle the TLD/package form (dropdown)
    * @param  {String} state "hide" or "show"
    * @return {Boolean}
@@ -325,6 +338,11 @@ $(function() {
   if($('.captcha').length > 0){
     // Disable button
     disableInputs();
+  }
+
+  if (inIframe()) {
+    $('body').removeClass('navbar-padding');
+    $('nav').addClass('hidden');
   }
 
   // Turn select into a chosen search input
