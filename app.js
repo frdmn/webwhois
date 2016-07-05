@@ -15,8 +15,14 @@ var express = require('express')
 // Add HJSON support
 require("hjson/lib/require-config");
 
-// Configuration files
-var configuration = require('./config.hjson')
+// Try to load configuration file
+try {
+  var configuration = require('./config.hjson')
+} catch(e) {
+  // Exit in case there is none
+  console.log('Couldn\'t find configuration file "config.hjson"!');
+  process.exit(1);
+}
 
 // Set options and initalize recaptcha
 recaptcha.init(configuration.general.recaptchaSite, configuration.general.recaptchaSecret, {
