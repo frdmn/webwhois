@@ -108,8 +108,6 @@ app.use(function(req, res, next) {
   next(err);
 });
 
-// Error handlers
-
 // Development error handler
 // Will print stacktrace
 if (app.get('env') === 'development') {
@@ -117,7 +115,8 @@ if (app.get('env') === 'development') {
     res.status(err.status || 500);
     res.render('error', {
       message: err.message,
-      error: err
+      error: err,
+      config: app.locals.configuration
     });
   });
 }
@@ -128,7 +127,8 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error', {
     message: err.message,
-    error: {}
+    error: {},
+    config: app.locals.configuration
   });
 });
 
