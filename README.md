@@ -2,7 +2,7 @@
 
 Simple, web-based domain availability lookup system. Can be embedded or used as standalone frontend.
 
-![](http://i.imgur.com/tMLEYJN.png)
+![](http://i.imgur.com/6u9Kk5p.png)
 
 ## Features
 
