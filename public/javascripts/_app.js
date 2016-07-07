@@ -349,6 +349,7 @@ $(function() {
   }
 
   if (inIframe()) {
+    $('.iweltBrand').addClass('hidden');
     $('body').removeClass('navbar-padding');
     $('nav').addClass('hidden');
   }
