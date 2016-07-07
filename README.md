@@ -41,6 +41,12 @@ You can find a (commented) example configuration file in [`config.hjson.example`
     bower install
     ```
 
+1. Install Node dependencies:  
+
+    ```shell
+    npm install
+    ```
+
 1. Run Gulp to compile assets:  
 
     ```shell
