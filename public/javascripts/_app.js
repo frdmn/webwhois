@@ -332,10 +332,11 @@ $(function() {
     });
 
     // URL encode the string
-    var encodedDomains = encodeURIComponent(domains.slice(0,-2));
+    var encodedDomains = encodeURIComponent(domains.slice(0,-2)),
+        purchaseFormRedirect = $('.purchaseFormRedirect').val().replace(/%s/g, encodedDomains);
 
     // Open in new window
-    window.open('https://www.iwelt.de/index.php?id=125&tx_powermail_pi1[field][1]=' + encodedDomains + '&L=0&qry=5486', '_blank');
+    window.open(purchaseFormRedirect, '_blank');
   });
 
   // Disable purchase button by default
