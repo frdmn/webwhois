@@ -66,9 +66,9 @@ Response:
 {  
    "status":"success",
    "data":{  
-      "iwelt.de":{  
+      "frdmn.de":{  
          "status":"success",
-         "available":false
+         "available":true
       }
    }
 }
@@ -89,23 +89,23 @@ Response:
 {  
    "status":"success",
    "data":{  
-      "iwelt.com":{  
+      "frdmn.com":{  
+         "status":"success",
+         "available":true
+      },
+      "frdmn.net":{  
+         "status":"success",
+         "available":true
+      },
+      "frdmn.org":{  
+         "status":"success",
+         "available":true
+      },
+      "frdmn.biz":{  
          "status":"success",
          "available":false
       },
-      "iwelt.net":{  
-         "status":"success",
-         "available":false
-      },
-      "iwelt.org":{  
-         "status":"success",
-         "available":false
-      },
-      "iwelt.biz":{  
-         "status":"success",
-         "available":false
-      },
-      "iwelt.info":{  
+      "frdmn.info":{  
          "status":"success",
          "available":false
       }
@@ -163,38 +163,39 @@ Response:
         "% ",
         "",
         "",
-        "Domain: iwelt.de",
-        "Nserver: dns.iwelt-ag.net",
-        "Nserver: dns2.iwelt-ag.net",
-        "Nserver: dns3.iwelt-ag.de",
+        "Domain: telekom.de",
+        "Nserver: dns1.telekom.de 217.6.95.193",
+        "Nserver: dns2.telekom.de 192.166.53.61",
+        "Nserver: pns.dtag.de",
+        "Nserver: secondary006.dtag.net",
         "Status: connect",
-        "Changed: 2013-10-21T16:11:35+02:00",
+        "Changed: 2012-10-16T15:22:10+02:00",
         "",
         "[Tech-C]",
-        "Type: ROLE",
-        "Name: Domainservice",
-        "Organisation: iWelt AG",
-        "Address: Mainparkring 4",
-        "PostalCode: 97246",
-        "City: Eibelstadt",
+        "Type: PERSON",
+        "Name: Tech-C T-Systems International GmbH",
+        "Organisation: T-Systems International GmbH",
+        "Address: Philipp-Reis-Platz 1",
+        "PostalCode: D-33602",
+        "City: Bielefeld",
         "CountryCode: DE",
-        "Phone: +49.9303982860",
-        "Fax: +49.9303982879",
-        "Email: support@iwelt.de",
-        "Changed: 2013-08-05T11:43:45+02:00",
+        "Phone: +49 521 92390",
+        "Fax: +49 521 92392963",
+        "Email: zone-c@t-systems.com",
+        "Changed: 2013-11-13T13:15:13+01:00",
         "",
         "[Zone-C]",
-        "Type: ROLE",
-        "Name: Domainservice",
-        "Organisation: iWelt AG",
-        "Address: Mainparkring 4",
-        "PostalCode: 97246",
-        "City: Eibelstadt",
+        "Type: PERSON",
+        "Name: Tech-C T-Systems International GmbH",
+        "Organisation: T-Systems International GmbH",
+        "Address: Philipp-Reis-Platz 1",
+        "PostalCode: D-33602",
+        "City: Bielefeld",
         "CountryCode: DE",
-        "Phone: +49.9303982860",
-        "Fax: +49.9303982879",
-        "Email: support@iwelt.de",
-        "Changed: 2013-08-05T11:43:45+02:00",
+        "Phone: +49 521 92390",
+        "Fax: +49 521 92392963",
+        "Email: zone-c@t-systems.com",
+        "Changed: 2013-11-13T13:15:13+01:00",
         ""
     ],
     "status": "success"
