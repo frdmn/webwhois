@@ -143,12 +143,12 @@ $(function() {
       if (data[domain].status === 'success') {
         // Append new table <tr> in htmlData
         if (data[domain].available === true ) {
-          htmlData += '<tr data-domain="' + domain + '" data-available="available"><th scope="row">' + domain + '</th><td class="text-center"><span class="glyphicon glyphicon-ok"></span></td><td class="text-center"><input type="checkbox" value=""></td></tr>';
+          htmlData += '<tr data-domain="' + domain + '" data-available="available"><th scope="row">' + domain + '</th><td class="text-center"><span class="label label-success"><span class="glyphicon glyphicon-ok"></span></span></td><td class="text-center"><input type="checkbox" value=""></td></tr>';
         } else {
-          htmlData += '<tr data-domain="' + domain + '" data-available="unavailable"><th scope="row">' + domain + '</th><td class="text-center"><span class="glyphicon glyphicon-remove"></span></td><td class="text-center"><input type="checkbox" value="" disabled></td></tr>';
+          htmlData += '<tr data-domain="' + domain + '" data-available="unavailable"><th scope="row">' + domain + '</th><td class="text-center"><span class="label label-danger"><span class="glyphicon glyphicon-remove"></span></span></td><td class="text-center"><input type="checkbox" value="" disabled></td></tr>';
         }
       } else {
-        htmlData += '<tr data-domain="' + domain + '" data-available="error"><th scope="row">' + domain + ' (' + data[domain].message + ')</th><td class="text-center"><span class="glyphicon glyphicon-exclamation-sign"></span></td><td class="text-center"><input type="checkbox" value="" disabled></td></tr>';
+        htmlData += '<tr data-domain="' + domain + '" data-available="error"><th scope="row">' + domain + ' (' + data[domain].message + ')</th><td class="text-center"><span class="label label-danger"><span class="glyphicon glyphicon-remove"></span></span></td><td class="text-center"><input type="checkbox" value="" disabled></td></tr>';
       }
     }
 
