@@ -299,19 +299,26 @@ $(function() {
 
       // Toggle checkbox and hightlighting of current row
       if ($checkbox.prop('checked')) {
-        $checkbox.prop('checked', false);
+        $checkbox.click();
         $(this).removeClass('table-selected');
       } else {
-        $checkbox.prop('checked', true);
+        $checkbox.click();
         $(this).addClass('table-selected');
       }
+    }
+  });
 
-      // Enable/disable purchase button
-      if ($('input[type=checkbox]:checked').length > 0) {
-        $('.purchase').addClass('enabled').removeClass('disabled');
-      } else {
-        $('.purchase').addClass('disabled').removeClass('enabled');
-      }
+  // Make sure to allow direct clicks on the checkbox
+  $('body').delegate('tbody tr input','click',function(event){
+    event.stopImmediatePropagation();
+  });
+
+  // Enable/disable purchase button
+  $('body').delegate('input[type=checkbox]','change',function(event){
+    if ($('input[type=checkbox]:checked').length > 0) {
+      $('.purchase').addClass('enabled').removeClass('disabled');
+    } else {
+      $('.purchase').addClass('disabled').removeClass('enabled');
     }
   });
 
