@@ -70,7 +70,7 @@ app.use(responseTime())
    .use(express.static(path.join(__dirname, 'public')));
 
 // Inject current version string into config object
-configuration.version = fs.readFileSync('./VERSION', 'utf8');
+configuration.version = fs.readFileSync(path.join(__dirname, 'VERSION'), 'utf8');
 app.locals.configuration = configuration;
 
 // Mount router for frontend and API
